@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FRONTDESK VN - Rosemary Luxury Boutique Hotel</title>
+<meta name="description" content="Vào vai lễ tân khách sạn: xác minh giấy tờ, xếp phòng, xử lý khiếu nại. Bản demo 6 tình huống. Mọi nhân vật và khách sạn đều là giả định.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--panel:#fff;--ink:#1f2a17;--muted:#5f6b55;--line:#d6dccb;--green:#556B2F;--brass:#556B2F;--brass-bg:#edf1e3;--good:#3c7d2a;--warn:#b3402f;--on-green:#ffffff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12160d;--panel:#1b2113;--ink:#eef2e4;--muted:#aab59a;--line:#333d25;--green:#556B2F;--brass:#a3c26b;--brass-bg:#2a331b;--good:#7ccf5f;--warn:#ee7d6b}}
+:root[data-theme="dark"]{--bg:#12160d;--panel:#1b2113;--ink:#eef2e4;--muted:#aab59a;--line:#333d25;--green:#556B2F;--brass:#a3c26b;--brass-bg:#2a331b;--good:#7ccf5f;--warn:#ee7d6b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "Be Vietnam Pro",system-ui,sans-serif}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1,h2{font-weight:700;margin:0}
+header.top{background:var(--green);color:var(--on-green);border-radius:3px;padding:14px 18px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+header.top b{font-size:18px}
+header.top small{opacity:.8;display:block}
+.stats{display:flex;gap:16px;flex-wrap:wrap}
+.stat{text-align:right;min-width:64px}
+.stat span{display:block;font-size:12px;opacity:.75}
+.stat strong{font-size:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:18px;margin-top:14px}
+.patience{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.patience i{display:block;height:100%;width:100%;background:var(--good);transition:width .25s linear,background .3s}
+.guest{display:flex;gap:14px;align-items:flex-start}
+.avatar{flex:none;width:52px;height:52px;border-radius:3px;background:var(--green);color:var(--on-green);display:grid;place-items:center;font-size:24px}
+.say{background:var(--brass-bg);border-radius:4px 12px 12px 12px;padding:12px 14px;margin:0}
+.name{font-weight:700}
+.docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px}
+.doc{border:1px solid var(--line);border-top:2px solid var(--green);border-radius:0;padding:10px 12px;font-size:14px;background:var(--panel)}
+.doc h3{margin:0 0 4px;font-size:13px;color:var(--brass);font-weight:700}
+.doc div{display:flex;justify-content:space-between;gap:8px}
+.doc div span:first-child{color:var(--muted)}
+.pms{font-size:14px;color:var(--muted);margin:14px 0 0}
+.opts{display:grid;gap:10px;margin-top:16px}
+.opt{text-align:left;background:var(--panel);color:var(--ink);border:1.5px solid var(--line);border-radius:3px;padding:12px 14px;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--brass);background:var(--brass-bg)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.picked{opacity:1;border-color:var(--ink)}
+.fb{margin-top:16px;border-left:5px solid var(--muted);padding:10px 14px;background:var(--bg);border-radius:0 8px 8px 0}
+.fb.q2{border-color:var(--good)}.fb.q1{border-color:var(--brass)}.fb.q0{border-color:var(--warn)}
+.fb b{display:block}
+.delta{font-size:13px;color:var(--muted);margin-top:4px}
+.btn{background:var(--green);color:var(--on-green);border:0;border-radius:3px;padding:12px 22px;font-weight:700;margin-top:14px}
+.btn:hover{filter:brightness(1.15)}
+.center{text-align:center}
+.stars{font-size:34px;color:var(--brass);letter-spacing:4px}
+ul.rev{text-align:left;padding-left:20px;margin:14px auto;max-width:560px}
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:10px}
+.rm{border:2px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--panel);color:var(--ink);text-align:left;font-size:12px;line-height:1.35}
+.rm b{font-size:16px;display:block}
+.rm.free{border-color:var(--good)}.rm.occ{background:var(--bg);color:var(--muted)}.rm.clean{border-style:dashed;border-color:var(--brass)}.rm.maint{border-color:var(--warn);border-style:dotted}
+.rm:disabled{cursor:default}.rm.go:not(:disabled):hover{background:var(--brass-bg)}
+.bill{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.bill td{padding:8px 4px;border-bottom:1px solid var(--line)}.bill td:last-child{text-align:right;white-space:nowrap}
+.bill input{width:20px;height:20px;accent-color:var(--green)}
+.tot{font-weight:700;font-size:18px;margin-top:10px}
+.bill td:only-child{text-align:left}
+.card{border-top:3px solid var(--green)}
+.shell{display:grid;grid-template-columns:230px 1fr;gap:14px;margin-top:4px}.shell:has(aside:empty){grid-template-columns:1fr}
+aside{font-size:12px;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--green);padding:10px;max-height:78vh;overflow:auto;position:sticky;top:8px;align-self:start}
+aside:empty{display:none}aside ol{padding-left:20px;margin:6px 0}aside li.cur{font-weight:700;color:var(--green)}aside li.dn{color:var(--muted);text-decoration:line-through}
+.board{max-height:230px;overflow:auto}
+@media(max-width:800px){.shell{grid-template-columns:1fr}aside{order:2;position:static;max-height:none}.shell>div{order:1}}
+.gb{background:var(--panel);border:2px solid var(--line);border-radius:6px;padding:8px 14px;color:var(--ink);cursor:pointer}.gb.on{border-color:var(--green);background:var(--brass-bg)}
+.ic{display:inline-block;vertical-align:-4px;margin-right:4px}
+.bob{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-3px)}}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.wave{transform-box:fill-box;transform-origin:20% 90%;animation:wave 2s ease-in-out infinite}@keyframes wave{50%{transform:rotate(-25deg)}}
+@media(prefers-reduced-motion:reduce){.bob,.eye,.wave{animation:none!important}}
+.rm:hover{background:var(--brass-bg)}.rm.res{border-color:#c99a1c;border-style:double;border-width:4px}
+.mail{background:var(--bg);border:1px solid var(--line);padding:10px;white-space:pre-wrap;font-size:14px;margin-top:12px}
+.bk{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-top:10px;padding:8px;border:1px solid var(--line);border-left:4px solid var(--green)}.bk b{grid-column:1/-1}
+.bk input,.bk select{padding:7px;border:1px solid var(--line);border-radius:3px;font:inherit;background:var(--panel);color:var(--ink)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gU" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f9a47"/><stop offset="1" stop-color="#3f5220"/></linearGradient>
+<radialGradient id="gS" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#ffe2c4"/><stop offset="1" stop-color="#e0a67c"/></radialGradient>
+<linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3d28"/><stop offset="1" stop-color="#2b1b10"/></linearGradient>
+<linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bb86a"/><stop offset="1" stop-color="#556B2F"/></linearGradient>
+<linearGradient id="gY" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#c99a1c"/></linearGradient>
+<linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a8a"/><stop offset="1" stop-color="#c0432f"/></linearGradient>
+<linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9cc9ff"/><stop offset="1" stop-color="#3a6fb5"/></linearGradient>
+</defs></svg><main class="wrap">
+<header class="top">
+  <div style="display:flex;gap:10px;align-items:center"><span id="av"></span><div><b>Rosemary Luxury Boutique Hotel ★★★★★</b><small id="shift">Khách sạn 5 sao giả định · Quầy lễ tân</small><small id="who"></small></div></div>
+  <div class="stats" aria-live="polite">
+    <div class="stat"><span><i class="ic" data-k="sat"></i>Hài lòng</span><strong id="sSat">50</strong></div>
+    <div class="stat"><span><i class="ic" data-k="rev"></i>Doanh thu</span><strong id="sRev">0</strong></div>
+    <div class="stat"><span><i class="ic" data-k="acc"></i>Chính xác</span><strong id="sAcc">100%</strong></div><div class="stat"><span><i class="ic" data-k="tr"></i>Uy tín</span><strong id="sTr">50</strong></div><div class="stat"><span><i class="ic" data-k="st"></i>Stress</span><strong id="sSt">20</strong></div>
+  </div>
+</header>
+<section id="prog" style="margin-top:10px"></section><div class="shell"><aside id="side"></aside><div><section id="board"></section><section id="stage"></section></div></div>
+</main>
+<script>
+const G=[
+{av:"🧳",name:"Nguyễn Minh Anh",shift:"Ca sáng · 08:10",
+ say:"Chào bạn, mình có đặt phòng ở đây 2 đêm. Cho mình nhận phòng nhé!",
+ docs:[{t:"CCCD",r:[["Họ tên","NGUYỄN MINH ANH"],["Ngày sinh","12/03/1994"]]},{t:"Đặt phòng #HB2041",r:[["Tên","Nguyen Minh Anh"],["Phòng","Deluxe Double"],["Số đêm","2 (30/09 - 02/10)"]]}],
+ pms:"Phòng 301 (Deluxe Double) đã dọn xong, sẵn sàng.",
+ o:[["Đối chiếu CCCD với đặt phòng, xác nhận thông tin, thu cọc rồi phát thẻ phòng 301.",2,6,1200,"Đúng quy trình. Tên khớp (chỉ khác dấu), phòng sẵn sàng. Luôn xem giấy tờ gốc trước khi phát thẻ."],
+    ["Phát thẻ phòng 201 ngay cho nhanh, khách đã có đặt phòng rồi.",0,2,0,"Bỏ qua bước xác minh danh tính. Nếu người đến không phải người đặt, khách sạn chịu rủi ro pháp lý và an ninh."],
+    ["Yêu cầu khách xuất trình thêm sổ hộ khẩu và thẻ tín dụng.",0,-8,0,"Thủ tục thừa. CCCD là đủ để khai báo lưu trú, hỏi thêm chỉ làm khách khó chịu."]]},
+{av:"🎒",name:"Trần Quốc Hưng",shift:"Ca sáng · 09:30",
+ say:"Chuyến bay của mình đến sớm. Mình đặt phòng từ ngày mai nhưng muốn vào phòng luôn hôm nay được không?",
+ docs:[{t:"CCCD",r:[["Họ tên","TRẦN QUỐC HƯNG"],["Ngày sinh","05/11/1990"]]},{t:"Đặt phòng #AG7710",r:[["Nhận phòng","01/10 (ngày mai)"],["Phòng","Superior Twin"],["Giá","900.000đ/đêm"]]}],
+ pms:"Còn 3 phòng Superior Twin trống hôm nay. Nhận phòng sớm tính thêm 50% giá đêm.",
+ o:[["Báo rõ còn phòng trống, phí nhận sớm là 450.000đ, khách đồng ý thì thêm đêm 30/09 và nhận phòng.",2,8,450000,"Xử lý tốt. Minh bạch phí, tận dụng phòng trống và tạo thêm doanh thu."],
+    ["Từ chối: đặt ngày mai thì ngày mai mới được vào.",1,-12,0,"Đúng quy định nhưng cứng nhắc khi còn phòng trống. Bạn bỏ lỡ cơ hội bán thêm và làm khách bực."],
+    ["Cho vào luôn, không tính phí để khách vui.",0,10,0,"Khách vui nhưng khách sạn mất doanh thu và sai lệch báo cáo. Miễn phí cần có sự đồng ý của quản lý."]]},
+{av:"🕶️",name:"Người lạ tại quầy",shift:"Ca chiều · 14:05",
+ say:"Tôi là bạn của ông Lee Sang-woo, đang ở khách sạn mình. Cho tôi xin số phòng để tôi lên gặp nhé.",
+ docs:[{t:"Ghi chú hệ thống",r:[["Khách","Mr. Lee Sang-woo"],["Phòng","806"],["Yêu cầu","Không làm phiền"]]}],
+ pms:"Người này chưa xuất trình giấy tờ và không có tên trong danh sách khách.",
+ o:[["Không tiết lộ số phòng. Đề nghị gọi điện đến phòng ông Lee, nếu ông đồng ý sẽ xuống đón hoặc báo số phòng.",2,4,0,"Chính xác. Thông tin lưu trú của khách là bảo mật, chỉ khách quyết định ai được biết."],
+    ["Đọc số phòng 806 vì người này có vẻ lịch sự và biết tên khách.",0,-25,0,"Vi phạm bảo mật nghiêm trọng. Biết tên khách không chứng minh được quan hệ."],
+    ["Từ chối thẳng và im lặng, không hỗ trợ gì thêm.",1,-6,0,"Đúng về bảo mật nhưng thiếu hỗ trợ. Luôn đưa ra phương án thay thế như gọi điện cho khách."]]},
+{av:"🛂",name:"Emma Carter",shift:"Ca chiều · 16:20",
+ say:"Hello! I have a reservation for three nights under Carter.",
+ docs:[{t:"Passport (UK)",r:[["Name","CARTER EMMA JANE"],["Visa","Miễn thị thực 45 ngày"],["Nhập cảnh","28/09/2026"]]},{t:"Booking #BK3308",r:[["Guest","Emma Carter"],["Room","Superior King"],["Nights","3"]]}],
+ pms:"Khách nước ngoài: bắt buộc khai báo lưu trú với cơ quan công an trong thời hạn quy định.",
+ o:[["Kiểm tra hộ chiếu và dấu nhập cảnh, quét vào hệ thống, khai báo lưu trú rồi làm thủ tục check-in.",2,6,1500,"Đúng. Khai báo lưu trú cho khách nước ngoài là bắt buộc, không được bỏ sót."],
+    ["Check-in trước, khai báo lưu trú để cuối tuần làm một lượt.",1,3,1500,"Rủi ro trễ hạn khai báo và bị xử phạt. Nên làm ngay khi nhận phòng."],
+    ["Chỉ ghi tên vào sổ, không cần giữ hộ chiếu hay quét thông tin.",0,2,0,"Thiếu dữ liệu để khai báo lưu trú. Đây là lỗi tuân thủ pháp luật."]]},
+{av:"📱",name:"Lê Thu Hà",shift:"Ca tối · 19:40",
+ say:"Mình đặt Deluxe qua Booking từ tuần trước, sao bạn nói hết phòng vậy?",
+ docs:[{t:"Đặt phòng #BK5521",r:[["Phòng","Deluxe Double"],["Số đêm","1"],["Đã thanh toán","Có"]]}],
+ pms:"Overbooking: phòng Deluxe hết. Còn 1 phòng Junior Suite trống, chênh giá 800.000đ/đêm. Quản lý cho phép nâng hạng miễn phí khi overbooking.",
+ o:[["Xin lỗi khách, giải thích lỗi thuộc về khách sạn và nâng hạng miễn phí lên Junior Suite.",2,14,-800000,"Tốt nhất. Chấp nhận lỗi của mình, đền bù tương xứng và giữ được khách. Chi phí nhỏ hơn nhiều so với mất khách và đánh giá xấu."],
+    ["Đề nghị khách chờ ở sảnh đến khi có ai trả phòng.",0,-20,0,"Khách đã thanh toán và có xác nhận, bắt chờ không rõ thời gian là không chấp nhận được."],
+    ["Bán Junior Suite cho khách với giá chênh 800.000đ.",0,-15,800000,"Bắt khách trả thêm cho lỗi của khách sạn sẽ dẫn đến khiếu nại và đánh giá 1 sao."]]},
+{av:"😴",name:"Phạm Đức Thịnh",shift:"Ca đêm · 23:50",
+ say:"Phòng bên cạnh mở nhạc ồn từ 10 giờ. Mình đi công tác, mai có họp sớm, bạn xử lý giúp mình!",
+ docs:[{t:"Phòng 518",r:[["Khách","Phạm Đức Thịnh"],["Phòng ồn","520"]]}],
+ pms:"Bảo vệ đang ở tầng 1. Còn phòng 301 cùng hạng, yên tĩnh. Có thể tặng voucher ăn sáng.",
+ o:[["Xin lỗi, báo bảo vệ lên nhắc phòng 520 ngay, đồng thời đề nghị đổi sang phòng 622 và tặng bữa sáng.",2,15,-100000,"Xử lý trọn vẹn: giải quyết nguồn gốc vấn đề, đưa phương án cho khách chọn và đền bù nhỏ."],
+    ["Xin lỗi và hứa sẽ nhắc nhở, không làm gì thêm.",1,3,0,"Có thiện chí nhưng thiếu hành động cụ thể. Nên gọi bảo vệ ngay và hỏi khách có muốn đổi phòng."],
+    ["Giải thích rằng khách sạn không thể kiểm soát việc khách khác làm.",0,-18,0,"Đổ lỗi và từ chối trách nhiệm. Khách sạn có nghĩa vụ đảm bảo sự yên tĩnh cho khách."]]}
+];
+const S={ts:[],rk:0,gender:"f",xp:0,name:"",clk:0,trust:50,stress:20,day:1,warn:0,i:0,sat:50,rev:0,ok:0,tot:0,log:[],t:null,late:false};
+const $=id=>document.getElementById(id);
+const fmt=n=>(n<0?"-":"")+Math.abs(n).toLocaleString("vi-VN")+"đ";
+function hud(){S.sat=Math.max(0,Math.min(100,S.sat));$("av").innerHTML=avatar(44);$("who").textContent=(S.name||"Chưa đăng nhập")+" · "+RANKS[rk()][0]+" · XP "+S.xp;$("sTr").textContent=S.trust;$("sSt").textContent=S.stress;$("sSt").style.color=S.stress>=70?"#ffb4a6":"";$("sSat").textContent=Math.max(0,Math.min(100,S.sat));$("sRev").textContent=S.rev.toLocaleString("vi-VN");$("sAcc").textContent=S.tot?Math.round(S.ok/S.tot*100)+"%":"100%"}
+function intro(){
+ $("stage").innerHTML=`<div class="card center"><h2>FRONTDESK VN</h2><p>Bạn là nhân viên lễ tân của Grand Lotus Hotel. Mỗi khách đến quầy là một tình huống: xác minh giấy tờ, giữ bảo mật, xử lý khiếu nại. Chọn cách xử lý phù hợp nhất.</p><p class="note">Bản demo gồm 11 tình huống: nhận phòng, xếp phòng theo sơ đồ, trả phòng kiểm hóa đơn và night audit. Toàn bộ khách sạn, nhân vật và doanh nghiệp là giả định.</p><button class="btn" id="go">Bắt đầu ca làm</button></div>`;
+ $("go").onclick=()=>show();
+}
+function show(){
+ const g=G[S.i];S.late=false;clearInterval(S.t);
+ $("shift").textContent=g.shift+" · Lượt "+(S.i+1)+"/"+G.length;
+ $("stage").innerHTML=`<div class="card"><div class="patience" role="progressbar" aria-label="Độ kiên nhẫn của khách"><i id="pat"></i></div>
+ <div class="guest"><div class="avatar" aria-hidden="true">${gv(g)}</div><div><div class="name">${g.name}</div><p class="say">${g.say}</p></div></div>
+ <div class="docs">${g.docs.map(d=>`<div class="doc"><h3>${d.t}</h3>${d.r.map(r=>`<div><span>${r[0]}</span><span>${r[1]}</span></div>`).join("")}</div>`).join("")}</div>
+ <p class="pms"><b>Hệ thống PMS:</b> ${g.pms}</p>
+ <div class="opts" id="opts">${g.o.map((o,k)=>`<button class="opt" data-k="${k}">${o[0]}</button>`).join("")}</div><div id="fbk"></div></div>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+ let p=100;const bar=$("pat");
+ S.t=setInterval(()=>{p-=(0.55+S.day*0.02)*(S.pm||1)*(S.stress>=70?1.25:1)*(1+rk()*.08);bar.style.width=p+"%";bar.style.background=p<30?"var(--warn)":p<60?"var(--brass)":"var(--good)";
+  if(p<=0){clearInterval(S.t);S.late=true;S.sat-=8;hud()}},250);
+}
+function pick(k){
+ clearInterval(S.t);const g=G[S.i],o=g.o[k];
+ let ds=o[2]-(S.late?8:0);
+ S.sat+=o[2];S.rev+=o[3];S.tot++;if(o[1]==2)S.ok++;else if(o[1]==1)S.ok+=.5;
+ S.log.push({n:g.name,q:o[1]});fx(o[1],S.late);if(g.mg){S.trust=Math.max(0,Math.min(100,S.trust+[-6,0,3][o[1]]));hud()}
+ document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j==k)b.classList.add("picked")});
+ const lab=["Chưa đúng","Chấp nhận được","Xử lý tốt"][o[1]];
+ const last=S.i==G.length-1;
+ $("fbk").innerHTML=`<div class="fb q${o[1]}"><b>${lab}</b>${o[4]}<div class="delta">Hài lòng ${o[2]>=0?"+":""}${o[2]}${S.late?" (thêm -8 vì để khách chờ lâu)":""} · Doanh thu ${o[3]>=0?"+":""}${fmt(o[3])}</div></div><button class="btn" id="nx">${last?"Xem báo cáo cuối ngày":"Khách tiếp theo"}</button>`;
+ $("nx").focus();
+ $("nx").onclick=()=>{S.i++;last?end():show()};
+}
+function end(){
+ $("shift").textContent="Báo cáo cuối ngày";
+ const acc=S.ok/S.tot,score=Math.max(0,Math.min(100,S.sat))*0.5+acc*100*0.5;
+ const st=score>=85?5:score>=70?4:score>=55?3:score>=40?2:1;
+ const q=["Cần luyện thêm","Chấp nhận được","Xử lý tốt"];
+ $("stage").innerHTML=`<div class="card center"><h2>Kết thúc ca làm</h2><div class="stars" aria-label="${st} trên 5 sao">${"★".repeat(st)}${"☆".repeat(5-st)}</div>
+ <p>Hài lòng <b>${Math.max(0,Math.min(100,S.sat))}/100</b> · Doanh thu <b>${fmt(S.rev)}</b> · Chính xác <b>${Math.round(acc*100)}%</b></p>
+ <ul class="rev">${S.log.map(l=>`<li>${l.n}: ${q[l.q]}</li>`).join("")}</ul>
+ <button class="btn" id="re">Chơi lại</button><p class="note">Bản đầy đủ có thể mở rộng lên 30 ngày, thêm đoàn tour, sự kiện ngẫu nhiên và nâng cấp kỹ năng.</p></div>`;
+ $("re").onclick=()=>{Object.assign(S,{i:0,sat:50,rev:0,ok:0,tot:0,log:[]});hud();$("shift").textContent="Khách sạn 5 sao giả định · Quầy lễ tân";intro()};
+}
+
+const rooms=[],TY=["Superior","Superior","Deluxe","Deluxe","Executive","Executive","Suite","Presidential"],GR=["Superior","Superior","Deluxe","Deluxe","Deluxe","Deluxe","Suite","Suite"];
+for(let f=1;f<=8;f++)for(let k=1;k<=5;k++)rooms.push({n:f+"0"+k,t:TY[f-1],g:GR[f-1],f,st:"free",v:f>=5?1:0});
+const LB={free:"Trống",occ:"Có khách",clean:"Đang dọn",maint:"Bảo trì"};
+function fx(q,late){S.xp+=[0,1,3][q];S.trust=Math.max(0,Math.min(100,S.trust+[-4,0,2][q]));S.stress=Math.max(0,Math.min(100,S.stress+[5,2,-1][q]+(late?3:0)));hud()}
+function prog(){const g=G[S.i];if(!g){$("prog").innerHTML="";$("side").innerHTML="";$("side").innerHTML="";return}const ca=g.shift.split(" · ")[1],ix=G.map(x=>x.shift.split(" · ")[1]),a=ix.indexOf(ca),n=ix.lastIndexOf(ca)-a+1;
+ $("prog").innerHTML=`<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Ngày ${S.day}/30 · ${ca}</span><span>${S.i-a+1}/${n} trong ca · tổng ${S.i+1}/${G.length}</span></div><div class="patience" style="margin:4px 0 0"><i style="width:${Math.round((S.i+1)/G.length*100)}%;background:var(--brass)"></i></div>`;$("side").innerHTML=`<b>Hàng đợi công việc</b><ol>${G.map((x,j)=>`<li class="${j<S.i?"dn":j==S.i?"cur":""}">${x.k=="task"?"📋 ":""}${(x.name||"").slice(0,28)}</li>`).join("")}</ol><b>Bảng chấm công</b><table class="bill" style="font-size:11px">${(S.ts||[]).slice(-6).reverse().map(x=>`<tr><td>N${x.d}</td><td>${x.c.replace("Ca ","")}</td><td>${x.t}</td><td>✓</td></tr>`).join("")}</table><small>Tổng: ${S.clk} ca · ${S.clk*8} giờ</small>`}
+function board(go){prog();
+ $("board").innerHTML=`<div class="card"><b>Sơ đồ phòng</b>${go?" · bấm vào một phòng để xếp khách":""}<div id="rinfo" class="pms"></div><div class="board">${rooms.map(r=>`<button class="rm ${r.rsv?"res":r.st} ${go?"go":""}" data-n="${r.n}" aria-label="Phòng ${r.n}, ${r.t}, tầng ${r.f}, ${LB[r.st]}"><b>${r.n}</b>${r.t}${r.v?" · view sông":""}<br>${r.rsv?"Đã đặt":LB[r.st]}</button>`).join("")}</div></div>`;
+ document.querySelectorAll(".rm").forEach(b=>b.onclick=()=>go?window.onRoom(b.dataset.n):info(b.dataset.n));
+}
+function head(g){return `<div class="guest"><div class="avatar" aria-hidden="true">${gv(g)}</div><div><div class="name">${g.name}</div><p class="say">${g.say}</p></div></div>`}
+function done(g,q,ds,dr,msg){
+ S.sat+=ds;S.rev+=dr;S.tot++;S.ok+=q==2?1:q==1?.5:0;S.log.push({n:g.name,q});fx(q,0);if(g.mg){S.trust=Math.max(0,Math.min(100,S.trust+[-6,0,3][q]));hud()}
+ $("fbk").innerHTML=`<div class="fb q${q}"><b>${["Chưa đúng","Chấp nhận được","Xử lý tốt"][q]}</b>${msg}<div class="delta">Hài lòng ${ds>=0?"+":""}${ds} · Doanh thu ${dr>=0?"+":""}${fmt(dr)}</div></div><button class="btn" id="nx">${S.i==G.length-1?"Xem báo cáo cuối ngày":"Tiếp theo"}</button>`;
+ $("nx").focus();$("nx").onclick=()=>{S.i++;S.i>=G.length?end():show()};
+}
+G.push(
+{k:"assign",av:"👨‍👩‍👧‍👦",name:"Gia đình anh Bảo",shift:"Ngày 2 · Ca sáng 08:00",say:"Nhà mình 4 người, 2 người lớn và 2 bé dưới 10 tuổi. Cho nhà mình một phòng đủ chỗ nhé.",req:"Yêu cầu: 4 người, ngủ chung một phòng.",
+ ev:r=>r.t=="Suite"?[2,8,2000000,"Suite đủ chỗ cho 4 người, không phải kê thêm giường."]:r.t=="Deluxe"?[1,0,1500000,"Deluxe chỉ vừa 2-3 người, phải kê giường phụ. Dùng được nhưng chật và khách kém thoải mái."]:[0,-15,0,"Superior không đủ chỗ cho 4 người, khách phải quay lại quầy đổi phòng."]},
+{k:"assign",av:"🌇",name:"Chị Diệp",shift:"Ngày 2 · Ca sáng 10:15",say:"Mình đặt Deluxe, cho mình phòng có view sông và ở tầng cao nếu được nhé.",req:"Yêu cầu: hạng Deluxe, view sông, ưu tiên tầng cao.",
+ ev:r=>r.t=="Deluxe"&&r.v?[2,r.f>=3?12:6,1300000,r.f>=3?"Đúng hạng, view sông, tầng cao nhất còn trống. Khách rất hài lòng.":"Đúng hạng và view sông, nhưng vẫn còn phòng cao hơn."]:r.t=="Suite"?[1,2,1300000,"Xếp Suite khi khách chỉ đặt Deluxe là lãng phí phòng cao cấp, lẽ ra có thể bán cho khách khác."]:[0,-10,0,"Sai hạng phòng hoặc không có view như khách yêu cầu."]},
+{k:"assign",av:"🎒",name:"Anh Kiên",shift:"Ngày 2 · Ca chiều 15:40",say:"Mình đi một mình, ở 1 đêm, chỉ cần phòng gọn gàng, giá mềm nhất là được.",req:"Yêu cầu: 1 người, ngân sách thấp.",
+ ev:r=>r.t=="Superior"?[2,8,900000,"Đúng nhu cầu, giữ Deluxe và Suite cho khách trả giá cao hơn."]:[0,-6,r.t=="Deluxe"?1300000:2000000,"Phòng vượt ngân sách của khách, và làm mất phòng tốt của khách sạn."]},
+{k:"co",av:"🧾",name:"Ông Vũ Hoàng",shift:"Ngày 2 · Ca chiều 12:00",room:"202",say:"Mình trả phòng 202. Hóa đơn tính minibar là sao? Mình có dùng gì đâu.",ev:"Báo cáo buồng phòng: minibar còn nguyên, không thiếu món nào. Voucher giảm 10% hợp lệ.",
+ lines:[["Tiền phòng 2 đêm",2400000,1,""],["Minibar (2 chai nước)",60000,0,"Buồng phòng xác nhận minibar còn nguyên."],["Giặt ủi",150000,1,""],["Voucher giảm 10% tiền phòng",-240000,1,"Voucher hợp lệ phải được áp dụng."]]},
+{k:"co",av:"🧾",name:"Chị Lan",shift:"Ngày 2 · Ca chiều 12:20",room:"302",say:"Mình trả phòng 302 lúc 11 giờ 45. Sao có phụ thu trả phòng muộn vậy?",ev:"Giờ trả phòng quy định: 12:00. Khách trả lúc 11:45. Bữa sáng 2 người đã ăn.",
+ lines:[["Tiền phòng 1 đêm",1500000,1,""],["Phụ thu trả phòng muộn",400000,0,"Khách trả trước 12:00, không được thu phụ phí."],["Bữa sáng 2 người",300000,1,""]]},
+{k:"audit",av:"🗂️",name:"Night audit",shift:"Ngày 2 · 23:59",say:"Cuối ngày, bạn đối chiếu két với hệ thống. Tiền mặt theo hệ thống là 8.450.000đ, két đếm được 8.150.000đ, lệch -300.000đ.",
+ o:[["Tìm chứng từ: thấy phiếu thu 300.000đ của phòng 302 chưa nhập, nhập bổ sung giao dịch có ghi chú và báo quản lý.",2,10,0,"Đúng. Truy nguyên nhân, sửa bằng bút toán có chứng từ và báo quản lý để lưu vết."],
+    ["Ghi 300.000đ vào mục 'phí khác' cho số liệu khớp rồi chốt ca.",0,-12,0,"Làm khớp số bằng cách che sai lệch là gian lận sổ sách, dù không có ý xấu."],
+    ["Tự bỏ tiền túi 300.000đ vào két để cân sổ.",0,-8,0,"Không được tự bù. Sai lệch thật sự vẫn còn đó và không ai biết nguyên nhân."]]}
+);
+const _show=show;
+show=function(){
+ const g=G[S.i];clearInterval(S.t);
+ const ca=g.shift.split(" · ")[1],key=S.day+ca;if(S.ck!==key){S.ck=key;return clock(g,ca)}
+ if(!g.k){board(0);return _show()}
+ $("shift").textContent=g.shift+" · Lượt "+(S.i+1)+"/"+G.length;
+ if(g.k=="assign"){board(1);
+  $("stage").innerHTML=`<div class="card">${head(g)}<p class="pms"><b>Yêu cầu đặt phòng:</b> ${g.req}</p><div id="fbk" aria-live="polite"></div></div>`;
+  window.onRoom=n=>{const r=rooms.find(x=>x.n==n);
+   if(r.st!="free"||r.rsv){S.sat-=3;S.tot++;hud();$("fbk").innerHTML=`<div class="fb q0"><b>Phòng ${n} ${(r.rsv?"đã đặt":LB[r.st]).toLowerCase()}</b>Không thể xếp khách vào phòng này. Chọn phòng có trạng thái Trống. (Hài lòng -3)</div>`;return}
+   const e=g.ev({...r,t:r.g});r.st="occ";r.guest={name:g.name,pax:"-",nights:"-",req:g.req.replace("Yêu cầu: ","")};board(0);done(g,e[0],e[1],e[2],`Bạn xếp phòng ${n} (${r.t}, tầng ${r.f}). `+e[3])};
+ }
+ else if(g.k=="co"){board(0);const rm=rooms.find(x=>x.n==g.room);
+  $("stage").innerHTML=`<div class="card">${head(g)}<p class="pms"><b>Kiểm tra:</b> ${g.ev}</p><p><b>Hóa đơn phòng ${g.room}</b> · bỏ chọn khoản không được thu:</p><table class="bill">${g.lines.map((l,j)=>`<tr><td><label><input type="checkbox" data-j="${j}" checked> ${l[0]}</label></td><td>${fmt(l[1])}</td></tr>`).join("")}</table><div class="tot" id="tot"></div><button class="btn" id="inv">Xuất hóa đơn và thu thẻ phòng</button><div id="fbk"></div></div>`;
+  const cks=[...document.querySelectorAll(".bill input")];
+  const calc=()=>{$("tot").textContent="Tổng thu: "+fmt(g.lines.reduce((a,l,j)=>a+(cks[j].checked?l[1]:0),0))};cks.forEach(c=>c.onchange=calc);calc();
+  $("inv").onclick=()=>{$("inv").remove();cks.forEach(c=>c.disabled=true);
+   const bad=g.lines.filter((l,j)=>cks[j].checked!=!!l[2]);
+   const dr=g.lines.reduce((a,l,j)=>a+(cks[j].checked&&l[2]?l[1]:0),0);
+   const q=bad.length==0?2:bad.length==1?1:0;rm.st="clean";rm.guest=null;board(0);
+   done(g,q,q==2?12:q==1?-6:-20,dr,bad.length?bad.map(l=>`Khoản "${l[0]}": ${l[2]?"đúng phải thu/áp dụng":l[3]}`).join(" "):"Hóa đơn chính xác. Phòng "+g.room+" chuyển sang trạng thái Đang dọn.")};
+ }
+
+ else if(g.k=="booking"){board(0);
+  if(!g.pick){const u=new Set();g.pick=g.rooms.map(()=>{const f=rooms.filter(r=>r.st=="free"&&!r.rsv&&!u.has(r.n)),r=f.find(x=>x.g==g.type)||f[0]||rooms[0];u.add(r.n);return r.n})}
+  const ops=RQ.map((q,k)=>`<option value="${k}">${q[0]} / ${q[1]}</option>`).join("");
+  $("stage").innerHTML=`<div class="card"><div class="guest"><div class="avatar" aria-hidden="true">${gv({name:g.name})}</div><div><div class="name">${g.name}</div><p class="say">Đọc nội dung booking, nhập thông tin từng phòng vào hệ thống.</p></div></div><div class="mail">${esc(g.text)}</div>${g.rooms.map((r,i)=>`<div class="bk"><b>Phòng ${g.pick[i]} · ${g.type}</b><input class="bn" placeholder="Tên người ở"><input class="bp" type="number" min="1" max="6" placeholder="Số người"><input class="bd" type="number" min="1" max="14" placeholder="Số đêm"><select class="bq">${ops}</select></div>`).join("")}<button class="btn" id="sv">Lưu booking vào hệ thống</button><div id="fbk"></div></div>`;
+  $("sv").onclick=()=>{$("sv").remove();const rs=[...document.querySelectorAll(".bk")];let c=0,dr=0;const msg=[];
+   g.rooms.forEach((r,i)=>{const e=rs[i],nm=e.querySelector(".bn").value,px=+e.querySelector(".bp").value,nt=+e.querySelector(".bd").value,rq=+e.querySelector(".bq").value,w=[];
+    if(nz(nm)==nz(r.name))c++;else w.push("tên (đúng: "+r.name+")");
+    if(px==r.pax)c++;else w.push("số người (đúng: "+r.pax+")");
+    if(nt==r.nights)c++;else w.push("số đêm (đúng: "+r.nights+")");
+    if(rq==r.rq)c++;else w.push("yêu cầu (đúng: "+RQ[r.rq][0]+")");
+    if(!w.length)dr+=r.nights*PR[g.type];else msg.push("Phòng "+g.pick[i]+": sai "+w.join(", "));
+    const rm=rooms.find(x=>x.n==g.pick[i]);rm.rsv=true;rm.guest={name:nm||"(trống)",pax:px||"-",nights:nt||"-",req:RQ[rq][0]}});
+   const tot=g.rooms.length*4,q=c==tot?2:c/tot>=.75?1:0;board(0);
+   done(g,q,q==2?8:q==1?-2:-10,dr,(msg.length?msg.join(". ")+". ":"Nhập chính xác toàn bộ thông tin. ")+"Bấm vào phòng trên sơ đồ để xem thông tin khách đã lưu.")}}
+ else if(g.k=="chain"){board(0);chain(g,0,2)}
+ else if(g.k=="task"){board(0);
+  $("stage").innerHTML=`<div class="card"><div class="guest"><div class="avatar" aria-hidden="true">${CLIP}</div><div><div class="name">${g.name}</div><p class="say">${g.say}</p></div></div>${g.rows?`<div class="doc" style="margin-top:12px"><h3>Số liệu bàn giao</h3>${g.rows.map(r=>`<div><span>${r[0]}</span><span>${r[1]}</span></div>`).join("")}</div>`:""}<p class="pms">Đối chiếu số liệu (nếu có) rồi tick các bước cần làm. Một số bước không nên làm.</p><table class="bill">${g.items.map((it,j)=>`<tr><td><label><input type="checkbox"> ${it[0]}</label></td></tr>`).join("")}</table><button class="btn" id="ok">Xác nhận hoàn thành</button><div id="fbk"></div></div>`;
+  $("ok").onclick=()=>{const cks=[...document.querySelectorAll(".bill input")];$("ok").remove();cks.forEach(c=>c.disabled=true);
+   const bad=g.items.filter((it,j)=>cks[j].checked!=!!it[1]);const q=bad.length==0?2:bad.length==1?1:0;
+   done(g,q,q==2?4:q==1?-3:-8,0,bad.length?bad.map(it=>`"${it[0]}": ${it[1]?"cần thực hiện":"không nên làm"}.`).join(" "):"Hoàn thành đầy đủ, đúng quy trình.")}}
+ else{board(0);
+  $("stage").innerHTML=`<div class="card">${head(g)}<div class="opts">${g.o.map((o,k)=>`<button class="opt" data-k="${k}">${o[0]}</button>`).join("")}</div><div id="fbk"></div></div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=g.o[+b.dataset.k];document.querySelectorAll(".opt").forEach(x=>x.disabled=true);b.classList.add("picked");done(g,o[1],o[2],o[3],o[4])});}
+};
+
+const POOL=G.slice(),BASE=rooms.map(r=>r.st),K="frontdesk-vn-save";
+const NAMES=["Nguyễn Thanh Sơn","Lê Hải Yến","Phạm Gia Huy","Đỗ Ngọc Ánh","Bùi Quang Vinh","Võ Thùy Linh","Hoàng Minh Tuấn"];
+const D=(t,...r)=>({t,r}),N=(av,name,say,docs,pms,o)=>({av,name,say,docs,pms,o,shift:""});
+POOL.push(
+N("🍺","Khách say ở sảnh","Ê... phòng tôi số mấy ấy nhỉ? Mất thẻ rồi, đưa thẻ khác đây!",[D("Hệ thống",["Tên đặt phòng","Tô Anh Tuấn"],["Phòng","305"])],"Khách có mùi rượu và chưa xuất trình giấy tờ.",[
+["Nhẹ nhàng nhờ khách xuất trình CCCD, đối chiếu với tên đặt phòng rồi làm thẻ mới và mời khách nghỉ ngơi.",2,5,0,"Đúng. Vẫn phải xác minh danh tính trước khi cấp thẻ, kể cả khi khách say, nhưng giữ thái độ hòa nhã."],
+["Cấp thẻ mới ngay vì khách biết tên mình.",0,-20,0,"Biết tên không phải là bằng chứng. Người lạ có thể vào nhầm phòng của khách khác."],
+["Từ chối phục vụ và mời khách ra khỏi sảnh.",0,-10,0,"Quá gay gắt. Khách sạn nên xử lý bình tĩnh, gọi bảo vệ hỗ trợ nếu cần thay vì đuổi khách."]]),
+N("💻","Ông Park","Laptop của tôi mất trong phòng! Khách sạn phải bồi thường cho tôi ngay bây giờ!",[D("Phòng 410",["Khách","Park Ji-hoon"],["Báo mất","Laptop 32 triệu"])],"Chưa có báo cáo từ buồng phòng. Camera hành lang đang hoạt động.",[
+["Bình tĩnh ghi nhận, lập biên bản, gọi quản lý và bảo vệ, kiểm tra camera hành lang, không kết luận lỗi của ai.",2,8,0,"Đúng quy trình. Ghi nhận đầy đủ, để quản lý quyết định bồi thường sau khi xác minh."],
+["Hứa đền bù ngay để khách yên tâm.",0,10,-32000000,"Hứa bồi thường khi chưa xác minh gây thiệt hại lớn và không thuộc quyền của lễ tân."],
+["Chỉ hướng dẫn khách ra công an trình báo.",1,-8,0,"Không sai nhưng quá lạnh nhạt. Khách sạn cần cùng kiểm tra trước."]]),
+N("↩️","Chị Hạnh","Chuyến bay của mình bị hủy nên mình không đến được. Hoàn tiền phòng giúp mình nhé?",[D("Đặt phòng AG6602",["Điều kiện","Không hoàn hủy"],["Đã thanh toán","1.400.000đ"],["Bằng chứng","Email hãng bay hủy chuyến"])],"Quản lý có thể xem xét bảo lưu hoặc đổi ngày với trường hợp bất khả kháng.",[
+["Giải thích điều kiện đặt phòng, ghi nhận bằng chứng và chuyển yêu cầu bảo lưu/đổi ngày lên quản lý xem xét.",2,8,0,"Đúng. Giữ đúng chính sách nhưng vẫn mở lối giải quyết hợp lý cho khách."],
+["Từ chối vì đây là đặt phòng không hoàn hủy.",1,-8,0,"Đúng chính sách nhưng bỏ qua bằng chứng bất khả kháng, dễ mất khách lâu dài."],
+["Hoàn 100% ngay tại quầy.",0,12,-1400000,"Vượt thẩm quyền và phá vỡ chính sách giá."]]),
+N("🤝","Ông Trịnh Đức Minh","Xin chào, tôi là Tổng giám đốc công ty đối tác. Tôi đặt Suite 3 đêm.",[D("Ghi chú VIP",["Phòng","Suite 401 view sông"],["Chuẩn bị","Hoa tươi, trái cây"],["Lưu ý","Vẫn cần CCCD"])],"Phòng 401 đã dọn xong, hoa và trái cây đã đặt.",[
+["Chào khách bằng tên, mời ngồi, xác minh CCCD nhanh gọn rồi cùng nhân viên hành lý đưa lên phòng.",2,10,6000000,"Phục vụ nồng nhiệt nhưng vẫn giữ quy trình. Khách VIP cũng phải xác minh giấy tờ."],
+["Làm thủ tục như mọi khách, không nhắc gì đến phần chuẩn bị.",1,2,6000000,"Đúng quy trình nhưng bỏ lỡ cơ hội gây ấn tượng với khách quan trọng."],
+["Bỏ qua CCCD và đưa thẻ ngay vì là VIP.",0,-6,6000000,"VIP cũng phải khai báo lưu trú. Không có ngoại lệ về xác minh."]]),
+N("❄️","Chị Nga","Mình vừa vào phòng 5 phút mà điều hòa không chạy, nóng quá!",[D("Phiếu kỹ thuật",["Tình trạng","Điều hòa hỏng"],["Kỹ thuật rảnh","Sau 20 phút"])],"Còn phòng Deluxe 301 trống, cùng hạng.",[
+["Xin lỗi, gọi kỹ thuật, đề nghị đổi sang phòng 301 ngay và tặng nước chào mừng.",2,12,-50000,"Xử lý nhanh, đưa phương án ngay và đền bù nhỏ."],
+["Xin lỗi và hẹn kỹ thuật lên sau 20 phút, mời khách chờ trong phòng.",1,-4,0,"Có xin lỗi nhưng để khách chịu nóng khi còn phòng trống là chưa tốt."],
+["Gợi ý khách mở cửa sổ hoặc bật quạt.",0,-15,0,"Không giải quyết vấn đề và làm khách cảm thấy bị coi nhẹ."]]),
+N("💳","Anh Đạt","Cứ quẹt thẻ này đi, thẻ của mình dùng được mà.",[D("Thẻ Visa",["Hết hạn","08/2026"]),D("POS",["Kết quả","Từ chối: thẻ hết hạn"])],"Tiền cọc cần thu: 1.200.000đ.",[
+["Nhẹ nhàng báo thẻ đã hết hạn và đề nghị thẻ khác hoặc đặt cọc bằng tiền mặt/chuyển khoản.",2,4,1200000,"Đúng. Thu cọc bằng phương thức khác để đảm bảo quyền lợi khách sạn."],
+["Cho nhận phòng không cần cọc để khỏi phiền.",0,6,0,"Không có cọc là rủi ro khi khách phát sinh dịch vụ rồi rời đi."],
+["Thử quẹt lại thẻ nhiều lần.",0,-8,0,"Thẻ hết hạn sẽ không thể qua. Thử nhiều lần chỉ làm mất thời gian và mất mặt khách."]]),
+N("👶","Gia đình chị Mai","Nhà mình 2 người lớn và bé 6 tuổi. Đặt phòng giường đôi thôi nhé.",[D("Đặt phòng",["Khách","2 người lớn, 1 trẻ 6 tuổi"],["Giường","Đôi"],["Giường phụ","Chưa yêu cầu"])],"Chính sách: trẻ từ 6 tuổi tính giường phụ 300.000đ/đêm. Còn 2 giường phụ.",[
+["Hỏi tuổi bé, báo chính sách giường phụ 300.000đ/đêm và thêm giường phụ cho khách.",2,6,300000,"Đúng. Minh bạch chính sách và đảm bảo chỗ ngủ thoải mái cho bé."],
+["Xếp phòng luôn, không nhắc đến giường phụ.",0,-8,0,"Bé không có chỗ ngủ đàng hoàng, khách sẽ phàn nàn vào ban đêm."],
+["Trải chăn gối phụ xuống sàn miễn phí.",1,-2,0,"Có thiện chí nhưng không an toàn và thoải mái bằng giường phụ."]]),
+N("📝","Anh Phan Văn Đức","Tên mình đặt phòng hơi sai một chút thôi, cho mình vào nhé.",[D("CCCD",["Họ tên","PHẠM VĂN ĐỨC"]),D("Đặt phòng",["Tên","Phan Van Duc"],["SĐT","Trùng với khách"])],"Số điện thoại và email đặt phòng trùng với thông tin khách.",[
+["Xác nhận qua SĐT/email, sửa tên đặt phòng theo CCCD và ghi chú lý do vào hệ thống.",2,6,1000000,"Đúng. Xác minh thêm bằng thông tin liên hệ rồi cập nhật chính xác để khai báo lưu trú không sai."],
+["Từ chối vì tên không giống hệt.",0,-15,0,"Quá cứng nhắc khi các thông tin khác đều khớp."],
+["Bỏ qua và nhập theo tên trên đặt phòng.",0,-4,1000000,"Khai báo lưu trú sai họ tên là lỗi tuân thủ."]]),
+N("📲","Chị Uyên","App Agoda ghi 950.000đ mỗi đêm, sao quầy lại tính 1.100.000đ?",[D("Agoda AG9012",["Giá","950.000đ/đêm"],["Trạng thái","Đã trả trước"]),D("Quầy",["Giá công bố","1.100.000đ/đêm"])],"Đặt qua đại lý và đã trả trước thì không thu thêm phần chênh.",[
+["Kiểm tra mã đặt phòng, xác nhận đã thanh toán qua Agoda, không thu thêm, xin lỗi vì nhầm lẫn.",2,8,950000,"Đúng. Giá khách trả là giá đã thanh toán qua đại lý."],
+["Thu thêm 150.000đ chênh lệch mỗi đêm.",0,-18,150000,"Thu sai giá đã trả trước gây khiếu nại và đánh giá xấu."],
+["Bảo khách tự liên hệ Agoda giải quyết.",1,-6,0,"Đẩy trách nhiệm cho khách trong khi thông tin đã có trên hệ thống."]]),
+N("🔔","Chuông báo cháy","Chuông báo cháy kêu lúc 02:10! Khách bắt đầu xuống sảnh.",[D("Tủ báo cháy",["Khu vực","Bếp tầng 1"],["Nghi ngờ","Khói từ nồi nấu"])],"Chưa có xác nhận cháy thật.",[
+["Giữ bình tĩnh, thông báo khách theo kịch bản, gọi bảo vệ và kỹ thuật kiểm tra, chỉ tắt chuông khi xác nhận an toàn.",2,8,0,"Đúng. Luôn coi báo động là thật cho đến khi được xác nhận."],
+["Tắt chuông ngay vì chắc là báo giả.",0,-25,0,"Rất nguy hiểm. Nếu cháy thật, khách sẽ không được cảnh báo."],
+["Bảo khách quay về phòng chờ và chờ thông báo.",1,-10,0,"Sai hướng. Trong báo động, khách cần theo hướng dẫn sơ tán, không nên quay lại phòng."]]),
+N("🗝️","Anh Long","Đưa mình thêm thẻ phòng cho vợ mình nhé.",[D("Đặt phòng",["Đã đăng ký","1 khách: Lê Thành Long"]),D("Quy định",["Thẻ phòng","Chỉ cấp cho người đã đăng ký"])],"Người còn lại chưa xuất trình giấy tờ.",[
+["Đề nghị vợ khách xuất trình CCCD để đăng ký thêm khách lưu trú rồi cấp thẻ.",2,5,0,"Đúng. Mọi người lưu trú đều phải được đăng ký."],
+["Cấp thẻ ngay vì đây là chuyện vợ chồng.",0,-15,0,"Không thể kiểm chứng quan hệ. Cấp thẻ cho người chưa đăng ký là lỗ hổng an ninh."],
+["Từ chối và không hướng dẫn gì thêm.",1,-6,0,"Đúng quy định nhưng thiếu hướng dẫn cách làm hợp lệ."]]),
+N("🚌","Trưởng đoàn Hải","Đoàn mình 20 khách vừa xuống xe, cần nhận phòng nhanh giúp!",[D("Đoàn tour",["Số phòng","10 Twin"],["Rooming list","Đã gửi trước"])],"Cần thu CCCD hoặc hộ chiếu của cả đoàn.",[
+["Dùng rooming list chuẩn bị thẻ trước, nhận giấy tờ theo lô, gọi thêm nhân viên hỗ trợ và mời nước chào mừng.",2,10,9000000,"Đúng. Chuẩn bị trước và chia việc giúp đoàn nhận phòng nhanh mà vẫn đủ giấy tờ."],
+["Làm thủ tục từng khách một cho chắc.",1,-10,9000000,"Chính xác nhưng đoàn phải chờ rất lâu."],
+["Phát hết thẻ theo danh sách, không thu giấy tờ.",0,-8,9000000,"Thiếu dữ liệu khai báo lưu trú cho cả đoàn."]]),
+N("🥂","Vợ chồng anh Khoa","Hôm nay là kỷ niệm 10 năm cưới của tụi mình. Khách sạn có gì đặc biệt không?",[D("Đặt phòng",["Phòng","Deluxe 1 đêm"]),D("Gợi ý",["Nâng Junior Suite","+800.000đ"],["Gói hoa và bánh","500.000đ"])],"Còn Junior Suite trống.",[
+["Chúc mừng, giới thiệu nâng hạng và gói kỷ niệm, để khách tự quyết định.",2,12,1300000,"Đúng. Bán thêm dựa trên nhu cầu thật của khách, không ép buộc."],
+["Nói chỉ còn vài phòng cuối để khách nâng hạng.",0,-15,800000,"Nói sai sự thật để bán thêm làm mất lòng tin khi khách phát hiện."],
+["Chỉ chúc mừng và làm thủ tục bình thường.",1,3,0,"Thân thiện nhưng bỏ lỡ cơ hội phục vụ tốt hơn và tăng doanh thu."]])
+);
+POOL.push(
+{k:"assign",av:"🧘",name:"Bà Elena",shift:"",say:"I need a very quiet room, high floor, far from the street noise please.",req:"Yêu cầu: phòng yên tĩnh, tầng cao.",
+ ev:r=>r.f>=5?[2,10,r.t=="Suite"?2600000:1800000,"Tầng cao, xa tiếng ồn đường phố. Khách rất hài lòng."]:r.f>=3?[1,2,1500000,"Khá yên tĩnh nhưng còn phòng cao hơn phù hợp hơn."]:[0,-12,0,"Tầng thấp, gần đường và sảnh, ồn hơn khách yêu cầu."]},
+{k:"assign",av:"💼",name:"Chị Vy",shift:"",say:"Mình ở 10 ngày để làm việc, cần bàn làm việc rộng, không cần view.",req:"Yêu cầu: ở dài ngày, ưu tiên bàn làm việc, không cần view.",
+ ev:r=>r.t=="Deluxe"&&!r.v?[2,8,1500000,"Deluxe không view có bàn làm việc rộng, giữ phòng view cho khách trả cao hơn."]:r.t=="Superior"?[0,-8,900000,"Phòng nhỏ, bàn làm việc không đủ cho lưu trú 10 ngày."]:[1,2,r.t=="Suite"?2600000:1800000,"Đủ tiện nghi nhưng dùng phòng view cho khách không cần là lãng phí."]},
+{k:"co",av:"🧾",name:"Anh Trần Bình",shift:"",room:"501",say:"Mình trả phòng 501. Kiểm giúp hóa đơn, mình chỉ ở 2 người thôi.",ev:"Đặt phòng chỉ có 2 khách. Buồng phòng báo thiếu 2 lon bia trong minibar. Có đưa đón sân bay.",
+ lines:[["Tiền phòng 3 đêm",4500000,1,""],["Đưa đón sân bay",600000,1,""],["Phụ thu người thứ 3",500000,0,"Chỉ có 2 khách, không có người thứ 3."],["Minibar (2 lon bia)",180000,1,""]]},
+N("🎩","Ông Aoki","Tôi cần đón sân bay lúc 6 giờ sáng mai và một bàn ở nhà hàng lúc 8 giờ tối nay.",[D("Yêu cầu",["Đón sân bay","06:00 sáng mai"],["Nhà hàng","20:00 tối nay"])],"Xe đón cần đặt trước 12 giờ, còn 1 xe. Nhà hàng còn bàn 20:00.",[
+["Xác nhận cả hai, đặt xe và bàn, ghi vào sổ bàn giao ca.",2,10,1200000,"Đúng. Dịch vụ quản gia 5 sao cần xác nhận rõ ràng và ghi bàn giao để không sót."],
+["Đặt nhà hàng, bảo khách tự bắt taxi ra sân bay.",1,-4,0,"Còn xe mà từ chối là không đạt chuẩn 5 sao."],
+["Nhận lời nhưng không ghi lại đâu cả.",0,-15,0,"Ca sau không biết, xe không đến và khách trễ chuyến bay."]]),
+N("🚗","Bà Clarke","Nobody picked me up at the airport. I waited 40 minutes and took a taxi!",[D("Phiếu đón",["Xe","Đã đặt"],["Kết quả","Không gặp khách"])],"Điều phối xe đang kiểm tra nguyên nhân.",[
+["Xin lỗi, hoàn phí taxi, xin điều phối làm rõ nguyên nhân và tặng đồ uống chào mừng.",2,12,-300000,"Đúng. Nhận trách nhiệm, đền bù ngay và tìm nguyên nhân để không lặp lại."],
+["Nói khách có thể đã đứng sai cửa ra.",0,-18,0,"Đổ lỗi cho khách khi chưa kiểm tra là tệ với tiêu chuẩn 5 sao."],
+["Xin lỗi nhưng không đền bù gì.",1,-3,0,"Lịch sự nhưng khách vẫn phải chịu thiệt hại."]]),
+N("🐕","Chị Hằng","Mình mang theo chú chó Poodle 5kg, khách sạn có cho không?",[D("Chính sách",["Thú cưng","Tầng 2, dưới 10kg"],["Phụ thu","500.000đ"])],"Còn phòng Superior tầng 2 dành cho thú cưng.",[
+["Báo chính sách, phụ thu, xếp phòng tầng 2 và đưa nội quy thú cưng.",2,6,500000,"Đúng. Minh bạch chính sách và xếp đúng khu vực."],
+["Từ chối vì khách sạn 5 sao không nhận thú cưng.",0,-8,0,"Khách sạn có chính sách nhận thú cưng, từ chối là sai thông tin."],
+["Cho ở tầng cao và miễn phụ thu.",1,3,0,"Sai khu vực dành cho thú cưng, mất doanh thu."]]),
+N("♿","Ông Sáu","Tôi 78 tuổi, đi xe lăn. Cho tôi phòng nào dễ đi lại nhé.",[D("Đặt phòng",["Nhu cầu","Xe lăn"])],"Có phòng tiếp cận gần thang máy, sàn không bậc.",[
+["Xếp phòng tiếp cận gần thang máy, hỗ trợ hành lý và hỏi thêm nhu cầu.",2,10,0,"Đúng. Xếp theo nhu cầu tiếp cận thay vì view."],
+["Xếp phòng tầng cao view đẹp nhất.",0,-15,0,"View không quan trọng bằng khả năng di chuyển."],
+["Nhờ người nhà tự lo hành lý và di chuyển.",1,-8,0,"Thiếu hỗ trợ, không đạt chuẩn 5 sao."]]),
+N("🌟","Chị Diamond","Mình là hội viên Diamond, xin trả phòng lúc 16 giờ nhé.",[D("Hội viên",["Hạng","Diamond"],["Quyền lợi","Trả muộn đến 16:00"])],"Phòng không có khách nhận trong ngày, còn trống ngày mai.",[
+["Kiểm tra quyền lợi và tình trạng phòng, xác nhận trả muộn miễn phí.",2,10,0,"Đúng. Thực hiện quyền lợi hội viên sau khi kiểm tra."],
+["Báo phụ thu 50% tiền phòng.",0,-12,750000,"Sai quyền lợi hội viên."],
+["Đồng ý ngay mà không kiểm tra phòng.",1,3,0,"Có thể trùng khách nhận phòng."]]),
+N("💒","Cô dâu Linh","Gia đình mình 5 phòng cùng tầng, mới 10 giờ sáng nhưng mọi người đã đến rồi.",[D("Đặt phòng",["Số phòng","5, cùng tầng"],["Nhận phòng","14:00"])],"Buồng phòng có thể dọn ưu tiên 5 phòng trước 12 giờ.",[
+["Giữ hành lý, mời lounge, báo buồng phòng ưu tiên dọn 5 phòng cùng tầng.",2,10,8000000,"Đúng. Giải pháp thực tế và dịch vụ chu đáo."],
+["Mời khách ra ngoài chờ đến 14 giờ.",0,-15,0,"Không đáp ứng tiêu chuẩn 5 sao."],
+["Nhận phòng sớm nhưng xếp khác tầng.",1,-3,8000000,"Khách vào sớm nhưng mất yêu cầu ở cùng tầng."]]),
+N("🕶️","Người hâm mộ","Có phải một nghệ sĩ nổi tiếng đang ở đây không? Cho mình xin số phòng nhé!",[D("Ghi chú",["Khách","Riêng tư tuyệt đối"])],"Chính sách: không xác nhận hay phủ nhận bất kỳ khách nào.",[
+["Lịch sự nói không thể chia sẻ thông tin về khách và báo bảo vệ chú ý sảnh.",2,6,0,"Đúng. Bảo vệ quyền riêng tư của khách là ưu tiên."],
+["Xác nhận là có nhưng không cho số phòng.",0,-25,0,"Xác nhận cũng là lộ thông tin."],
+["Nói không có ai như vậy.",1,-2,0,"Nói dối không nên, hãy dùng câu trả lời trung lập."]]),
+N("🥜","Ông Weber","I'm allergic to peanuts. Please note that for my whole stay.",[D("Hồ sơ khách",["Dị ứng","Chưa ghi nhận"])],"Có thể cập nhật hồ sơ và thông báo nhà hàng, buồng phòng.",[
+["Ghi vào hồ sơ và thông báo nhà hàng, bếp, buồng phòng.",2,8,0,"Đúng. Dị ứng liên quan đến an toàn, mọi bộ phận phải biết."],
+["Chỉ ghi vào hồ sơ, không báo bộ phận nào.",1,1,0,"Thông tin không đến được người cần biết."],
+["Bảo khách tự nhắc khi gọi món.",0,-10,0,"Chuyển trách nhiệm an toàn cho khách."]]),
+N("🛂","Ông Lee Jong","Tôi để quên hộ chiếu ở đâu đó, mai tôi bay rồi!",[D("Khách",["Chuyến bay","Sáng mai"])],"Nhà hàng và taxi mà khách dùng hôm nay đều có thể liên lạc.",[
+["Giúp gọi nhà hàng, bảo vệ tìm, ghi biên bản và hướng dẫn liên hệ đại sứ quán nếu không thấy.",2,8,0,"Đúng. Hỗ trợ tích cực và có kế hoạch dự phòng."],
+["Chỉ đưa số điện thoại đại sứ quán.",1,-3,0,"Đúng nhưng thiếu hỗ trợ trực tiếp."],
+["Nói đây không phải việc của khách sạn.",0,-15,0,"Thiếu tinh thần phục vụ 5 sao."]]),
+N("💆","Chị Trâm","Kỹ thuật viên spa ấn quá mạnh, lưng mình đau từ chiều đến giờ.",[D("Spa",["Liệu trình","90 phút","2.400.000đ"])],"Có y tế trong khách sạn và quản lý spa đang trực.",[
+["Xin lỗi, hỏi tình trạng, gọi quản lý spa và y tế nếu cần, miễn phí liệu trình.",2,10,-2400000,"Đúng. Sức khỏe khách được ưu tiên."],
+["Nói kỹ thuật viên đã làm đúng quy trình.",0,-15,0,"Bác bỏ khách khi họ đang đau."],
+["Chuyển khách sang spa mà không hỏi thêm.",1,-4,0,"Thiếu quan tâm ban đầu."]]),
+N("🧾","Anh Phú","Mình cần hóa đơn VAT tên công ty cho lần lưu trú vừa rồi.",[D("Khách",["Đã thanh toán","Có"],["Hóa đơn","Chưa xuất"])],"Hóa đơn điện tử xuất được ngay khi có mã số thuế.",[
+["Xin mã số thuế, kiểm tra thông tin và xuất hóa đơn điện tử ngay.",2,6,0,"Đúng. Đảm bảo hóa đơn đúng ngay từ đầu."],
+["Xuất tên cá nhân rồi hẹn sửa sau.",0,-8,0,"Phải điều chỉnh hóa đơn, rắc rối kế toán."],
+["Hẹn khách gửi email mã số thuế rồi xuất sau.",1,-2,0,"Chậm hơn cần thiết."]]),
+N("⛈️","Nhiều khách cùng lúc","Bão làm hủy chuyến bay, nhiều khách xin ở thêm một đêm mà chỉ còn vài phòng.",[D("Phòng",["Còn trống","4 phòng"],["Khách xin","7 người"])],"Ưu tiên khách đang ở để tránh đổi phòng.",[
+["Ưu tiên khách đang ở, xếp theo thứ tự yêu cầu, báo giá ưu đãi và hướng dẫn khách còn lại.",2,8,1800000,"Đúng. Công bằng, minh bạch và hỗ trợ khách còn lại."],
+["Tăng giá gấp đôi vì nhu cầu cao.",0,-15,3600000,"Lợi dụng khách khi khó khăn gây hại thương hiệu."],
+["Từ chối tất cả vì sắp hết phòng.",1,-6,0,"Bỏ lỡ doanh thu và thiếu hỗ trợ."]])
+);
+const T=(av,name,say,d,pms,a,b,c)=>N(av,name,say,[D(...d)],pms,[[a[0],2,a[1],a[2],a[3]],[b[0],1,b[1],b[2],b[3]],[c[0],0,c[1],c[2],c[3]]]);
+POOL.push(
+T("🛗","Khách kẹt thang máy","Mình đang kẹt trong thang máy số 2 gần 5 phút rồi!",["Camera thang",["Thang","Số 2"],["Kẹt","1 khách"]],"Bảo vệ đến trong 2 phút, kỹ thuật cần 10 phút.",["Trấn an khách, gọi kỹ thuật và bảo vệ ngay, giữ liên lạc đến khi khách ra.",10,-100000,"Đúng. Trấn an và điều phối nhanh là ưu tiên."],["Báo kỹ thuật rồi ngắt máy để xử lý việc khác.",-6,0,"Khách hoảng vì không có ai bên cạnh."],["Bảo khách bấm nút khẩn cấp trong thang.",-15,0,"Đẩy việc cho khách đang hoảng."]),
+T("💲","Chị Ngân","Giá đêm nay sao cao hơn giá mình đã đặt?",["Đặt phòng",["Giá xác nhận","2.400.000đ"],["Giá quầy","2.900.000đ"]],"Đặt phòng đã xác nhận, giá giữ nguyên.",["Kiểm tra xác nhận, áp dụng đúng 2.400.000đ và xin lỗi vì nhầm.",8,2400000,"Đúng. Giá đã xác nhận phải được giữ."],["Báo khách chờ quản lý duyệt giá.",-4,0,"Không cần thiết khi đã có xác nhận."],["Giải thích giá dao động và thu giá mới.",-12,2900000,"Sai. Khách đã có xác nhận giá."]),
+T("💐","Người giao hoa","Tôi giao hoa cho khách phòng 503, cho tôi lên tận phòng nhé.",["Đơn giao",["Người nhận","Phòng 503"],["Người gửi","Không rõ"]],"Người ngoài không được lên khu lưu trú.",["Nhận hoa tại quầy, gọi khách xác nhận rồi nhân viên mang lên.",6,0,"Đúng. Khách quyết định nhận, người ngoài không vào khu phòng."],["Nhận hoa và để lại quầy đến khi khách xuống.",-2,0,"An toàn nhưng chậm."],["Cho người giao hoa lên thẳng phòng 503.",-18,0,"Người ngoài vào khu lưu trú không xác minh."]),
+T("🧳","Anh Hòa","Mình phải về gấp, trả phòng sớm 2 đêm thì có hoàn tiền không?",["Chính sách",["Hoàn","50% nếu báo trước 24 giờ"],["Khách báo","Trong ngày"]],"Quản lý có thể xem xét ngoại lệ.",["Giải thích chính sách, chuyển quản lý xem xét hoàn một phần và ghi lý do.",8,-1200000,"Đúng. Giữ chính sách và để quản lý quyết định ngoại lệ."],["Từ chối hoàn theo đúng quy định.",-6,0,"Đúng quy định nhưng cứng nhắc."],["Hoàn 100% hai đêm cho khách yên lòng.",8,-4800000,"Vượt thẩm quyền và phá vỡ chính sách."]),
+T("🧳","Cô Hương","Vali này không phải của mình! Vali mình đâu?",["Nhãn hành lý",["Tên trên nhãn","Lê Quang Nam"],["Phòng","409"]],"Bellman vừa giao hai vali giống nhau cho hai khách.",["Xin lỗi, gọi bellman đối chiếu nhãn, liên hệ khách phòng 409 và đổi lại vali.",10,0,"Đúng. Nhận lỗi và truy vết ngay."],["Bảo khách chờ, sẽ báo sau.",-4,0,"Không rõ thời gian, khách bất an."],["Bảo khách tự sang phòng 409 đổi vali.",-15,0,"Bắt khách tự xử lý lỗi của khách sạn."]),
+T("📅","Anh Sinh","Mình đặt phòng hôm nay, sao hệ thống ghi tháng sau?",["Đặt phòng",["Email xác nhận","30/10"],["Khách nói","30/09"]],"Còn Deluxe trống hôm nay.",["Kiểm tra email, giải thích nhầm lẫn và đề xuất đặt hôm nay hoặc đổi ngày.",8,1500000,"Đúng. Không đổ lỗi, đưa phương án rõ ràng."],["Nhận phòng theo giá cũ và ghi chú để kế toán xử lý.",2,1200000,"Giữ được khách nhưng giá không chuẩn."],["Bảo khách quay lại tháng sau.",-8,0,"Bỏ khách và doanh thu khi còn phòng."]),
+T("🀄","Chị Tuyết","Phòng 404 không hợp tuổi, cho mình đổi phòng khác được không?",["Đặt phòng",["Phòng","404 Deluxe"],["Tình trạng","Còn Deluxe khác"]],"Còn Deluxe cùng hạng và cùng giá.",["Vui vẻ đổi sang Deluxe khác cùng hạng, không thu phí.",8,0,"Đúng. Đổi ngang hạng là chi phí nhỏ cho sự hài lòng."],["Đổi nhưng thu phí đổi phòng.",-4,200000,"Đổi được nhưng khách cảm thấy bị tính toán."],["Từ chối vì đó là mê tín.",-12,0,"Coi thường niềm tin của khách."]),
+T("🧒","Bạn Long","Em 17 tuổi, em muốn đặt một phòng cho em ở một mình.",["CCCD",["Tuổi","17"],["Người giám hộ","Không có"]],"Chính sách: khách dưới 18 phải có người lớn đi cùng.",["Lịch sự giải thích chính sách, đề nghị liên hệ người giám hộ.",6,0,"Đúng. Bảo vệ trẻ vị thành niên là bắt buộc."],["Nhận nếu có tin nhắn đồng ý từ phụ huynh.",-4,900000,"Không xác minh được người gửi và không đúng chính sách."],["Cho nhận phòng để không mất doanh thu.",-22,900000,"Rủi ro pháp lý và an toàn nghiêm trọng."]),
+T("🚑","Khách khó thở","Anh ấy đột nhiên khó thở, ngồi lả ở sảnh!",["Hiện trường",["Khách","Nam, khoảng 60 tuổi"],["Triệu chứng","Khó thở"]],"Y tế khách sạn trực, bệnh viện gần nhất cách 8 phút.",["Gọi cấp cứu 115 và y tế khách sạn, ở bên cạnh, làm theo hướng dẫn sơ cứu.",12,0,"Đúng. Cấp cứu là ưu tiên tuyệt đối."],["Gọi taxi đưa khách đến bệnh viện.",-8,0,"Chậm hơn xe cấp cứu và không có hỗ trợ y tế."],["Mời khách nghỉ một lúc xem sao.",-25,0,"Nguy hiểm, có thể gây hậu quả nghiêm trọng."]),
+T("🧸","Bé lạc","Chị ơi, em không thấy mẹ em đâu!",["Bé",["Tuổi","Khoảng 5 tuổi"],["Vị trí","Sảnh"]],"Có quy trình trẻ lạc, bảo vệ có thể đóng cửa ra vào.",["Ở cạnh bé, báo bảo vệ, thông báo nội bộ và giữ bé đến khi gặp người thân.",10,0,"Đúng. Giữ an toàn cho bé và phối hợp nhanh."],["Dỗ bé và chờ mẹ bé tìm đến.",-4,0,"Thụ động, bé có thể bị lạc xa hơn."],["Dắt bé đi tìm quanh khách sạn một mình.",-12,0,"Rời quầy và không có quy trình."]),
+T("🎥","Ông Nam","Tôi mất đồ, cho tôi xem camera hành lang ngay!",["Yêu cầu",["Khách","Phòng 507"],["Xem","Camera hành lang"]],"Camera chỉ cung cấp cho cơ quan chức năng hoặc quản lý cùng xem.",["Ghi nhận, lập biên bản, mời quản lý và bảo vệ cùng kiểm tra camera.",8,0,"Đúng. Bảo vệ quyền riêng tư của khách khác."],["Hướng dẫn khách báo công an rồi đến lấy trích xuất.",-2,0,"Đúng luật nhưng lạnh lùng."],["Cho khách xem camera ngay tại quầy.",-18,0,"Lộ hình ảnh khách khác."]),
+T("🚬","Phòng có mùi thuốc","Buồng phòng báo phòng 506 có mùi thuốc lá nồng.",["Phòng 506",["Quy định","Cấm hút thuốc"],["Phí vệ sinh","2.000.000đ"]],"Cảm biến khói không báo động.",["Nhắc nhở lịch sự, lập biên bản và tính phí vệ sinh 2.000.000đ theo chính sách.",6,2000000,"Đúng. Có biên bản và đúng mức phí."],["Chỉ nhắc nhở, không tính phí.",-2,0,"Nhẹ nhàng nhưng mất quyền lợi khách sạn."],["Thu 5.000.000đ không cần biên bản.",-12,5000000,"Thu sai mức, không có chứng từ."]),
+T("🎉","Tiệc trong phòng","Phòng 508 mở tiệc ồn quá, các phòng khác gọi xuống phàn nàn!",["Phản ánh",["Số cuộc gọi","3"],["Giờ","22:30"]],"Bảo vệ có thể lên nhắc.",["Gọi nhắc phòng 508, cử bảo vệ nếu cần và cảnh cáo bằng văn bản.",8,0,"Đúng. Giải quyết nguồn gốc, bảo vệ khách khác."],["Xin lỗi khách phàn nàn và hứa sẽ nhắc sau.",-4,0,"Chậm xử lý."],["Bảo khách phàn nàn đóng cửa sổ.",-15,0,"Không giải quyết vấn đề."]),
+T("🏦","Anh Đông","Mình chuyển khoản cọc rồi, đây là ảnh chụp màn hình.",["Ảnh chuyển khoản",["Số tiền","3.000.000đ"],["Trạng thái","Chưa thấy tiền"]],"Kế toán kiểm tra sao kê trong 10 phút.",["Nhờ kế toán kiểm tra sao kê, mời khách ngồi lounge và nhận phòng khi xác nhận.",6,3000000,"Đúng. Không dựa vào ảnh chụp màn hình."],["Cho nhận phòng trước, kiểm tra sau.",-4,3000000,"Rủi ro nếu ảnh không thật."],["Từ chối và nghi ngờ khách gian dối.",-12,0,"Thiếu tôn trọng khi chưa xác minh."]),
+T("🎂","Chị Thư","Hôm nay sinh nhật mình, cho mình nâng lên Suite miễn phí nhé!",["Đặt phòng",["Phòng","Deluxe"],["Ưu đãi","Nâng hạng +800.000đ"]],"Nâng hạng miễn phí cần quản lý duyệt.",["Chúc mừng, giới thiệu nâng hạng giá ưu đãi và tặng bánh sinh nhật nhỏ.",10,800000,"Đúng. Vừa cá nhân hóa vừa giữ chính sách."],["Chúc mừng và làm thủ tục như thường.",2,0,"Thân thiện nhưng không đặc biệt."],["Nâng lên Suite miễn phí không hỏi ý ai.",-6,-800000,"Vượt thẩm quyền."]),
+T("👯","Đặt phòng trùng","Mình lỡ đặt hai lần cho cùng ngày, xin giữ một cái thôi.",["Hai đặt phòng",["Mã","BK7001 và BK7002"],["Cọc","2 x 1.000.000đ"]],"Cả hai đều còn hiệu lực.",["Xác minh hai đặt phòng, hủy một cái với đồng ý của khách và hoàn cọc theo chính sách.",8,1000000,"Đúng. Xử lý minh bạch và giữ lòng tin."],["Giữ cả hai và thu cọc cả hai.",-8,2000000,"Thu tiền của phòng không dùng đến."],["Hủy ngẫu nhiên một cái, khách khỏi lo.",-14,0,"Không xác nhận với khách."]),
+T("🌅","Chị Loan","Mình vừa hạ cánh, mới 6 giờ sáng, cho mình nhận phòng sớm được không?",["Đặt phòng",["Nhận phòng","14:00"],["Còn trống","Có phòng sạch"]],"Nhận phòng sớm tính thêm phí, spa còn chỗ.",["Gửi hành lý, mời ăn sáng buffet và xếp phòng sạch sớm nhất với phí ưu đãi.",10,900000,"Đúng. Giải pháp thực tế và thân thiện."],["Cho nhận phòng sớm mà không nói gì về phí.",-4,0,"Mất doanh thu và không rõ chính sách."],["Yêu cầu khách chờ ngoài sảnh đến 14 giờ.",-12,0,"Khách mệt sau chuyến bay đêm."]),
+T("📶","Ông Kim","Wifi phòng mình quá chậm, mình có cuộc họp online lúc 9 giờ!",["Kiểm tra",["Tốc độ","2 Mbps"],["Cuộc họp","09:00"]],"IT có thể chuyển sang mạng ưu tiên, phòng họp còn trống.",["Gọi IT xử lý ngay, đề nghị dùng phòng họp và tặng cà phê.",10,-200000,"Đúng. Đưa phương án dự phòng trước khi giờ họp tới."],["Hứa IT sẽ kiểm tra sau.",-6,0,"Không kịp giờ họp."],["Nói wifi chung nên tốc độ thế là bình thường.",-15,0,"Bỏ qua nhu cầu quan trọng của khách."]),
+T("🧾","Anh Tân","Xuất giúp mình hóa đơn 5 triệu, dù thật ra mình chỉ ở 3 triệu nhé.",["Yêu cầu",["Thực tế","3.000.000đ"],["Yêu cầu ghi","5.000.000đ"]],"Ghi sai giá trị hóa đơn là vi phạm quy định.",["Lịch sự từ chối, giải thích quy định và chỉ xuất theo giá trị thật.",6,3000000,"Đúng. Không được lập hóa đơn khống."],["Hẹn khách hỏi kế toán rồi trả lời sau.",-2,3000000,"Chậm nhưng không sai quy định."],["Đồng ý xuất theo yêu cầu.",-20,5000000,"Vi phạm pháp luật về hóa đơn."]),
+T("💵","Ông Cường","Đây 2 triệu, cho tôi phòng view sông đã có khách đặt nhé, đừng nói ai.",["Tình huống",["Phòng","601, đã có người đặt"],["Tiền","2.000.000đ"]],"Chính sách: cấm nhận tiền ngoài hóa đơn.",["Từ chối lịch sự, giải thích quy trình và tìm phòng view khác còn trống.",8,0,"Đúng. Giữ liêm chính, đưa phương án khác."],["Từ chối tiền nhưng không giúp gì thêm.",-2,0,"Đúng quy tắc nhưng thiếu hỗ trợ."],["Nhận tiền và đổi khách kia sang phòng khác.",-25,0,"Vi phạm đạo đức nghề nghiệp."]),
+T("🍳","Chị Quyên","Bữa sáng phòng mình nguội và thiếu món, mình muốn miễn phí!",["Phiếu room service",["Món thiếu","Trứng, nước cam"],["Giá","450.000đ"]],"Bếp có thể làm lại trong 10 phút.",["Xin lỗi, gọi bếp làm lại và miễn phí phần món có lỗi.",8,-150000,"Đúng. Sửa lỗi ngay, đền bù đúng phần."],["Xin lỗi và làm lại món thiếu, vẫn tính tiền đủ.",-2,450000,"Sửa lỗi nhưng khách vẫn thiệt."],["Nói phần lỗi do phục vụ, không đền bù.",-12,0,"Tranh cãi với khách."]),
+T("🗺️","Ông Bảo","Cho mình tư vấn tour đi Củ Chi và đặt xe luôn nhé.",["Concierge",["Tour","Củ Chi nửa ngày"],["Khách","2 người"]],"Có đối tác tour uy tín, giá niêm yết rõ ràng.",["Hỏi sở thích, đề xuất tour đối tác uy tín, nêu rõ giá và đặt xe.",8,700000,"Đúng. Tư vấn theo nhu cầu, minh bạch giá."],["Đưa danh sách tour có sẵn để khách tự chọn.",2,0,"Ổn nhưng thiếu cá nhân hóa."],["Giới thiệu tour rẻ nhất chưa kiểm tra chất lượng.",-8,300000,"Rủi ro danh tiếng khách sạn."])
+);
+const EVT=[
+{n:"Mất điện",ic:"⚡",d:"Cả khách sạn mất điện vài lần trong ngày. Khách mất kiên nhẫn nhanh hơn.",pm:1.5,occ:0,s:T("⚡","Mất điện toàn khách sạn","Sảnh tối đen, khách hỏi thang máy và phòng có sao không!",["Sự cố",["Điện lưới","Mất"],["Máy phát","Sẵn sàng"]],"Kịch bản mất điện cần bảo vệ và kỹ thuật phối hợp.",["Kích hoạt kịch bản, bảo vệ dẫn khách bằng đèn pin, thông báo bình tĩnh và phát nước.",12,-200000,"Đúng. Trấn an và điều phối theo kịch bản."],["Bảo khách chờ ở sảnh đến khi có điện.",-6,0,"Không có hướng dẫn cụ thể."],["Nói khách tự đi thang bộ lên phòng.",-18,0,"Nguy hiểm trong bóng tối."])},
+{n:"Đoàn tour đột xuất",ic:"🚌",d:"Có xe đoàn không hẹn trước. Số phòng trống ít hơn thường lệ.",pm:1.1,occ:.15,s:T("🚌","Xe 30 khách đến","Đoàn 30 người, chưa đặt trước nhưng muốn nhận phòng ngay!",["Đoàn",["Số khách","30"],["Phòng trống","Chỉ vài phòng"]],"Khách sạn đối tác gần đó còn phòng.",["Nhận số phòng đủ khả năng, giới thiệu khách sạn đối tác cho phần còn lại.",10,4000000,"Đúng. Không overbooking, vẫn giúp được khách."],["Nhận hết 30 khách và xử lý sau.",-12,6000000,"Overbooking, gây rắc rối tối nay."],["Từ chối cả đoàn.",-6,0,"Bỏ lỡ doanh thu và không giúp gì thêm."])},
+{n:"Hệ thống PMS treo",ic:"🖥️",d:"Hệ thống quản lý khách sạn chập chờn cả ngày. Khách chờ lâu hơn.",pm:1.3,occ:0,s:T("🖥️","Hệ thống bị treo","Hệ thống đứng rồi, khách xếp hàng dài ở quầy!",["PMS",["Trạng thái","Không phản hồi"],["Khách chờ","8 người"]],"IT đang xử lý, có mẫu phiếu thủ công.",["Chuyển sang quy trình thủ công, ghi lại để nhập bổ sung và báo IT.",10,0,"Đúng. Duy trì phục vụ và có kế hoạch nhập lại."],["Xin khách đợi đến khi hệ thống chạy.",-8,0,"Khách xếp hàng dài không rõ khi nào."],["Cho khách vào phòng, không ghi gì cả.",-14,0,"Mất dữ liệu lưu trú."])},
+{n:"Khách bí mật",ic:"🔍",d:"Hôm nay có một đoàn kiểm tra chất lượng 5 sao ghé qua ẩn danh.",pm:1,occ:0,s:T("🔍","Khách hỏi nhiều","Cho tôi hỏi nhiều thứ nhé, và tôi ghi lại đôi chút.",["Quan sát",["Hành vi","Ghi chép, đo thời gian"]],"Nhân viên không được biết ai là người kiểm tra.",["Phục vụ đúng chuẩn như mọi khách, không đổi thái độ.",12,0,"Đúng. Chuẩn 5 sao phải nhất quán."],["Ghi nhận và phục vụ, nhưng hơi gượng.",2,0,"Ổn nhưng thiếu tự nhiên."],["Đưa ưu đãi ngoài chính sách để lấy lòng.",-10,-300000,"Không nhất quán và sai chính sách."])},
+{n:"Lễ hội cao điểm",ic:"🎆",d:"Khách sạn gần kín phòng vì dịp lễ. Phòng trống rất ít.",pm:1.2,occ:.2,s:T("🎆","Khách vãng lai","Cho mình một phòng, mình chưa đặt, mọi nơi đều hết!",["Phòng",["Còn trống","1 Deluxe"],["Giá niêm yết","2.200.000đ"]],"Ưu tiên khách đã đặt trước.",["Báo minh bạch giá niêm yết và bán phòng cuối nếu không ảnh hưởng khách đã đặt.",8,2200000,"Đúng. Minh bạch, không đè lên khách đặt trước."],["Từ chối vì sợ khách đặt trước đến sát giờ.",-2,0,"An toàn nhưng bỏ lỡ doanh thu."],["Bán giá gấp đôi vì ngày lễ.",-14,4400000,"Trái niêm yết, phá uy tín."])},
+{n:"Người khả nghi",ic:"🚨",d:"Bảo vệ báo có người lảng vảng khu lưu trú. Cần cảnh giác hơn.",pm:1.1,occ:0,s:T("🚨","Người khả nghi","Có người đứng lảng vảng ở sảnh thang máy, hỏi phòng khách!",["Bảo vệ",["Vị trí","Sảnh tầng 5"],["Người","Không có thẻ"]],"Không nên đối đầu trực tiếp.",["Quan sát kín đáo, báo bảo vệ, không tiết lộ thông tin khách.",10,0,"Đúng. An toàn cho khách và nhân viên."],["Yên lặng chờ xem sao.",-6,0,"Thụ động, có thể muộn."],["Đến chất vấn to tiếng trước mặt khách.",-14,0,"Gây hoang mang và có thể nguy hiểm."])}
+];
+const cat=(c,x)=>({...x,cat:c});
+POOL.push(
+cat("i",T("🛌","Khách gia hạn","Mình muốn ở thêm 2 đêm nữa, phòng này còn được không?",["Phòng",["Hiện tại","Deluxe, ra ngày mai"],["Booking mới","Có khách đặt tối mai"]],"Có Deluxe khác cùng hạng trống hai đêm tới.",["Đề xuất chuyển sang Deluxe khác cùng hạng, báo giá và xác nhận với khách.",8,3000000,"Đúng. Giữ được khách và không ảnh hưởng booking sau."],["Báo hết phòng và không đề xuất phương án nào.",-6,0,"Mất doanh thu khi vẫn còn phòng khác."],["Đồng ý gia hạn mà không kiểm tra booking sau.",-14,3000000,"Gây overbooking vào tối mai."])),
+cat("i",T("🔑","Khách mất thẻ","Mình lại làm mất thẻ phòng rồi, cho mình thẻ mới nhé.",["Hồ sơ",["Phòng","402"],["Lần mất","2"]],"Cấp thẻ mới sẽ vô hiệu thẻ cũ.",["Xác minh bằng CCCD, vô hiệu thẻ cũ, cấp thẻ mới và ghi chú hồ sơ.",6,0,"Đúng. Vô hiệu thẻ cũ bảo vệ an ninh phòng."],["Cấp thẻ mới nhưng không vô hiệu thẻ cũ.",-6,0,"Thẻ cũ vẫn mở được phòng."],["Cấp thẻ mới khi khách chỉ nói số phòng.",-16,0,"Không xác minh danh tính."])),
+cat("i",T("🚿","Khách phòng 305","Phòng mình không có nước nóng từ sáng đến giờ!",["Phiếu",["Phòng","305"],["Sự cố","Không nước nóng"]],"Còn Deluxe 301 trống. Kỹ thuật cần 30 phút.",["Xin lỗi, gọi kỹ thuật, đề nghị đổi phòng ngay và tặng nước chào mừng.",12,-50000,"Đúng. Giải quyết nhanh và đền bù nhỏ."],["Hẹn kỹ thuật lên sau 30 phút.",-4,0,"Còn phòng trống mà để khách chờ."],["Nói khách chờ thêm vì sắp có nước.",-16,0,"Không giải quyết, bỏ qua khó chịu của khách."])),
+cat("i",T("👪","Gia đình in-house","Con mình ở phòng khác tầng, cho mình đổi sang hai phòng liền kề nhé.",["Phòng",["Hiện tại","Hai phòng khác tầng"],["Còn trống","2 phòng liền kề tầng 3"]],"Đổi phòng phải cập nhật vào hệ thống.",["Đổi sang hai phòng liền kề miễn phí và cập nhật hệ thống.",10,0,"Đúng. Đáp ứng nhu cầu hợp lý và đồng bộ dữ liệu."],["Từ chối vì khách đã nhận phòng.",-6,0,"Cứng nhắc khi còn phòng."],["Đổi phòng nhưng quên cập nhật hệ thống.",-8,0,"Sai dữ liệu phòng, dễ gây nhầm lẫn."])),
+cat("i",T("🧮","Khách hỏi hóa đơn","Cho mình xem hóa đơn tạm tính, sáng mai mình trả phòng sớm.",["Folio",["Phòng","503"],["Minibar","Chưa cập nhật"]],"Buồng phòng chưa kiểm tra minibar.",["In folio tạm, giải thích minibar sẽ cập nhật và báo buồng phòng kiểm tra trước.",8,0,"Đúng. Minh bạch và tránh sai sót lúc trả phòng."],["In folio tạm mà không nhắc đến minibar.",-4,0,"Khách bất ngờ khi hóa đơn thay đổi."],["Nói chưa có hóa đơn cho đến lúc trả phòng.",-8,0,"Không hỗ trợ khách."])),
+cat("i",T("👥","Bảo vệ báo","Phòng 207 đăng ký 2 khách nhưng có 4 người ra vào!",["Báo cáo",["Đăng ký","2 khách"],["Thực tế","4 người"]],"Cần đăng ký đủ khách lưu trú.",["Liên hệ khách, xác minh người thêm, đăng ký bổ sung và phụ thu theo chính sách.",8,300000,"Đúng. Đảm bảo khai báo lưu trú đầy đủ."],["Nhắc khách miệng một lần rồi thôi.",-4,0,"Không đăng ký thì vẫn thiếu dữ liệu."],["Bỏ qua vì sắp trả phòng.",-14,0,"Lỗ hổng an ninh và tuân thủ."])),
+cat("w",T("🚶","Khách vãng lai","Phòng đêm nay giá bao nhiêu, bớt cho mình nhé?",["Giá niêm yết",["Deluxe","2.200.000đ"],["Ưu đãi","Gói gồm ăn sáng"]],"Giảm giá cần quản lý duyệt.",["Báo giá niêm yết và giới thiệu gói gồm ăn sáng.",8,2200000,"Đúng. Tạo giá trị thay vì giảm giá."],["Giảm 10% mà không xin ý quản lý.",-4,1980000,"Vượt thẩm quyền."],["Giảm 40% để chốt khách.",-14,1320000,"Phá giá và vi phạm chính sách."])),
+cat("w",T("📱","Khách vãng lai","Mình quên CCCD, nhưng có ảnh chụp trong điện thoại nhé.",["Giấy tờ",["Loại","Ảnh chụp CCCD"]],"Cần giấy tờ hợp lệ để khai báo lưu trú.",["Giải thích cần giấy tờ hợp lệ (bản gốc hoặc định danh điện tử) và hướng dẫn khách.",6,0,"Đúng. Giấy tờ hợp lệ là bắt buộc."],["Từ chối và không hướng dẫn thêm.",-6,0,"Đúng nhưng thiếu hỗ trợ."],["Cho nhận phòng bằng ảnh chụp.",-16,1000000,"Không đủ cơ sở xác minh."])),
+cat("w",T("🚫","Khách vãng lai","Cho mình một phòng, hết thì mình ngồi chờ đến khi có nhé!",["Phòng",["Còn trống","0"],["Đối tác","Còn phòng"]],"Khách sạn đối tác cách 500m còn phòng.",["Báo hết phòng, giới thiệu khách sạn đối tác và gọi giúp.",8,0,"Đúng. Không giữ khách vô vọng, vẫn hỗ trợ."],["Báo hết phòng và để khách tự tìm.",-4,0,"Thiếu hỗ trợ."],["Bảo khách ngồi chờ dù không có phòng.",-12,0,"Làm khách mất thời gian vô ích."])),
+cat("w",T("💵","Khách vãng lai","Mình trả bằng đô la được không?",["Chính sách",["Thanh toán","Chỉ VND"]],"Quầy không nhận ngoại tệ.",["Báo chính sách, hướng dẫn đổi tiền hoặc thanh toán thẻ.",6,1200000,"Đúng. Nêu rõ chính sách và đưa phương án."],["Từ chối nhận ngoại tệ và không gợi ý gì thêm.",-4,0,"Đúng chính sách nhưng thiếu hỗ trợ."],["Nhận đô la theo tỷ giá tự tính.",-12,1000000,"Sai chính sách và sai tỷ giá."])),
+cat("w",T("👨‍👩‍👦","Khách vãng lai","Nhà mình 3 người, thuê phòng 2 người thôi, thêm một người không ai biết đâu.",["Phòng",["Sức chứa","2 người"],["Giường phụ","300.000đ"]],"Còn giường phụ.",["Đăng ký đủ 3 khách và báo phụ thu giường phụ.",8,2100000,"Đúng. Đăng ký đủ khách và bán thêm dịch vụ."],["Cho nhận phòng 2 người, mặc khách tự lo.",-6,1800000,"Thiếu dữ liệu và rủi ro an toàn."],["Đồng ý để khách lén thêm người.",-14,1800000,"Vi phạm quy định lưu trú."])),
+cat("w",T("🧳","Khách vãng lai","Mình không ở đây, chỉ nhờ gửi vali vài tiếng thôi.",["Dịch vụ",["Gửi hành lý","Có phí cho khách ngoài"],["Phí","50.000đ"]],"Cần phiếu gửi và kiểm tra vật cấm.",["Báo phí, hỏi đồ giá trị, kiểm tra vật cấm và lập phiếu gửi.",6,50000,"Đúng. Có phiếu và có kiểm tra an toàn."],["Từ chối vì không phải khách lưu trú.",-4,0,"Bỏ lỡ dịch vụ thu phí hợp lý."],["Nhận gửi không phiếu, không kiểm tra.",-14,0,"Rủi ro an ninh và tranh chấp."]))
+);
+POOL.push(
+cat("i",T("🧹","Khách phòng 504","Phòng mình dọn chưa sạch, còn tóc trong phòng tắm và bụi trên bàn!",["Phản ánh",["Phòng","504"],["Vấn đề","Dọn chưa đạt"]],"Có thể gọi buồng phòng dọn lại ngay.",["Xin lỗi, gọi buồng phòng dọn lại ngay, tặng đồ uống và kiểm tra lại với khách.",10,-50000,"Đúng. Sửa lỗi nhanh và theo dõi đến khi khách hài lòng."],["Xin lỗi và hẹn buồng phòng dọn khi khách ra ngoài.",-2,0,"Ổn nhưng khách phải tiếp tục chờ."],["Giải thích phòng đã đạt kiểm tra sáng nay.",-14,0,"Tranh cãi với khách."])),
+cat("i",T("🐜","Khách phòng 406","Có kiến trong phòng mình, ở cạnh chỗ để đồ ăn!",["Phản ánh",["Phòng","406"],["Sự cố","Côn trùng"]],"Còn phòng cùng hạng trống. Có đội diệt côn trùng.",["Xin lỗi, đổi phòng ngay, báo kỹ thuật xử lý và báo quản lý.",12,0,"Đúng. Giải quyết ngay và báo cáo để tránh lặp lại."],["Cử người xịt thuốc khi khách đang ở trong phòng.",-4,0,"Gây khó chịu cho khách."],["Nói vài con kiến là bình thường.",-16,0,"Xem nhẹ vấn đề vệ sinh."])),
+cat("i",T("🖨️","Khách doanh nhân","Cho mình in gấp hợp đồng này, tài liệu mật nhé.",["Yêu cầu",["Tài liệu","Hợp đồng bảo mật"],["Máy in","Business center"]],"Máy in công cộng có thể lưu bản sao.",["In giúp, không đọc nội dung, xóa file khỏi máy ngay và đưa bản gốc cho khách.",8,50000,"Đúng. Giữ bí mật và xóa dấu vết."],["In xong để file lại trong máy cho tiện.",-8,50000,"Có thể lộ tài liệu nhạy cảm."],["Mở file đọc trước để kiểm tra lỗi in.",-16,0,"Vi phạm quyền riêng tư."])),
+cat("i",T("🚕","Khách phòng 603","Mình để quên điện thoại trong taxi lúc nãy!",["Thông tin",["Taxi","Hãng đã biết"],["Giờ","20 phút trước"]],"Có thể gọi tổng đài hãng taxi và xem biển số qua camera cổng.",["Ghi nhận, gọi hãng taxi, xem camera cổng lấy biển số và báo khách tiến độ.",10,0,"Đúng. Hỗ trợ chủ động, có kế hoạch."],["Đưa số tổng đài taxi cho khách tự gọi.",-4,0,"Thiếu hỗ trợ."],["Nói khách sạn không chịu trách nhiệm đồ bên ngoài.",-14,0,"Đúng pháp lý nhưng thiếu tinh thần phục vụ."])),
+cat("i",T("🎁","Khách tặng quà","Cảm ơn bạn nhiều lắm, mình có chút quà và tiền cảm ơn riêng cho bạn.",["Quà",["Giá trị","1.500.000đ tiền mặt"]],"Chính sách: không nhận tiền, quà giá trị lớn phải báo quản lý.",["Cảm ơn khéo, từ chối nhận tiền, báo quản lý nếu là quà và nhắc khách có thể ghi nhận qua phiếu khen.",6,0,"Đúng. Giữ liêm chính và vẫn tôn trọng khách."],["Nhận quà nhỏ, từ chối tiền, không báo ai.",-4,0,"Vi phạm quy định báo cáo."],["Nhận tiền vì khách tự nguyện.",-18,0,"Vi phạm chính sách."])),
+cat("i",T("🔒","Khách xin gửi đồ","Mình muốn gửi vài món trang sức vào két quầy, đêm nay mình không giữ trong phòng.",["Yêu cầu",["Vật gửi","Trang sức"],["Két","Két chung ở quầy"]],"Cần biên bản gửi có chữ ký hai bên.",["Lập biên bản, kiểm đếm cùng khách, đóng niêm phong và ký hai bên.",8,0,"Đúng. Quy trình bảo vệ cả khách và khách sạn."],["Nhận gửi bằng giấy ghi tay.",-6,0,"Thiếu chứng từ."],["Nhét vào ngăn kéo quầy cho nhanh.",-18,0,"Mất an toàn tài sản."])),
+cat("w",T("🎤","Người tự xưng phóng viên","Mình viết cho một tạp chí, cho mình chụp sảnh và phỏng vấn vài khách nhé.",["Yêu cầu",["Chụp ảnh","Sảnh và khách"],["Phỏng vấn","Khách lưu trú"]],"Mọi yêu cầu truyền thông phải qua bộ phận PR.",["Mời liên hệ bộ phận PR, không cho chụp khách và không cung cấp thông tin lưu trú.",8,0,"Đúng. Bảo vệ riêng tư khách và đúng quy trình."],["Cho chụp sảnh vắng nhưng không cho phỏng vấn.",-2,0,"Chưa đúng quy trình PR."],["Cho phỏng vấn khách đang ở sảnh.",-18,0,"Xâm phạm riêng tư khách."])),
+cat("w",T("💍","Cặp đôi vãng lai","Mình sắp cưới, cho mình xem sảnh tiệc và tư vấn gói cưới nhé.",["Yêu cầu",["Dịch vụ","Tiệc cưới 150 khách"],["Bộ phận","Kinh doanh sự kiện"]],"Nhân viên sales sự kiện đang trực.",["Chúc mừng, ghi thông tin, gọi sales dẫn xem sảnh tiệc và đưa brochure.",10,0,"Đúng. Chuyển đúng bộ phận, cá nhân hóa."],["Đưa brochure và xin khách để lại số điện thoại.",2,0,"Ổn nhưng bỏ lỡ cơ hội tư vấn ngay."],["Nói chỉ nhận tiệc qua email.",-8,0,"Lạnh nhạt, mất khách tiềm năng."])),
+cat("w",T("🏨","Khách vãng lai","Cho mình xem phòng trước khi thuê nhé, mình tự lên xem.",["Yêu cầu",["Xem phòng","Chưa lưu trú"]],"Chỉ cho xem phòng mẫu có nhân viên đi cùng.",["Mời khách xem phòng mẫu có nhân viên đi cùng.",8,1800000,"Đúng. Giữ an ninh và tăng khả năng chốt phòng."],["Từ chối xem phòng, chỉ cho xem hình.",-4,0,"An toàn nhưng khó thuyết phục khách."],["Đưa thẻ phòng trống cho khách tự lên xem.",-16,0,"Người ngoài vào khu lưu trú một mình."])),
+cat("w",T("🌐","Khách nước ngoài","(Nói ngôn ngữ lạ) Pointing at the room price list, using a translation app.",["Tình huống",["Ngôn ngữ","Không phải Anh/Việt"],["Công cụ","App dịch"]],"Có đồng nghiệp biết một ít ngôn ngữ đó.",["Dùng app dịch, nhờ đồng nghiệp hỗ trợ và xác nhận thông tin bằng hình thức viết.",8,1500000,"Đúng. Kiên nhẫn và xác nhận bằng chữ để tránh nhầm."],["Gọi khách đi tìm người dịch giúp.",-6,0,"Đẩy việc cho khách."],["Đoán ý khách rồi làm thủ tục.",-12,1500000,"Dễ sai thông tin đặt phòng."])),
+cat("w",T("🍸","Khách vãng lai","Gần đây có chỗ nào vui vui kiểu thư giãn đặc biệt không bạn?",["Yêu cầu",["Gợi ý","Dịch vụ nhạy cảm"]],"Khách sạn có spa và quầy bar riêng.",["Lịch sự giới thiệu spa, quầy bar và các hoạt động hợp pháp của khách sạn.",6,300000,"Đúng. Giữ hình ảnh và đưa lựa chọn phù hợp."],["Nói không biết rồi quay đi.",-4,0,"Thiếu tinh thần phục vụ."],["Gợi ý địa điểm có dịch vụ nhạy cảm.",-18,0,"Vi phạm đạo đức và pháp luật."])),
+T("🚗","Khách bãi đỗ xe","Xe mình bị trầy ở bãi đỗ khách sạn! Các bạn phải đền ngay!",["Phản ánh",["Khu vực","Bãi đỗ"],["Camera","Có"]],"Cần biên bản và quản lý xem camera.",["Lập biên bản, chụp ảnh hiện trạng, mời quản lý và bảo vệ cùng xem camera, không cam kết trước.",8,0,"Đúng. Ghi nhận khách quan, để quản lý quyết định."],["Hẹn khách quay lại sau để kiểm tra.",-6,0,"Chậm, khách mất lòng tin."],["Hứa sẽ đền toàn bộ chi phí sửa xe.",-10,-3000000,"Cam kết khi chưa xác minh."])
+);
+const BAD=["Bỏ qua phản ánh của khách.","Hẹn khách quay lại sau mà không ghi nhận.","Nói đó là quy định, không thể thay đổi.","Đổ lỗi cho bộ phận khác trước mặt khách."],MID=["Xin lỗi nhưng chưa nêu giải pháp cụ thể.","Chuyển cho bộ phận khác mà không theo dõi tiếp.","Hứa xử lý sau, không ghi vào Log."];
+const Z=(c,name,say,ctx,a,j)=>({...N(c=="i"?"🛎️":"🚶",name,say,[D("Ghi nhận",["Nội dung",ctx])],"Xử lý đúng quy trình và ghi Log.",[[a,2,8,0,"Đúng. Chủ động, đúng quy trình và có ghi nhận."],[MID[j%3],1,-3,0,"Chấp nhận được nhưng chưa đủ chủ động."],[BAD[j%4],0,-12,0,"Không phù hợp, ảnh hưởng đến khách và khách sạn."]]),cat:c});
+const MB=["Làm đúng một phần nhưng thiếu báo cáo hoặc ghi chép.","Nhận việc nhưng không xác nhận lại với quản lý."],MC=["Phớt lờ chỉ đạo vì đang bận.","Làm không đúng quy trình cho nhanh.","Nói đó không phải việc của lễ tân."];
+const M=(role,say,a,j)=>({...N("💼",role,say,[D("Chỉ đạo",["Từ",role])],"Quản lý đang chờ phản hồi của bạn.",[[a,2,4,0,"Đúng. Phản hồi chuyên nghiệp, rõ ràng và có ghi nhận."],[MB[j%2],1,-2,0,"Chấp nhận được nhưng thiếu chuyên nghiệp."],[MC[j%3],0,-10,0,"Sai. Ảnh hưởng đến uy tín với quản lý."]]),mg:1});
+POOL.push(...[
+["Máy sấy tóc trong phòng không hoạt động","Xin lỗi, mang máy sấy mới lên phòng ngay."],["TV không có kênh quốc tế","Báo kỹ thuật chỉnh ngay và hướng dẫn khách trong lúc chờ."],["Két sắt trong phòng không mở được","Cử kỹ thuật mở két có mặt khách và lập biên bản."],["Rèm cửa không đóng kín, ánh sáng chiếu vào","Xin lỗi, báo kỹ thuật sửa hoặc đổi phòng."],["Giường khá cứng, mình khó ngủ","Mang topper hoặc gối khác lên và đề nghị đổi phòng nếu cần."],["Phòng tắm có mùi ẩm mốc","Đề nghị đổi phòng, báo buồng phòng và kỹ thuật xử lý."],["Nhà hàng sáng quá đông, mình chờ rất lâu","Xin lỗi, báo nhà hàng sắp bàn và đề nghị room service ngày mai."],["Phòng gym đóng cửa sớm hơn thông báo","Xin lỗi, xác nhận giờ đúng và báo bộ phận cập nhật thông tin."],["Hồ bơi lạnh hơn quảng cáo","Xin lỗi, báo kỹ thuật kiểm tra và mời đồ uống."],["Taxi trước cửa tính phí cao bất thường","Ghi nhận, liên hệ hãng taxi và hỗ trợ khách phản ánh."],["Điện thoại phòng không gọi ra ngoài được","Báo kỹ thuật và cho khách dùng điện thoại quầy lúc chờ."],["Đèn đầu giường bị hỏng","Mang đèn thay thế lên phòng ngay."],["Vòi sen yếu, nước chảy rất nhỏ","Cử kỹ thuật kiểm tra, đổi phòng nếu không sửa kịp."],["Minibar thiếu nước suối","Báo buồng phòng bổ sung ngay."],["Spa hẹn sai giờ làm mình trễ lịch","Xin lỗi, sắp xếp lại giờ và tặng ưu đãi nhỏ."],["Wifi ở sảnh không kết nối được","Hướng dẫn khách kết nối và báo IT kiểm tra."],["Ban ngày phòng mình nghe tiếng thi công","Xin lỗi, đề nghị phòng yên tĩnh hơn."],["Đồ giặt ủi trả trễ hơn hẹn","Kiểm tra tiến độ, cam kết giờ trả và giảm phí."],["Hóa đơn nhà hàng bị tính nhầm món","Kiểm tra bill, điều chỉnh đúng món và xin lỗi."],["Xe đưa đón sân bay đến trễ","Xin lỗi, xếp xe ưu tiên và hỗ trợ chi phí."],["Mình dị ứng, cần gối chống dị ứng","Mang gối chống dị ứng lên phòng ngay."],["Ổ cắm gần giường bị lỏng","Gọi kỹ thuật kiểm tra ngay vì an toàn điện."],["Điều hòa chạy ồn vào ban đêm","Kỹ thuật kiểm tra hoặc đổi phòng."],["Hành lang có mùi khói thuốc","Báo bảo vệ kiểm tra tầng và xử lý."],["Cuộc gọi báo thức sáng nay không đúng giờ","Xin lỗi, ghi chú cẩn thận và cam kết gọi đúng giờ."],["Mình muốn có hoa sinh nhật cho vợ trong phòng","Nhận yêu cầu, báo buồng phòng và florist thực hiện đúng giờ."],["Phòng mình thiếu khăn tắm","Mang khăn bổ sung ngay."],["Cửa ban công khó khóa","Gọi kỹ thuật kiểm tra ngay vì an toàn."],["Bàn làm việc thiếu ổ cắm","Mang ổ cắm đa năng cho khách."],["Mình cần thêm chăn dày hơn","Mang chăn bổ sung ngay."]
+].map((x,j)=>Z("i","Khách phòng "+(1+j%8)+"0"+(1+j%5),x[0]+", nhờ bạn xử lý giúp mình!",x[0],x[1],j)),
+...[
+["Cho mình mượn điện thoại quầy để gọi taxi","Hỗ trợ gọi taxi giúp khách theo quy định."],["Nhờ xác nhận khách nào đang ở để gửi thư","Nhận thư, chuyển giúp khách và không xác nhận thông tin lưu trú."],["Chỉ giúp mình bệnh viện gần nhất","Chỉ đường và gọi hỗ trợ nếu khẩn cấp."],["Mình xin dùng nhà vệ sinh","Lịch sự chỉ đường đến nhà vệ sinh công cộng."],["Nhà hàng còn bàn cho 12 người hôm nay không","Kiểm tra với nhà hàng và đặt bàn nếu còn."],["Mình muốn đổi tiền lẻ","Báo chính sách và hướng dẫn ngân hàng gần nhất."],["Cho mình xin bản đồ du lịch thành phố","Đưa bản đồ và gợi ý lịch trình ngắn."],["Cho mình hóa đơn bữa tối ở nhà hàng","Báo nhà hàng xuất hóa đơn và hỗ trợ nhận."],["Tour du lịch bên bạn giá bao nhiêu","Báo giá từ đối tác và nêu rõ điều kiện."],["Mình lỡ chuyến bay, cho ngủ nhờ ở sảnh được không","Giải thích không ngủ sảnh được, đề nghị phòng giá hợp lý."],["Có người gửi quà cho khách phòng 502","Nhận quà, báo khách xuống lấy và không cho người lạ lên phòng."],["Đặt giúp mình xe đi sân bay lúc 5 giờ sáng","Đặt xe, ghi vào Log và xác nhận giờ."],["Gửi xe máy qua đêm được không","Báo phí gửi xe và hướng dẫn bãi gửi."],["Nhờ in giúp vé máy bay","In giúp tại business center."],["Giặt gấp trong 3 giờ được không","Báo phí giặt gấp, nhận đồ và lập phiếu."]
+].map((x,j)=>Z("w","Khách vãng lai",x[0]+".",x[0],x[1],j+30)),
+...[
+["FOM","Tối nay VIP đến lúc 22 giờ, xếp phòng 801 và báo bếp chuẩn bị.","Xác nhận, kiểm tra phòng 801, ghi Log và set up VIP."],["AFOM","Báo cáo công suất phòng và ADR hôm qua trước 10 giờ.","Lập báo cáo từ PMS, kiểm tra số liệu và gửi đúng hạn."],["FO Supervisor","Ca sau thiếu người, bạn hỗ trợ thêm được không?","Trao đổi rõ lịch, nhận trong khả năng và báo supervisor."],["Giám đốc khách sạn","Tôi đang đi kiểm tra sảnh. Báo nhanh tình hình khách chờ.","Báo ngắn gọn số khách chờ, vấn đề và hướng xử lý."],["Kế toán","Sổ quỹ lệch 200.000đ so với PMS, giải trình giúp.","Kiểm tra chứng từ, giải trình trung thực và đề xuất điều chỉnh."],["Nhân sự","Hôm qua bạn trễ 15 phút, xin giải trình.","Giải trình trung thực và cam kết đúng giờ."],["Sales","Khách đoàn đến sớm, ưu tiên phòng cho họ nhé.","Kiểm tra phòng sẵn sàng, phối hợp buồng phòng và báo sales."],["Trưởng buồng phòng","Phòng 305 rò nước, đừng bán tối nay.","Chuyển phòng sang Bảo trì, cập nhật PMS và báo Supervisor."],["Trưởng kỹ thuật","Tầng 5 bảo trì lúc 14 giờ, nhờ báo khách.","Thông báo sớm cho khách tầng 5 và đề xuất phương án."],["Quản lý F&B","Nhà hàng kín chỗ, tạm dừng xếp thêm bàn.","Ghi chú, giới thiệu nhà hàng đối tác nếu khách hỏi."],["Trưởng bảo vệ","Có người khả nghi trong khu vực, tăng kiểm tra thẻ.","Kiểm tra thẻ ra vào, ghi Log và báo bảo vệ."],["FOM","Quy trình check-in mới đã cập nhật, đọc và ký nhận.","Đọc kỹ, hỏi nếu chưa rõ và ký nhận."],["Giám đốc khách sạn","Hôm nay có đoàn kiểm tra, giữ sảnh thật gọn.","Rà soát sảnh, quầy, đồng phục rồi báo cáo đầy đủ."],["FO Supervisor","VIP đang khiếu nại, bạn tiếp tục hay nhờ tôi?","Báo cáo diễn biến, đề xuất phương án và nhờ hỗ trợ khi cần."],["AFOM","15 giờ có đào tạo nhân viên mới, bạn hướng dẫn phần check-in.","Chuẩn bị tài liệu, hướng dẫn từng bước và cho thực hành."],["Kế toán","Hóa đơn OTA tháng này chưa claim, hoàn thiện hôm nay.","Đối chiếu, claim đủ và gửi chứng từ."],["Sales","Khách công ty xin đổi giá hợp đồng, bạn giữ giá được không?","Kiểm tra hợp đồng, giữ đúng giá và báo sales khi khác."],["FOM","Có đánh giá tiêu cực về lễ tân ca bạn, trả lời giúp.","Xem lại sự việc, phản hồi chân thành và báo FOM."],["Nhân sự","Tuần sau đánh giá thử việc, hãy chuẩn bị.","Chuẩn bị tự đánh giá với ví dụ cụ thể."],["Giám đốc khách sạn","Ca lễ cần đủ người, bạn nhận ca lễ được không?","Xác nhận khả năng và thương lượng lịch hợp lý."]
+].map((x,j)=>M(x[0],x[1],x[2],j))
+);
+const CH=(role,steps)=>({k:"chain",mg:1,av:"💼",name:role,say:"",shift:"",st:steps.map(x=>({s:x[0],b:x[1],o:[[x[2],2,6,0,"Đúng. Chuyên nghiệp và có báo cáo rõ ràng."],[x[3],1,-3,0,"Chấp nhận được nhưng thiếu chặt chẽ."],[x[4],0,-12,0,"Sai. Gây hậu quả cho các bước sau."]]}))});
+POOL.push(
+CH("FO Supervisor · VIP khiếu nại leo thang",[["VIP phòng 801 phản ánh hoa đặt trước không có và phòng dọn chưa kỹ.","","Xin lỗi, bổ sung hoa, gọi buồng phòng dọn lại và báo Supervisor.","Xin lỗi và hứa bổ sung sau.","Giải thích hoa không có trong ghi chú."],["VIP đã hài lòng, hỏi thêm xe sân bay và hóa đơn công ty.","VIP gọi lại, đòi gặp quản lý và dọa đăng đánh giá xấu.","Xử lý đủ yêu cầu và báo FOM toàn bộ diễn biến.","Xử lý yêu cầu nhưng không báo ai.","Chuyển cho đồng nghiệp rồi rời quầy."],["Sáng hôm sau FOM hỏi diễn biến vụ VIP.","FOM nhận email phàn nàn của VIP và yêu cầu giải trình.","Trình bày trung thực, nêu bài học và đề xuất cải tiến.","Nói vắn tắt, không nêu chi tiết.","Đổ lỗi cho buồng phòng."]]),
+CH("Kế toán · Đối soát quỹ lệch",[["Kế toán báo quỹ ca bạn lệch 500.000đ so với PMS.","","Kiểm tra chứng từ, ghi nhận và hợp tác đối soát.","Nói chắc do ca khác.","Tự bù tiền để hết lệch."],["Tìm ra phiếu thu chưa nhập, kế toán đề nghị bạn ký biên bản.","Kế toán nghi vấn và yêu cầu báo cáo văn bản gửi FOM.","Viết báo cáo trung thực, ký biên bản và đề xuất biện pháp.","Ký biên bản nhưng không nêu nguyên nhân.","Từ chối ký."]]),
+CH("FO Supervisor · Thiếu người ca đêm",[["Hai đồng nghiệp ca đêm xin nghỉ đột xuất, bạn được nhờ hỗ trợ.","","Trao đổi lịch, nhận trong khả năng và báo Supervisor.","Nhận hết dù đã quá tải.","Từ chối mà không giải thích."],["Ca đêm vận hành ổn, Supervisor hỏi cách chia việc.","Ca đêm quá tải, vài khách phàn nàn và FOM hỏi nguyên nhân.","Nêu rõ phân công, vấn đề và đề xuất bổ sung người.","Nói mọi thứ đều ổn.","Đổ lỗi cho đồng nghiệp."]]),
+CH("Trưởng bảo vệ · Sự cố thẻ phòng",[["Thẻ phòng 406 bị dùng bởi người lạ lúc 1 giờ sáng.","","Khóa thẻ, gọi bảo vệ và liên hệ khách xác nhận.","Chờ sáng rồi mới báo.","Cấp thẻ mới ngay mà không xác nhận."],["Điều tra xong, Giám đốc hỏi báo cáo sự cố.","Khách mất đồ, yêu cầu bồi thường và cơ quan chức năng hỏi thông tin.","Báo cáo đầy đủ giờ giấc, hành động và Log.","Báo cáo sơ sài.","Giấu bớt chi tiết bất lợi."]]),
+CH("AFOM · Kèm nhân viên mới",[["AFOM nhờ bạn kèm nhân viên mới trong ca chiều.","","Làm mẫu, cho thực hành và góp ý từng bước.","Đưa tài liệu rồi để họ tự lo.","Để họ làm một mình cho quen."],["Nhân viên mới check-in đúng quy trình, AFOM hỏi nhận xét.","Nhân viên mới làm sai check-in và khách phàn nàn.","Nhận phần trách nhiệm, sửa lỗi với khách và hướng dẫn lại.","Xin lỗi khách nhưng không hướng dẫn lại.","Đổ lỗi cho nhân viên mới."]])
+);
+const LOGS=["Phòng 305 xin đổi phòng vì ồn, chưa giải quyết","Khách phòng 502 cần xe sân bay lúc 5 giờ sáng, chưa đặt xe","Folio phòng 402 còn khoản minibar chưa thu","Khách VIP phòng 601 dị ứng hải sản, chưa báo bếp","Khách phòng 208 xin hóa đơn VAT, chưa xuất"];
+function bf(name,lst){
+ const rn=n=>Math.floor(Math.random()*n),mk=(label,sys,unit,dl,money)=>{const bad=Math.random()<.5,act=bad?sys+dl*(rn(2)?1:-1):sys,f=v=>money?fmt(v):v+" "+unit;return {label,bad,txt:"Hệ thống "+f(sys)+" · Thực tế "+f(act)}};
+ const R=[mk(lst,12+rn(8),"phòng",1+rn(2)),mk("Invoice",10+rn(8),"hóa đơn",1+rn(2)),mk("Cash Float",5000000,"",100000*(1+rn(5)),1)],lg=Math.random()<.5?rnd(LOGS):null;
+ const items=[...R.map(r=>["Báo chênh lệch và ghi Log: "+r.label,r.bad?1:0]),...(lg?[["Nhận và xử lý việc tồn đọng trong Log: "+lg,1]]:[]),["Ký nhận brief sau khi đối chiếu đủ",1],["Ký nhận ngay mà không đối chiếu",0]].sort(()=>Math.random()-.5);
+ return {k:"task",name,say:"Đối chiếu số liệu bàn giao trước khi ký nhận.",rows:[...R.map(r=>[r.label,r.txt]),["Log",lg||"Không có việc tồn đọng"]],items};
+}
+const KT=(name,say,...items)=>({k:"task",name,say,items});
+const TASKS={
+brief_m:KT("Nhận brief từ ca đêm","Ca đêm bàn giao lại quầy cho bạn.",["Đối chiếu Departure List với hệ thống",1],["Kiểm tra Invoice đã chuẩn bị",1],["Đọc Log ca đêm, ghi việc tồn đọng",1],["Đếm Cash Float cùng ca đêm rồi ký nhận",1],["Ký nhận ngay mà không đếm két",0]),
+folio:KT("Chuẩn bị folio cho khách check-out","Sắp đến giờ khách trả phòng.",["In folio theo Departure List",1],["Đối chiếu minibar và phụ phí với buồng phòng",1],["Kiểm tra voucher và giảm giá hợp lệ",1],["Trừ khoản đã trả trước (OTA, tiền cọc)",1],["Bỏ qua folio của khách trả muộn",0]),
+bfast:KT("Hướng dẫn khách đến nhà hàng ăn sáng","Khách xuống sảnh hỏi chỗ ăn sáng.",["Chào khách, hỏi số phòng và gói ăn sáng",1],["Chỉ đường hoặc dẫn khách tới nhà hàng",1],["Báo nhà hàng yêu cầu đặc biệt (dị ứng, ăn chay)",1],["Cho khách vào ăn mà không kiểm tra gói ăn sáng",0]),
+arrlist:KT("Chuẩn bị Arrival List","Chuẩn bị danh sách khách đến hôm nay.",["Lấy danh sách khách đến từ hệ thống",1],["Đánh dấu VIP, khách quay lại và yêu cầu đặc biệt",1],["Kiểm tra phòng dự kiến với buồng phòng",1],["In và để sẵn cho ca chiều",1],["Chỉ in tên khách, bỏ ghi chú",0]),
+handM:KT("Bàn giao Brief cho ca chiều","Sắp hết ca sáng.",["Bàn giao Arrival List",1],["Bàn giao Invoice",1],["Ghi Log ca sáng đầy đủ",1],["Bàn giao Cash Float đã đếm",1],["Rời quầy ngay khi hết giờ, chưa bàn giao",0]),
+brief_a:KT("Nhận Brief từ ca sáng","Ca sáng bàn giao lại quầy cho bạn.",["Nhận Arrival List và kiểm tra",1],["Kiểm tra Invoice",1],["Đọc Log ca sáng",1],["Đếm Cash Float cùng ca sáng rồi ký nhận",1],["Nhận miệng qua lời nhắn, không ký",0]),
+welcome:KT("Chuẩn bị Welcome drink","Chuẩn bị đồ uống chào mừng cho khách đến.",["Kiểm tra số lượng theo Arrival List",1],["Chuẩn bị thêm loại không cồn cho trẻ em và khách kiêng",1],["Giữ lạnh và đặt sẵn tại quầy",1],["Chuẩn bị một loại cho tất cả khách",0]),
+arrroom:KT("Check Arrival room và Special Request","Kiểm tra phòng khách sắp đến.",["Hỏi buồng phòng phòng đã sẵn sàng",1],["Đối chiếu yêu cầu đặc biệt (giường phụ, tầng cao, dị ứng)",1],["Báo bộ phận liên quan chuẩn bị yêu cầu",1],["Giao phòng chưa kiểm tra để kịp giờ",0]),
+vip:KT("Set up VIP","Có khách VIP đến chiều nay.",["Kiểm tra lại phòng VIP đã dọn xong",1],["Đặt hoa, trái cây và thư chào",1],["Chuẩn bị sẵn thủ tục để check-in nhanh",1],["Bỏ qua kiểm tra vì phòng đã dọn sáng nay",0]),
+handA:KT("Bàn giao Brief cho ca Đêm","Sắp hết ca chiều.",["Bàn giao Arrival còn lại nếu có",1],["Bàn giao Invoice",1],["Ghi Log ca chiều đầy đủ",1],["Bàn giao Cash Float đã đếm",1],["Chỉ nhắn miệng cho ca đêm",0]),
+brief_n:KT("Nhận Brief từ ca Chiều","Ca chiều bàn giao lại quầy cho bạn.",["Arrival còn lại nếu có",1],["Invoice",1],["Log ca chiều",1],["Cash Float đếm cùng ca chiều",1],["Nhận két khi chưa đếm tiền",0]),
+ota:KT("Claim tiền từ OTA","Đến giờ đối chiếu và claim tiền từ các kênh OTA.",["Đối chiếu booking OTA với folio",1],["Claim các booking trả trước và khách no-show đúng hạn",1],["Lưu chứng từ và mã booking",1],["Claim cả những booking đã hủy",0]),
+deplist:KT("Chuẩn bị Departure List, Invoice","Chuẩn bị cho khách trả phòng sáng mai.",["Lấy danh sách khách trả phòng sáng mai",1],["In Invoice theo đặt phòng",1],["Đánh dấu khách cần xe, trả muộn",1],["Để mặc định, không kiểm tra",0]),
+bflist:KT("Chuẩn bị Breakfast List","Chuẩn bị danh sách ăn sáng cho nhà hàng.",["Lấy khách có gói ăn sáng",1],["Ghi dị ứng, ăn chay và yêu cầu đặc biệt",1],["Gửi nhà hàng và kiểm tra lại",1],["Gửi toàn bộ khách trong khách sạn",0]),
+handN:KT("Bàn giao cho ca sáng hôm sau","Sắp hết ca đêm.",["Bàn giao Departure List",1],["Bàn giao Invoice",1],["Ghi Log ca đêm đầy đủ",1],["Bàn giao Cash Float sau night audit",1],["Để két chưa đối chiếu sau night audit",0])
+};
+POOL.forEach((g,i)=>g.id=i);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const LV=d=>d<8?"Ngày thường":d<15?"Cuối tuần đông khách":d<22?"Mùa cao điểm":"Dịp lễ Tết";
+function resetRooms(x){
+ const p=Math.min(.78,.3+S.day*.014+rk()*.02+(x||0));
+ rooms.forEach(r=>{const x=Math.random();r.st=x<p?"occ":x<p+.08?"clean":x<p+.12?"maint":"free"});
+ [r=>r.g=="Superior",r=>r.g=="Deluxe"&&!r.v,r=>r.g=="Deluxe"&&r.v,r=>r.g=="Suite"].forEach(f=>{const g=rooms.filter(f);if(!g.some(r=>r.st=="free"))rnd(g).st="free"});
+ while(rooms.filter(r=>r.st=="free").length<16)rnd(rooms.filter(r=>r.st!="free")).st="free";
+ rooms.forEach(r=>{delete r.rsv;r.guest=r.st=="occ"?{name:rnd(NAMES),pax:1+Math.floor(Math.random()*4),nights:1+Math.floor(Math.random()*5),req:rnd(RQ)[0]}:null});
+}
+function save(){try{localStorage.setItem(K,JSON.stringify({ts:S.ts,rk:S.rk,gender:S.gender,xp:S.xp,name:S.name,clk:S.clk,trust:S.trust,stress:S.stress,hist:S.hist,lastEv:S.lastEv,day:S.day,sat:S.sat,rev:S.rev,warn:S.warn,ok:S.ok,tot:S.tot}))}catch(e){}}
+function load(){try{return JSON.parse(localStorage.getItem(K))}catch(e){return null}}
+function wipe(){try{localStorage.removeItem(K)}catch(e){}}
+const esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PK="frontdesk-vn-profile";let P={name:"",runs:[]};try{P=JSON.parse(localStorage.getItem(PK))||P}catch(e){}
+const saveP=()=>{try{localStorage.setItem(PK,JSON.stringify(P))}catch(e){}};
+const RANKS=[["Trainee",0],["Receptionist",120],["Captain",360],["FO Supervisor",700],["AFOM",1150],["FOM",1700]];
+const rk=()=>S.rk||0;
+function clock(g,ca){board(0);const h={"Ca sáng":"06:00 - 14:00","Ca chiều":"14:00 - 22:00","Ca đêm":"22:00 - 06:00"}[ca];
+ $("stage").innerHTML=`<div class="card center"><h2>Chấm công · ${ca}</h2><p><b>${esc(S.name||"Nhân viên")}</b> · ${RANKS[rk()][0]}<br>Giờ ca: ${h}</p><button class="btn" id="cc">Chấm công vào ca</button></div>`;
+ $("cc").onclick=()=>{S.ts=S.ts||[];S.ts.push({d:S.day,c:ca,t:new Date().toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})});if(S.ts.length>90)S.ts.shift();S.clk++;S.xp+=2;hud();save();show()}}
+function ach(){
+ ["board","prog","side"].forEach(i=>$(i).innerHTML="");$("shift").textContent="Bảng tổng kết thành tích";
+ const sv=load(),rows=[...(sv?[{n:sv.name,rk:RANKS[sv.rk||0][0],d:sv.day,rev:sv.rev,acc:sv.tot?Math.round(sv.ok/sv.tot*100):100,w:sv.warn,clk:sv.clk||0,st:"Đang chơi"}]:[]),...P.runs.slice().reverse().map(r=>({...r,st:r.win?"Hoàn thành":"Mất việc"}))];
+ const top=Math.max(-1,...rows.map(r=>RANKS.findIndex(x=>x[0]==r.rk)));
+ $("stage").innerHTML=`<div class="card"><h2>Bảng tổng kết thành tích</h2><p>Nhân viên: <b>${esc(P.name||"-")}</b> · Chức danh cao nhất: <b>${top>=0?RANKS[top][0]:"Chưa có"}</b> · Số lần kết thúc: <b>${P.runs.length}</b></p><div style="overflow-x:auto"><table class="bill"><tr><td><b>Tên</b></td><td><b>Chức danh</b></td><td><b>Ngày</b></td><td><b>Doanh thu</b></td><td><b>Chính xác</b></td><td><b>Cảnh cáo</b></td><td><b>Ca chấm công</b></td><td><b>Kết quả</b></td></tr>${rows.map(r=>`<tr><td>${esc(r.n)}</td><td>${r.rk}</td><td>${r.d}/30</td><td>${fmt(r.rev)}</td><td>${r.acc}%</td><td>${r.w}/3</td><td>${r.clk}</td><td>${r.st}</td></tr>`).join("")||"<tr><td>Chưa có dữ liệu</td></tr>"}</table></div><button class="btn" id="bk">Về menu</button></div>`;
+ $("bk").onclick=menu}
+const IS=b=>`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">${b}</svg>`,GL='<ellipse cx="9" cy="6" rx="4" ry="2" fill="#fff" opacity=".35"/>';
+const ICO={sat:IS('<circle cx="12" cy="12" r="10" fill="url(#gY)"/><circle cx="8.5" cy="10" r="1.3" fill="#5a3b00"/><circle cx="15.5" cy="10" r="1.3" fill="#5a3b00"/><path d="M7.5 14Q12 19 16.5 14" stroke="#5a3b00" stroke-width="1.6" fill="none" stroke-linecap="round"/>'+GL),rev:IS('<ellipse cx="12" cy="17" rx="8" ry="3.5" fill="#a8790f"/><rect x="4" y="11" width="16" height="6" fill="url(#gY)"/><ellipse cx="12" cy="11" rx="8" ry="3.5" fill="url(#gY)" stroke="#a8790f"/><ellipse cx="10" cy="10" rx="4" ry="1.2" fill="#fff" opacity=".45"/>'),acc:IS('<circle cx="12" cy="12" r="10" fill="url(#gR)"/><circle cx="12" cy="12" r="6.5" fill="#fff"/><circle cx="12" cy="12" r="3.5" fill="url(#gR)"/>'+GL),tr:IS('<path d="M12 2L21 5V12Q21 19 12 22Q3 19 3 12V5Z" fill="url(#gO)" stroke="#fff" stroke-width="1"/><path d="M8 12L11 15L16 9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>'),st:IS('<path d="M13 2L5 14H11L10 22L19 9H13Z" fill="url(#gB)" stroke="#fff" stroke-width=".8" stroke-linejoin="round"/>')};
+const icons=()=>document.querySelectorAll(".ic").forEach(e=>e.innerHTML=ICO[e.dataset.k]);
+const avatar=(w,g)=>{g=g||S.gender||sel||"f";const m=g=="m",n=rk()+1;
+return `<svg class="bob" viewBox="0 0 120 140" width="${w}" height="${Math.round(w*7/6)}" aria-hidden="true"><ellipse cx="60" cy="136" rx="38" ry="4" fill="#000" opacity=".15"/>${m?"":'<path d="M28 66Q24 22 60 22Q96 22 92 66L92 100Q80 92 80 74L40 74Q40 92 28 100Z" fill="url(#gH)"/>'}<path d="M18 138Q18 92 60 92Q102 92 102 138Z" fill="url(#gU)"/><path d="M48 92L60 112L72 92Z" fill="#fff" opacity=".9"/>${m?'<path d="M56 100L60 116L64 100Z" fill="#2f3b17"/>':'<path d="M50 94Q60 106 70 94L66 92Q60 98 54 92Z" fill="#c99a1c"/>'}<rect x="52" y="76" width="16" height="18" rx="6" fill="url(#gS)"/><circle cx="60" cy="56" r="25" fill="url(#gS)"/>${m?'<path d="M34 54Q32 26 60 28Q88 26 86 54Q78 40 60 42Q42 40 34 54Z" fill="url(#gH)"/>':'<path d="M34 56Q36 30 60 30Q84 30 86 56Q74 42 58 42Q44 44 34 56Z" fill="url(#gH)"/>'}<ellipse class="eye" cx="50" cy="58" rx="2.6" ry="3.2" fill="#2b2118"/><ellipse class="eye" cx="70" cy="58" rx="2.6" ry="3.2" fill="#2b2118"/><path d="M52 68Q60 75 68 68" stroke="#9a4a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="40" rx="12" ry="5" fill="#fff" opacity=".22"/><rect x="72" y="108" width="20" height="10" rx="2" fill="#fff"/>${Array.from({length:n},(_,i)=>`<rect x="${74+i*3}" y="110" width="2" height="6" fill="#556B2F"/>`).join("")}<g class="wave"><circle cx="102" cy="118" r="7" fill="url(#gS)"/></g></svg>`};
+let sel=P.gender||"f";
+const gsel=()=>`<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:10px 0">${[["m","Nam"],["f","Nữ"]].map(x=>`<button class="gb ${sel==x[0]?"on":""}" data-g="${x[0]}" aria-label="Chọn nhân viên ${x[1]}">${avatar(84,x[0])}<br><b>${x[1]}</b></button>`).join("")}</div>`;
+const EXAM={1:[["Khách nước ngoài check-in, việc bắt buộc là gì?","Quét hộ chiếu và khai báo lưu trú","Chỉ ghi tên vào sổ","Giữ hộ chiếu suốt kỳ nghỉ"],["Người lạ hỏi số phòng của khách?","Không tiết lộ, gọi phòng để khách quyết định","Đọc số phòng nếu họ biết tên","Hỏi lý do rồi cho biết"],["Nhận ca thấy Cash Float lệch?","Ghi Log, báo trưởng ca trước khi ký","Ký nhận rồi tính sau","Tự bù tiền"]],
+2:[["Overbooking, ưu tiên xử lý thế nào?","Nâng hạng hoặc chuyển khách sạn đối tác kèm đền bù","Bắt khách chờ ở sảnh","Thu thêm phí của khách"],["Cách kèm nhân viên mới tốt nhất?","Làm mẫu, cho thực hành và góp ý","Chỉ đưa tài liệu","Để họ tự học"],["Night audit lệch số, làm gì?","Truy chứng từ, sửa bằng bút toán có ghi chú và báo quản lý","Ghi vào mục phí khác","Bỏ qua nếu nhỏ"]],
+3:[["Nhân viên đi trễ nhiều lần, bạn làm gì?","Trao đổi riêng, tìm nguyên nhân và lập kế hoạch cải thiện","Phê bình công khai","Cho qua"],["VIP khiếu nại vượt thẩm quyền lễ tân?","Tiếp nhận, báo FOM và theo dõi xử lý","Hứa đền bù ngay","Né tránh"],["Xếp ca khi thiếu người?","Ưu tiên giờ cao điểm và thương lượng hỗ trợ","Xếp ngẫu nhiên","Bắt tăng ca đột xuất"]],
+4:[["ADR là gì?","Giá phòng trung bình đã bán","Tỷ lệ lấp đầy phòng","Tổng doanh thu"],["Phát hiện quy trình kém hiệu quả?","Phân tích dữ liệu, đề xuất cải tiến và thử nghiệm","Giữ nguyên","Tự đổi mà không báo ai"],["Đánh giá tiêu cực trực tuyến?","Phản hồi chân thành, tìm nguyên nhân gốc và cải tiến","Xóa đánh giá","Bỏ qua"]],
+5:[["RevPAR tính thế nào?","Doanh thu phòng chia số phòng sẵn có","Doanh thu chia số phòng đã bán","Tổng doanh thu cả khách sạn"],["Cân bằng chi phí nhân sự và chất lượng?","Dự báo công suất, điều chỉnh ca và đào tạo đa kỹ năng","Cắt giảm đều mọi ca","Tuyển thêm không cần tính"],["Khủng hoảng truyền thông?","Phối hợp GM và PR, phản hồi nhanh có kiểm chứng","Im lặng","Phản bác công khai"]]};
+function exam(r,go){
+ const Q=EXAM[r].map(q=>({q:q[0],o:q.slice(1).map((t,i)=>[t,i==0]).sort(()=>Math.random()-.5)}));let k=0,sc=0;
+ const nq=()=>{
+  if(k>=Q.length){const ok=sc>=2;if(ok){S.rk=r;S.xp+=20;S.trust=Math.min(100,S.trust+5)}hud();save();
+   $("stage").innerHTML=`<div class="card center">${avatar(90)}<h2>${ok?"Chúc mừng! Bạn đã thăng chức "+RANKS[r][0]:"Chưa đạt kỳ thi"}</h2><p>Đúng ${sc}/${Q.length} câu. ${ok?"Độ khó công việc tăng lên.":"Cần đúng ít nhất 2 câu. Bạn có thể thi lại vào cuối ngày sau."}</p><button class="btn" id="go">Tiếp tục</button></div>`;$("go").onclick=go;return}
+  const q=Q[k];$("stage").innerHTML=`<div class="card"><b>Thi thăng chức lên ${RANKS[r][0]} · Câu ${k+1}/${Q.length}</b><p>${q.q}</p><div class="opts">${q.o.map(o=>`<button class="opt">${o[0]}</button>`).join("")}</div><div id="fbk"></div></div>`;
+  document.querySelectorAll(".opt").forEach((b,j)=>b.onclick=()=>{document.querySelectorAll(".opt").forEach(x=>x.disabled=true);const ok=q.o[j][1];if(ok)sc++;$("fbk").innerHTML=`<div class="fb q${ok?2:0}"><b>${ok?"Đúng":"Chưa đúng"}</b>${ok?"":"Đáp án: "+q.o.find(o=>o[1])[0]}</div><button class="btn" id="nx">Tiếp</button>`;$("nx").onclick=()=>{k++;nq()}})};
+ nq()}
+function chain(g,i,pq){
+ const st=g.st[i],os=st.o.slice().sort(()=>Math.random()-.5);
+ $("stage").innerHTML=`<div class="card"><div class="guest"><div class="avatar" aria-hidden="true">${gv(g)}</div><div><div class="name">${g.name} · Bước ${i+1}/${g.st.length}</div><p class="say">${pq===0&&st.b?st.b:st.s}</p></div></div><div class="opts">${os.map(o=>`<button class="opt">${o[0]}</button>`).join("")}</div><div id="fbk"></div></div>`;
+ document.querySelectorAll(".opt").forEach((b,j)=>b.onclick=()=>{const o=os[j];document.querySelectorAll(".opt").forEach(x=>x.disabled=true);b.classList.add("picked");
+  done(g,o[1],o[2],o[3],o[4]);const more=i+1<g.st.length;$("nx").textContent=more?"Bước tiếp theo":(S.i==G.length-1?"Xem báo cáo cuối ngày":"Tiếp theo");
+  $("nx").onclick=()=>{if(more)chain(g,i+1,o[1]);else{S.i++;S.i>=G.length?end():show()}}})}
+const CLIP='<svg viewBox="0 0 24 24" width="30" height="30"><rect x="5" y="4" width="14" height="18" rx="2" fill="#fff"/><rect x="9" y="2" width="6" height="4" rx="1" fill="#c99a1c"/><path d="M8 11h8M8 15h8" stroke="#556B2F" stroke-width="1.6"/></svg>';
+const gv=g=>{let h=0;for(const c of (g.name||"x"))h=(h*31+c.charCodeAt(0))>>>0;const sk=["#f3c9a5","#e0a67c","#c68642","#8d5524"][h%4],hc=["#2b1b10","#5a3d28","#8a8a8a","#b5651d","#1c1c1c"][(h>>2)%5],cl=["#3a6fb5","#c0432f","#7a5aa6","#2f8f83","#a8790f","#555"][(h>>4)%6],f=(h>>6)%2;
+return `<svg viewBox="0 0 48 48" width="46" height="46" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#e8ecdf"/><path d="M6 48Q6 32 24 32Q42 32 42 48Z" fill="${cl}"/><rect x="20" y="26" width="8" height="8" rx="3" fill="${sk}"/><circle cx="24" cy="20" r="10" fill="${sk}"/>${f?`<path d="M13 22Q11 6 24 8Q37 6 35 22Q33 14 24 14Q15 14 13 22ZM13 22L12 36Q16 34 16 26ZM35 22L36 36Q32 34 32 26Z" fill="${hc}"/>`:`<path d="M14 20Q13 8 24 9Q35 8 34 20Q32 13 24 13Q16 13 14 20Z" fill="${hc}"/>`}<circle cx="20.5" cy="21" r="1.2" fill="#222"/><circle cx="27.5" cy="21" r="1.2" fill="#222"/><path d="M21 25Q24 27.5 27 25" stroke="#8a3a2a" stroke-width="1.2" fill="none"/></svg>`};
+const RQ=[["Tầng cao","High floor"],["Không hút thuốc","Non-smoking"],["Giường đôi","Double bed"],["Giường phụ","Extra bed"],["Ăn sáng chay","Vegetarian breakfast"],["Đón sân bay","Airport pickup"],["Nhận phòng sớm","Early check-in"],["Phòng yên tĩnh","Quiet room"],["Dị ứng hải sản","Seafood allergy"],["Trang trí sinh nhật","Birthday decoration"],["Không có","None"]];
+const EN=["Michael Brown","Sarah Johnson","David Smith","Emma Wilson","Liam Taylor","Olivia Davis","Noah Miller","Sophia Moore"],VN=()=>[...NAMES,"Trần Bảo Châu","Ngô Khánh Linh","Đặng Hữu Phước"],PR={Superior:900000,Deluxe:1500000,Suite:2600000};
+const nz=x=>x.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/đ/g,"d").replace(/\s+/g," ").trim();
+const info=n=>{const r=rooms.find(x=>x.n==n);$("rinfo").innerHTML=`<b>Phòng ${r.n} · ${r.t} · tầng ${r.f}</b> · ${r.rsv?"Đã đặt":LB[r.st]}`+(r.guest?`<br>Khách: ${esc(r.guest.name)} · ${r.guest.pax} người · ${r.guest.nights} đêm<br>Yêu cầu: ${esc(r.guest.req||"Không có")}`:"<br>Chưa có thông tin khách.")};
+function mkBk(){
+ const rn=n=>Math.floor(Math.random()*n),en=rn(100)<20+rk()*12,src=rnd(["email","sales","web"]),tp=rnd(["Superior","Deluxe","Suite"]),n=1+rn(Math.min(5,2+rk())),nm=(en?EN:VN()).slice().sort(()=>Math.random()-.5),rooms=Array.from({length:n},(_,i)=>({name:nm[i],pax:1+rn(4),nights:1+rn(5),rq:rn(RQ.length)})),d=["02","03","04","05"][rn(4)]+"/10/2026",ref=1000+rn(9000),who=rnd(en?EN:VN());
+ const L=rooms.map((r,i)=>{const q=RQ[r.rq][en?1:0],k=i+1;return (en?{email:`- Room ${k}: ${r.name}, ${r.pax} guest(s), ${r.nights} night(s). Request: ${q}.`,sales:`Guest ${k}: ${r.name} | ${r.pax} pax | ${r.nights}N | Request: ${q}`,web:`Room ${k} - Guest: ${r.name} | Guests: ${r.pax} | Nights: ${r.nights} | Notes: ${q}`}:{email:`- Phòng ${k}: ${r.name}, ${r.pax} người, ở ${r.nights} đêm. Yêu cầu: ${q}.`,sales:`Khách ${k}: ${r.name} | ${r.pax} pax | ${r.nights} đêm | YC: ${q}`,web:`Phòng ${k} - Họ tên: ${r.name} | Số khách: ${r.pax} | Số đêm: ${r.nights} | Ghi chú: ${q}`})[src]}).join("\n");
+ const H=(en?{email:`From: ${nz(who).replace(/ /g,".")}@mail.com\nSubject: Room reservation\nDear Reception,\nPlease book ${n} ${tp} room(s) from ${d}.\n`,sales:`[SALES NOTE] Corporate booking, ${n} ${tp} room(s), arrival ${d}\n`,web:`Website booking #W${ref} | ${n} ${tp} room(s) | Arrival ${d}\n`}:{email:`Từ: ${nz(who).replace(/ /g,".")}@mail.com\nChủ đề: Đặt phòng\nKính gửi Lễ tân,\nTôi muốn đặt ${n} phòng ${tp}, nhận phòng ngày ${d}.\n`,sales:`[SALES] Booking công ty, ${n} phòng ${tp}, nhận phòng ${d}\n`,web:`Đặt phòng website #W${ref} | ${n} phòng ${tp} | Nhận phòng ${d}\n`})[src];
+ return {k:"booking",name:{email:"Email",sales:"Sales",web:"Website"}[src]+" booking ("+(en?"EN":"VI")+") · "+n+" phòng",type:tp,rooms,text:H+L+(src=="email"?(en?"\nBest regards,\n":"\nTrân trọng,\n")+who:"")}}
+function menu(){
+ const sv=load();$("board").innerHTML="";$("prog").innerHTML="";$("shift").textContent="Khách sạn 5 sao giả định · Quầy lễ tân";
+ $("stage").innerHTML=`<div class="card center"><h2>FRONTDESK VN</h2><p>Bạn làm lễ tân 30 ngày tại Rosemary Luxury Boutique Hotel, khách sạn 5 sao với 40 phòng thuộc 5 hạng (Superior, Deluxe, Executive, Suite, Presidential). Tiêu chuẩn 5 sao nghĩa là khách nhanh mất kiên nhẫn hơn. Mỗi ca có quy trình riêng: ca sáng nhận brief, làm folio, hướng dẫn khách ăn sáng, check-out và chuẩn bị Arrival List; ca chiều chuẩn bị welcome drink, kiểm tra phòng, set up VIP và check-in; ca đêm claim tiền OTA, night audit và chuẩn bị Departure List, Invoice, Breakfast List. Cuối mỗi ca đều phải bàn giao brief. Càng về sau khách càng đông, khách càng nóng tính và phòng trống càng ít. Tích lũy XP để thăng chức Trainee, Receptionist, Captain, FO Supervisor, AFOM, FOM. Chức càng cao càng khó, và quản lý bắt đầu giao việc từ Captain. Cuối ngày bạn nhận thưởng hoặc bị phạt. Hài lòng dưới 25 hoặc Uy tín dưới 20 vào cuối ngày là một cảnh cáo. Xử lý đúng giúp tăng Uy tín và giảm Stress, sai sót làm Stress tăng và trên 80 thì bạn kiệt sức, đủ 3 cảnh cáo thì mất việc.</p>
+ ${gsel()}<p><label>Tên nhân viên: <input id="pn" maxlength="24" value="${esc(P.name)}" style="padding:8px;border:1px solid var(--line);border-radius:3px;font:inherit"></label></p><button class="btn" id="nw" style="margin:14px 6px 0">Chơi mới</button>${sv?`<button class="btn" id="ct" style="margin:14px 6px 0">Tiếp tục ngày ${sv.day}</button>`:""}<button class="btn" id="ac" style="margin:14px 6px 0">Thành tích</button>
+ <p class="note">Toàn bộ khách sạn, nhân vật và doanh nghiệp là giả định. Tiến trình được lưu tự động trên trình duyệt này.</p></div>`;
+ $("nw").onclick=()=>{P.name=$("pn").value.trim()||"Nhân viên mới";saveP();$("ac").onclick=null;Object.assign(S,{ts:[],gender:sel,rk:0,name:P.name,xp:0,clk:0,trust:50,stress:20,day:1,warn:0,sat:50,rev:0,ok:0,tot:0,hist:[],lastEv:""});hud();startDay()};
+ $("ac").onclick=ach;document.querySelectorAll(".gb").forEach(b=>b.onclick=()=>{sel=b.dataset.g;P.gender=sel;saveP();document.querySelectorAll(".gb").forEach(x=>x.classList.toggle("on",x===b))});
+ if(sv)$("ct").onclick=()=>{Object.assign(S,sv);if($("pn").value.trim()){S.name=$("pn").value.trim();P.name=S.name;saveP()}hud();startDay()};
+}
+function startDay(){
+ S.hist=S.hist||[];const ban=S.hist.flat();
+ S.ev=S.day%3==2?rnd(EVT.filter(e=>e.n!=S.lastEv)):null;if(S.ev)S.lastEv=S.ev.n;
+ S.pm=S.ev?S.ev.pm:1;S.rk0=rk();resetRooms(S.ev?S.ev.occ:0);
+ const pool=POOL.filter(g=>g.k!="audit"&&!ban.includes(g.id)&&(!g.mg||rk()>=2)).sort(()=>Math.random()-.5);
+ const take=(f,n)=>{const r=[];for(let i=pool.length-1;i>=0&&r.length<n;i--)if(f(pool[i]))r.push(pool.splice(i,1)[0]);return r};
+ const fill=(r,n)=>[...r,...take(g=>!g.k,n-r.length)].slice(0,n).sort(()=>Math.random()-.5),tc=(c,n)=>take(g=>g.cat==c,n);
+ const gm=fill([...take(g=>g.k=="co",2),...tc("i",2)],5),ga=fill([...take(g=>g.k=="chain",rk()>=2?1:0),...take(g=>g.mg&&g.k!="chain",rk()>=2?2:0),...take(g=>g.k=="assign",3),...tc("w",2),...tc("i",1)],8),gn=fill([...tc("w",1),...tc("i",2)],5);
+ S.hist.push([...gm,...ga,...gn].map(g=>g.id));S.hist=S.hist.slice(-3);
+ const pr=g=>{const c={...g};if(c.o)c.o=c.o.slice().sort(()=>Math.random()-.5);if(c.k&&c.k!="chain")c.name=rnd(NAMES);return c};
+ const tk=k=>({...TASKS[k],items:TASKS[k].items.slice().sort(()=>Math.random()-.5)});
+ const ae=ga.map(pr);
+ if(S.ev){const e={...S.ev.s};e.o=e.o.slice().sort(()=>Math.random()-.5);e.name="⚠️ "+e.name;ae.splice(Math.floor(Math.random()*(ae.length+1)),0,e)}
+ const a=JSON.parse(JSON.stringify(POOL.find(g=>g.k=="audit"))),d=rnd([150000,300000,500000]);
+ const t=x=>x.replace(/8\.150\.000đ|300\.000đ/g,m=>m[0]=="8"?fmt(8450000-d):fmt(d));
+ a.say=t(a.say);a.o.forEach(o=>{o[0]=t(o[0]);o[4]=t(o[4])});a.o.sort(()=>Math.random()-.5);a.name="Night Audit - Cut-off";
+ const sh=(ca,arr)=>arr.map(g=>({...g,shift:"Ngày "+S.day+" · "+ca}));
+ const q=[...sh("Ca sáng",[bf("Nhận brief từ ca đêm","Departure List"),tk("folio"),tk("bfast"),mkBk(),...gm.map(pr),tk("arrlist"),tk("handM")]),
+  ...sh("Ca chiều",[bf("Nhận Brief từ ca sáng","Arrival List"),tk("welcome"),tk("arrroom"),tk("vip"),...ae,tk("handA")]),
+  ...sh("Ca đêm",[bf("Nhận Brief từ ca Chiều","Arrival còn lại"),mkBk(),...gn.map(pr),tk("ota"),a,tk("deplist"),tk("bflist"),tk("handN")])];
+ const nt=q.filter(g=>g.k=="task").length;
+ G.length=0;G.push(...q);S.i=0;S.log=[];S.d0={ok:S.ok,tot:S.tot};
+ board(0);$("shift").textContent="Ngày "+S.day+"/30";
+ $("stage").innerHTML=`<div class="card center"><h2>Ngày ${S.day}: ${LV(S.day)}</h2>${S.ev?`<div class="fb q1" style="text-align:left"><b>${S.ev.ic} Sự kiện đặc biệt: ${S.ev.n}</b>${S.ev.d}</div>`:""}<p>Hôm nay có ${q.length} lượt việc trong 3 ca: ${nt} bước quy trình ca và ${q.length-nt} lượt xử lý khách. Cảnh cáo hiện tại: ${S.warn}/3.</p><button class="btn" id="st">Bắt đầu ca sáng</button></div>`;
+ $("st").onclick=show;save();
+}
+end=function(){
+ const h=Math.max(1,S.tot-S.d0.tot),acc=(S.ok-S.d0.ok)/h,score=S.sat*.5+acc*50;
+ const st=score>=85?5:score>=70?4:score>=55?3:score>=40?2:1;
+ const bonus=st>=4?500000*(st-3):st<=2?-300000:0;S.rev+=0;S.rev+=bonus;
+ const low=S.sat<25||S.trust<=20;if(low)S.warn++;
+ const lost=S.warn>=3,win=!lost&&S.day>=30,bad=S.log.filter(l=>l.q<2).map(l=>l.n);
+ hud();$("shift").textContent="Báo cáo ngày "+S.day+"/30";
+ const fin=lost||win,elig=!(lost||win)&&S.rk<5&&S.xp>=RANKS[S.rk+1][1];if(fin){wipe();P.runs.push({n:S.name,d:S.day,rev:S.rev,rk:RANKS[rk()][0],acc:Math.round(S.ok/Math.max(1,S.tot)*100),w:S.warn,win,clk:S.clk});P.runs=P.runs.slice(-10);saveP()}
+ $("stage").innerHTML=`<div class="card center"><h2>${lost?"Bạn bị cho thôi việc":win?"Hoàn thành 30 ngày!":"Kết thúc ngày "+S.day}</h2><div class="stars" aria-label="${st} trên 5 sao">${"★".repeat(st)}${"☆".repeat(5-st)}</div>
+ ${elig?`<div class="fb q2" style="text-align:left"><b>Đủ XP thăng chức!</b>Bạn đủ điều kiện thi lên ${RANKS[S.rk+1][0]}.</div>`:""}<p>Xử lý <b>${h}</b> lượt · Chính xác ngày này <b>${Math.round(acc*100)}%</b> · Hài lòng <b>${S.sat}/100</b><br>${bonus?(bonus>0?"Thưởng ":"Phạt ")+fmt(Math.abs(bonus))+" · ":""}Tổng doanh thu <b>${fmt(S.rev)}</b></p>
+ <p>Uy tín với quản lý <b>${S.trust}/100</b> · Stress <b>${S.stress}/100</b>${S.stress>=80?" (kiệt sức: hài lòng bị trừ 8 sang ngày sau)":""}</p>${bad.length?`<p>Cần xem lại: ${bad.join(", ")}.</p>`:"<p>Không có lỗi nào hôm nay.</p>"}
+ ${low?`<p><b>Cảnh cáo ${S.warn}/3:</b> hài lòng dưới 25 hoặc uy tín quá thấp.</p>`:""}
+ ${lost?"<p>Ba lần cảnh cáo. Khách sạn tìm người thay bạn.</p>":win?`<p>Kết quả cuối: doanh thu ${fmt(S.rev)}, chính xác ${Math.round(S.ok/S.tot*100)}%, ${S.warn} cảnh cáo.</p>`:""}
+ <button class="btn" id="nd">${fin?"Xem bảng thành tích":elig?"Làm bài thi thăng chức":"Sang ngày "+(S.day+1)}</button></div>`;
+ const adv=()=>{S.sat=Math.min(100,S.sat+8-(S.stress>=80?16:0));S.stress=Math.max(0,S.stress-(S.stress>=80?15:30));S.day++;hud();startDay()};$("nd").onclick=()=>fin?ach():elig?exam(S.rk+1,adv):adv();
+};
+icons();hud();menu();
+</script>
+</body>
+</html>
