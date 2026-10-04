@@ -196,6 +196,8 @@ html,body{height:auto;overflow:auto}#root{height:auto}#legacy{max-width:none}
 .net .ctr{transform-box:fill-box;transform-origin:center;animation:nc 3s ease-in-out infinite}@keyframes nc{50%{transform:scale(1.05)}}
 .wl-card{background:transparent;border:0;padding:0;backdrop-filter:none}
 @media(prefers-reduced-motion:reduce){.net *{animation:none!important}}
+.dt{display:flex;gap:6px;align-items:center}.dt input{flex:1;min-width:0}.cal{flex:none;width:42px;height:42px;border:1px solid var(--line);border-radius:4px;background:var(--panel);display:grid;place-items:center;cursor:pointer}.cal:hover{background:var(--brass-bg)}.cal:focus-visible{outline:3px solid var(--acc)}.bk input[type=date]::-webkit-calendar-picker-indicator,.dt input[type=date]::-webkit-calendar-picker-indicator{display:none}
+.p-strip{display:flex;flex-wrap:wrap;gap:8px 18px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);padding:8px 14px;margin:6px 0 10px;font-size:13px}.p-strip span:first-child{font-weight:700;color:var(--green)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script></head>
 <body>
@@ -229,9 +231,9 @@ const G=[
     ["Yêu cầu khách xuất trình thêm sổ hộ khẩu và thẻ tín dụng.",0,-8,0,"Thủ tục thừa. CCCD là đủ để khai báo lưu trú, hỏi thêm chỉ làm khách khó chịu."]]},
 {av:"🎒",name:"Trần Quốc Hưng",shift:"Ca sáng · 09:30",
  say:"Chuyến bay của mình đến sớm. Mình đặt phòng từ ngày mai nhưng muốn vào phòng luôn hôm nay được không?",
- docs:[{t:"CCCD",r:[["Họ tên","TRẦN QUỐC HƯNG"],["Ngày sinh","05/11/1990"]]},{t:"Đặt phòng #AG7710",r:[["Nhận phòng","01/10 (ngày mai)"],["Phòng","Superior Twin"],["Giá","900.000đ/đêm"]]}],
+ docs:[{t:"CCCD",r:[["Họ tên","TRẦN QUỐC HƯNG"],["Ngày sinh","05/11/1990"]]},{t:"Đặt phòng #AG7710",r:[["Nhận phòng","{D1} (ngày mai)"],["Phòng","Superior Twin"],["Giá","900.000đ/đêm"]]}],
  pms:"Còn 3 phòng Superior Twin trống hôm nay. Nhận phòng sớm tính thêm 50% giá đêm.",
- o:[["Báo rõ còn phòng trống, phí nhận sớm là 450.000đ, khách đồng ý thì thêm đêm 30/09 và nhận phòng.",2,8,450000,"Xử lý tốt. Minh bạch phí, tận dụng phòng trống và tạo thêm doanh thu."],
+ o:[["Báo rõ còn phòng trống, phí nhận sớm là 450.000đ, khách đồng ý thì thêm đêm {D0} và nhận phòng.",2,8,450000,"Xử lý tốt. Minh bạch phí, tận dụng phòng trống và tạo thêm doanh thu."],
     ["Từ chối: đặt ngày mai thì ngày mai mới được vào.",1,-12,0,"Đúng quy định nhưng cứng nhắc khi còn phòng trống. Bạn bỏ lỡ cơ hội bán thêm và làm khách bực."],
     ["Cho vào luôn, không tính phí để khách vui.",0,10,0,"Khách vui nhưng khách sạn mất doanh thu và sai lệch báo cáo. Miễn phí cần có sự đồng ý của quản lý."]]},
 {av:"🕶️",name:"Người lạ tại quầy",shift:"Ca chiều · 14:05",
@@ -243,7 +245,7 @@ const G=[
     ["Từ chối thẳng và im lặng, không hỗ trợ gì thêm.",1,-6,0,"Đúng về bảo mật nhưng thiếu hỗ trợ. Luôn đưa ra phương án thay thế như gọi điện cho khách."]]},
 {av:"🛂",name:"Emma Carter",shift:"Ca chiều · 16:20",
  say:"Hello! I have a reservation for three nights under Carter.",
- docs:[{t:"Passport (UK)",r:[["Name","CARTER EMMA JANE"],["Visa","Miễn thị thực 45 ngày"],["Nhập cảnh","28/09/2026"]]},{t:"Booking #BK3308",r:[["Guest","Emma Carter"],["Room","Superior King"],["Nights","3"]]}],
+ docs:[{t:"Passport (UK)",r:[["Name","CARTER EMMA JANE"],["Visa","Miễn thị thực 45 ngày"],["Nhập cảnh","{D-3}"]]},{t:"Booking #BK3308",r:[["Guest","Emma Carter"],["Room","Superior King"],["Nights","3"]]}],
  pms:"Khách nước ngoài: bắt buộc khai báo lưu trú với cơ quan công an trong thời hạn quy định.",
  o:[["Kiểm tra hộ chiếu và dấu nhập cảnh, quét vào hệ thống, khai báo lưu trú rồi làm thủ tục check-in.",2,6,1500,"Đúng. Khai báo lưu trú cho khách nước ngoài là bắt buộc, không được bỏ sót."],
     ["Check-in trước, khai báo lưu trú để cuối tuần làm một lượt.",1,3,1500,"Rủi ro trễ hạn khai báo và bị xử phạt. Nên làm ngay khi nhận phòng."],
@@ -263,7 +265,7 @@ const G=[
     ["Xin lỗi và hứa sẽ nhắc nhở, không làm gì thêm.",1,3,0,"Có thiện chí nhưng thiếu hành động cụ thể. Nên gọi bảo vệ ngay và hỏi khách có muốn đổi phòng."],
     ["Giải thích rằng khách sạn không thể kiểm soát việc khách khác làm.",0,-18,0,"Đổ lỗi và từ chối trách nhiệm. Khách sạn có nghĩa vụ đảm bảo sự yên tĩnh cho khách."]]}
 ];
-const S={gt:360,gs:360,ot:0,otp:0,rf:"all",ts:[],rk:0,gender:"f",xp:0,name:"",clk:0,trust:50,stress:20,day:1,warn:0,i:0,sat:50,rev:0,ok:0,tot:0,log:[],t:null,late:false};
+const S={base:"",gt:360,gs:360,ot:0,otp:0,rf:"all",ts:[],rk:0,gender:"f",xp:0,name:"",clk:0,trust:50,stress:20,day:1,warn:0,i:0,sat:50,rev:0,ok:0,tot:0,log:[],t:null,late:false};
 const $=id=>document.getElementById(id);
 const fmt=n=>(n<0?"-":"")+Math.abs(n).toLocaleString("vi-VN")+"đ";
 function hud(){S.sat=Math.max(0,Math.min(100,S.sat));$("av").innerHTML=avatar(44);$("who").textContent=(S.name||"Chưa đăng nhập")+" · "+RANKS[rk()][0]+" · XP "+S.xp+(RANKS[rk()+1]?"/"+RANKS[rk()+1][1]:"");$("xpf").style.width=(RANKS[rk()+1]?Math.min(100,Math.round((S.xp-RANKS[rk()][1])/(RANKS[rk()+1][1]-RANKS[rk()][1])*100)):100)+"%";$("clk").innerHTML=clockSvg(S.gt)+"<strong>"+fmtT(S.gt)+"</strong>";$("sTr").textContent=S.trust;$("sSt").textContent=S.stress;$("sSt").style.color=S.stress>=70?"#ffb4a6":"";$("sSat").textContent=Math.max(0,Math.min(100,S.sat));$("sRev").textContent=S.rev.toLocaleString("vi-VN");$("sAcc").textContent=S.tot?Math.round(S.ok/S.tot*100)+"%":"100%"}
@@ -372,11 +374,11 @@ show=function(){
   $("co").onclick=()=>{const t=S.ts[S.ts.length-1];if(t){t.o=fmtT(Math.max(S.gt,te));t.ot=ot}S.gt=Math.max(S.gt,te);S.ot+=ot;S.otp+=ot*1500;S.xp+=Math.floor(ot/30);S.stress=Math.min(100,S.stress+Math.floor(ot/30)*2);hud();save();S.i++;S.i>=G.length?end():show()}}
  else if(g.k=="booking"){board(0);
   if(!g.pick){const u=new Set();g.pick=g.rooms.map(()=>{const f=rooms.filter(r=>r.st=="free"&&!r.rsv&&!u.has(r.n)),r=f.find(x=>x.g==g.type)||f[0]||rooms[0];u.add(r.n);return r.n})}
-  const ops=RQ.map((q,k)=>`<option value="${k}">${q[0]} / ${q[1]}</option>`).join("");
-  $("stage").innerHTML=`<div class="card"><div class="guest"><div class="avatar" aria-hidden="true">${gv({name:g.name})}</div><div><div class="name">${g.name}</div><p class="say">Đọc nội dung booking, nhập thông tin từng phòng. Mỗi phòng tối đa 2 khách, khách thứ 3 kê giường phụ (EB). Nhập đúng ngày CI và CO.</p></div></div><div class="mail">${esc(g.text)}</div>${g.rooms.map((r,i)=>`<div class="bk"><b>Phòng ${g.pick[i]} · ${g.type}</b><label>Tên người ở<input class="bn" placeholder="Tên người ở"></label><label>Số người<input class="bp" type="number" min="1" max="3" placeholder="1 - 3"></label><label>CI<input class="bci" type="date" min="2026-10-01"></label><label>CO<input class="bco" type="date" min="2026-10-01"></label><label>Yêu cầu đặc biệt<select class="bq">${ops}</select></label></div>`).join("")}<button class="btn" id="ask" style="margin-right:8px">Hỏi lại khách</button><button class="btn" id="sv">Lưu booking vào hệ thống</button><div id="fbk"></div></div>`;
+  const ops=RQ.map((q,k)=>`<option value="${k}">${q[(window.__L||"vi")=="vi"?0:1]}</option>`).join("");
+  $("stage").innerHTML=`<div class="card"><div class="guest"><div class="avatar" aria-hidden="true">${gv({name:g.name})}</div><div><div class="name">${g.name}</div><p class="say">Đọc nội dung booking, nhập thông tin từng phòng. Mỗi phòng tối đa 2 khách, khách thứ 3 kê giường phụ (EB). Nhập đúng ngày CI và CO.</p></div></div><div class="mail">${esc(g.text)}</div>${g.rooms.map((r,i)=>`<div class="bk"><b>Phòng ${g.pick[i]} · ${g.type}</b><label>Tên người ở<input class="bn" placeholder="Tên người ở"></label><label>Số người<input class="bp" type="number" min="1" max="3" placeholder="1 - 3"></label><label>CI<span class="dt"><input class="bci" type="date" min="${ISOd(S.day)}"><button type="button" class="cal" aria-label="Chọn lịch CI" onclick="const i=this.previousElementSibling;try{i.showPicker()}catch(e){i.focus()}">${CALI}</button></span></label><label>CO<span class="dt"><input class="bco" type="date" min="${ISOd(S.day)}"><button type="button" class="cal" aria-label="Chọn lịch CO" onclick="const i=this.previousElementSibling;try{i.showPicker()}catch(e){i.focus()}">${CALI}</button></span></label><label>Yêu cầu đặc biệt<select class="bq">${ops}</select></label></div>`).join("")}<button class="btn" id="ask" style="margin-right:8px">Hỏi lại khách</button><button class="btn" id="sv">Lưu booking vào hệ thống</button><div id="fbk"></div></div>`;
   $("ask").onclick=()=>{S.gt+=15;g.asked=1;$("ask").disabled=true;document.querySelector(".mail").textContent+="\n\n"+g.reply;hud()};
   $("sv").onclick=()=>{$("sv").remove();$("ask").remove();const rs=[...document.querySelectorAll(".bk")];let c=0,dr=0;const msg=[];
-   g.rooms.forEach((r,i)=>{const e=rs[i],nm=e.querySelector(".bn").value,px=+e.querySelector(".bp").value,ci=e.querySelector(".bci").value,co=e.querySelector(".bco").value,dd=x=>x?+x.slice(8,10):0,ISO=n=>"2026-10-"+String(n).padStart(2,"0"),rq=+e.querySelector(".bq").value,w=[];
+   g.rooms.forEach((r,i)=>{const e=rs[i],nm=e.querySelector(".bn").value,px=+e.querySelector(".bp").value,ci=e.querySelector(".bci").value,co=e.querySelector(".bco").value,dd=x=>x?dnum(x):0,ISO=ISOd,rq=+e.querySelector(".bq").value,w=[];
     if(nz(nm)==nz(r.name))c++;else w.push("tên (đúng: "+r.name+")");
     if(px==r.pax)c++;else w.push("số người (đúng: "+r.pax+")");
     if(ci==ISO(g.d0))c++;else w.push("CI (đúng: "+ISO(g.d0)+")");if(co==ISO(g.d0+r.nights))c++;else w.push("CO (đúng: "+ISO(g.d0+r.nights)+")");
@@ -420,7 +422,7 @@ N("❄️","Chị Nga","Mình vừa vào phòng 5 phút mà điều hòa không 
 ["Xin lỗi, gọi kỹ thuật, đề nghị đổi sang phòng 301 ngay và tặng nước chào mừng.",2,12,-50000,"Xử lý nhanh, đưa phương án ngay và đền bù nhỏ."],
 ["Xin lỗi và hẹn kỹ thuật lên sau 20 phút, mời khách chờ trong phòng.",1,-4,0,"Có xin lỗi nhưng để khách chịu nóng khi còn phòng trống là chưa tốt."],
 ["Gợi ý khách mở cửa sổ hoặc bật quạt.",0,-15,0,"Không giải quyết vấn đề và làm khách cảm thấy bị coi nhẹ."]]),
-N("💳","Anh Đạt","Cứ quẹt thẻ này đi, thẻ của mình dùng được mà.",[D("Thẻ Visa",["Hết hạn","08/2026"]),D("POS",["Kết quả","Từ chối: thẻ hết hạn"])],"Tiền cọc cần thu: 1.200.000đ.",[
+N("💳","Anh Đạt","Cứ quẹt thẻ này đi, thẻ của mình dùng được mà.",[D("Thẻ Visa",["Hết hạn","{EXP}"]),D("POS",["Kết quả","Từ chối: thẻ hết hạn"])],"Tiền cọc cần thu: 1.200.000đ.",[
 ["Nhẹ nhàng báo thẻ đã hết hạn và đề nghị thẻ khác hoặc đặt cọc bằng tiền mặt/chuyển khoản.",2,4,1200000,"Đúng. Thu cọc bằng phương thức khác để đảm bảo quyền lợi khách sạn."],
 ["Cho nhận phòng không cần cọc để khỏi phiền.",0,6,0,"Không có cọc là rủi ro khi khách phát sinh dịch vụ rồi rời đi."],
 ["Thử quẹt lại thẻ nhiều lần.",0,-8,0,"Thẻ hết hạn sẽ không thể qua. Thử nhiều lần chỉ làm mất thời gian và mất mặt khách."]]),
@@ -516,7 +518,7 @@ T("💲","Chị Ngân","Giá đêm nay sao cao hơn giá mình đã đặt?",["�
 T("💐","Người giao hoa","Tôi giao hoa cho khách phòng 503, cho tôi lên tận phòng nhé.",["Đơn giao",["Người nhận","Phòng 503"],["Người gửi","Không rõ"]],"Người ngoài không được lên khu lưu trú.",["Nhận hoa tại quầy, gọi khách xác nhận rồi nhân viên mang lên.",6,0,"Đúng. Khách quyết định nhận, người ngoài không vào khu phòng."],["Nhận hoa và để lại quầy đến khi khách xuống.",-2,0,"An toàn nhưng chậm."],["Cho người giao hoa lên thẳng phòng 503.",-18,0,"Người ngoài vào khu lưu trú không xác minh."]),
 T("🧳","Anh Hòa","Mình phải về gấp, trả phòng sớm 2 đêm thì có hoàn tiền không?",["Chính sách",["Hoàn","50% nếu báo trước 24 giờ"],["Khách báo","Trong ngày"]],"Quản lý có thể xem xét ngoại lệ.",["Giải thích chính sách, chuyển quản lý xem xét hoàn một phần và ghi lý do.",8,-1200000,"Đúng. Giữ chính sách và để quản lý quyết định ngoại lệ."],["Từ chối hoàn theo đúng quy định.",-6,0,"Đúng quy định nhưng cứng nhắc."],["Hoàn 100% hai đêm cho khách yên lòng.",8,-4800000,"Vượt thẩm quyền và phá vỡ chính sách."]),
 T("🧳","Cô Hương","Vali này không phải của mình! Vali mình đâu?",["Nhãn hành lý",["Tên trên nhãn","Lê Quang Nam"],["Phòng","409"]],"Bellman vừa giao hai vali giống nhau cho hai khách.",["Xin lỗi, gọi bellman đối chiếu nhãn, liên hệ khách phòng 409 và đổi lại vali.",10,0,"Đúng. Nhận lỗi và truy vết ngay."],["Bảo khách chờ, sẽ báo sau.",-4,0,"Không rõ thời gian, khách bất an."],["Bảo khách tự sang phòng 409 đổi vali.",-15,0,"Bắt khách tự xử lý lỗi của khách sạn."]),
-T("📅","Anh Sinh","Mình đặt phòng hôm nay, sao hệ thống ghi tháng sau?",["Đặt phòng",["Email xác nhận","30/10"],["Khách nói","30/09"]],"Còn Deluxe trống hôm nay.",["Kiểm tra email, giải thích nhầm lẫn và đề xuất đặt hôm nay hoặc đổi ngày.",8,1500000,"Đúng. Không đổ lỗi, đưa phương án rõ ràng."],["Nhận phòng theo giá cũ và ghi chú để kế toán xử lý.",2,1200000,"Giữ được khách nhưng giá không chuẩn."],["Bảo khách quay lại tháng sau.",-8,0,"Bỏ khách và doanh thu khi còn phòng."]),
+T("📅","Anh Sinh","Mình đặt phòng hôm nay, sao hệ thống ghi tháng sau?",["Đặt phòng",["Email xác nhận","{M1}"],["Khách nói","{D0}"]],"Còn Deluxe trống hôm nay.",["Kiểm tra email, giải thích nhầm lẫn và đề xuất đặt hôm nay hoặc đổi ngày.",8,1500000,"Đúng. Không đổ lỗi, đưa phương án rõ ràng."],["Nhận phòng theo giá cũ và ghi chú để kế toán xử lý.",2,1200000,"Giữ được khách nhưng giá không chuẩn."],["Bảo khách quay lại tháng sau.",-8,0,"Bỏ khách và doanh thu khi còn phòng."]),
 T("🀄","Chị Tuyết","Phòng 404 không hợp tuổi, cho mình đổi phòng khác được không?",["Đặt phòng",["Phòng","404 Deluxe"],["Tình trạng","Còn Deluxe khác"]],"Còn Deluxe cùng hạng và cùng giá.",["Vui vẻ đổi sang Deluxe khác cùng hạng, không thu phí.",8,0,"Đúng. Đổi ngang hạng là chi phí nhỏ cho sự hài lòng."],["Đổi nhưng thu phí đổi phòng.",-4,200000,"Đổi được nhưng khách cảm thấy bị tính toán."],["Từ chối vì đó là mê tín.",-12,0,"Coi thường niềm tin của khách."]),
 T("🧒","Bạn Long","Em 17 tuổi, em muốn đặt một phòng cho em ở một mình.",["CCCD",["Tuổi","17"],["Người giám hộ","Không có"]],"Chính sách: khách dưới 18 phải có người lớn đi cùng.",["Lịch sự giải thích chính sách, đề nghị liên hệ người giám hộ.",6,0,"Đúng. Bảo vệ trẻ vị thành niên là bắt buộc."],["Nhận nếu có tin nhắn đồng ý từ phụ huynh.",-4,900000,"Không xác minh được người gửi và không đúng chính sách."],["Cho nhận phòng để không mất doanh thu.",-22,900000,"Rủi ro pháp lý và an toàn nghiêm trọng."]),
 T("🚑","Khách khó thở","Anh ấy đột nhiên khó thở, ngồi lả ở sảnh!",["Hiện trường",["Khách","Nam, khoảng 60 tuổi"],["Triệu chứng","Khó thở"]],"Y tế khách sạn trực, bệnh viện gần nhất cách 8 phút.",["Gọi cấp cứu 115 và y tế khách sạn, ở bên cạnh, làm theo hướng dẫn sơ cứu.",12,0,"Đúng. Cấp cứu là ưu tiên tuyệt đối."],["Gọi taxi đưa khách đến bệnh viện.",-8,0,"Chậm hơn xe cấp cứu và không có hỗ trợ y tế."],["Mời khách nghỉ một lúc xem sao.",-25,0,"Nguy hiểm, có thể gây hậu quả nghiêm trọng."]),
@@ -628,7 +630,7 @@ function resetRooms(x){
  while(rooms.filter(r=>r.st=="free").length<16)rnd(rooms.filter(r=>r.st!="free")).st="free";
  rooms.forEach(r=>{delete r.rsv;r.guest=r.st=="occ"?(()=>{const n=1+Math.floor(Math.random()*5),k=1+Math.floor(Math.random()*n),ci=S.day-k;return{name:rnd(NAMES),pax:1+Math.floor(Math.random()*3),nights:n,ci,co:ci+n,req:rnd(RQ)[0],src:rnd(["Direct","Booking.com","Agoda","Website","Corporate","Walk-in"])}})():null});
 }
-function save(){try{localStorage.setItem(K,JSON.stringify({schema:2,ot:S.ot,otp:S.otp,gt:S.gt,gs:S.gs,ts:S.ts,rk:S.rk,gender:S.gender,xp:S.xp,name:S.name,clk:S.clk,trust:S.trust,stress:S.stress,hist:S.hist,lastEv:S.lastEv,day:S.day,sat:S.sat,rev:S.rev,warn:S.warn,ok:S.ok,tot:S.tot}))}catch(e){}}
+function save(){try{localStorage.setItem(K,JSON.stringify({schema:2,base:S.base,ot:S.ot,otp:S.otp,gt:S.gt,gs:S.gs,ts:S.ts,rk:S.rk,gender:S.gender,xp:S.xp,name:S.name,clk:S.clk,trust:S.trust,stress:S.stress,hist:S.hist,lastEv:S.lastEv,day:S.day,sat:S.sat,rev:S.rev,warn:S.warn,ok:S.ok,tot:S.tot}))}catch(e){}}
 function load(){try{return JSON.parse(localStorage.getItem(K))}catch(e){return null}}
 function wipe(){try{localStorage.removeItem(K)}catch(e){}}
 const esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -680,21 +682,25 @@ const nz=x=>x.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().repl
 const fmtT=m=>String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
 const clockSvg=m=>`<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#fff" stroke="#9bb86a" stroke-width="3"/><line x1="20" y1="20" x2="20" y2="10" stroke="#556B2F" stroke-width="2.6" stroke-linecap="round" transform="rotate(${(m/60%12)*30} 20 20)"/><line x1="20" y1="20" x2="20" y2="5" stroke="#c0432f" stroke-width="1.6" stroke-linecap="round" transform="rotate(${(m%60)*6} 20 20)"/><circle cx="20" cy="20" r="2" fill="#556B2F"/></svg>`;
 const info=n=>{const r=rooms.find(x=>x.n==n),gs=r.guest;$("rinfo").innerHTML=`<b>Phòng ${r.n} · ${r.t} · tầng ${r.f}</b> · ${r.rsv?"Đã đặt":LB[r.st]}`+(gs?`<br>Khách: ${esc(gs.name)} · ${gs.pax} người · ${gs.nights} đêm<br>Yêu cầu: ${esc(gs.req||"Không có")}`:"<br>Chưa có thông tin khách.")+(r.rsv?`<br><button class="btn" id="be">Sửa booking</button> <button class="btn" id="bc" style="background:var(--warn)">Hủy booking</button>`:"");
- if(r.rsv){$("bc").onclick=()=>{r.rsv=false;r.guest=null;board(0)};$("be").onclick=()=>{$("rinfo").innerHTML=`<div class="bk"><b>Sửa booking phòng ${r.n}</b><input id="en" value="${esc(gs.name)}"><input id="ep" type="number" value="${gs.pax}"><input id="ed" type="number" value="${gs.nights}"><select id="eq">${RQ.map((q,k)=>`<option value="${k}" ${q[0]==gs.req?"selected":""}>${q[0]} / ${q[1]}</option>`).join("")}</select></div><button class="btn" id="es">Lưu thay đổi</button>`;$("es").onclick=()=>{r.guest={name:$("en").value,pax:+$("ep").value||"-",nights:+$("ed").value||"-",req:RQ[+$("eq").value][0]};info(n)}}}};
+ if(r.rsv){$("bc").onclick=()=>{r.rsv=false;r.guest=null;board(0)};$("be").onclick=()=>{$("rinfo").innerHTML=`<div class="bk"><b>Sửa booking phòng ${r.n}</b><input id="en" value="${esc(gs.name)}"><input id="ep" type="number" value="${gs.pax}"><input id="ed" type="number" value="${gs.nights}"><select id="eq">${RQ.map((q,k)=>`<option value="${k}" ${q[0]==gs.req?"selected":""}>${q[(window.__L||"vi")=="vi"?0:1]}</option>`).join("")}</select></div><button class="btn" id="es">Lưu thay đổi</button>`;$("es").onclick=()=>{r.guest={name:$("en").value,pax:+$("ep").value||"-",nights:+$("ed").value||"-",req:RQ[+$("eq").value][0]};info(n)}}}};
 function mkBk(){
- const rn=n=>Math.floor(Math.random()*n),en=rn(100)<20+rk()*12,src=rnd(["email","sales","web"]),tp=rnd(["Superior","Deluxe","Suite"]),n=1+rn(Math.min(5,2+rk())),nm=(en?EN:VN()).slice().sort(()=>Math.random()-.5),rooms=Array.from({length:n},(_,i)=>({name:nm[i],pax:1+rn(3),nights:1+rn(5),rq:rn(RQ.length)})),d0=2+rn(4),P2=x=>String(x).padStart(2,"0"),d=P2(d0)+"/10/2026",ref=1000+rn(9000),who=rnd(en?EN:VN());
+ const rn=n=>Math.floor(Math.random()*n),en=rn(100)<20+rk()*12,src=rnd(["email","sales","web"]),tp=rnd(["Superior","Deluxe","Suite"]),n=1+rn(Math.min(5,2+rk())),nm=(en?EN:VN()).slice().sort(()=>Math.random()-.5),rooms=Array.from({length:n},(_,i)=>({name:nm[i],pax:1+rn(3),nights:1+rn(5),rq:rn(RQ.length)})),d0=S.day+rn(4),P2=x=>String(x).padStart(2,"0"),d=DMY(d0),ref=1000+rn(9000),who=rnd(en?EN:VN());
  const E=rn(100)<25+rk()*6?rn(2):-1,ei=rn(n),ef=rn(3);
  const R2=rooms.map((r,i)=>({name:E==0&&i==ei&&ef==0?(en?"(name not provided)":"(chưa có tên)"):r.name,pax:E==0&&i==ei&&ef==1?"?":r.pax,nights:E==0&&i==ei&&ef==2?"?":r.nights,rq:r.rq}));
- const L=R2.map((r,i)=>{const q=RQ[r.rq][en?1:0],k=i+1,x=E==1&&i==ei?` (${en?"check-out":"trả phòng"} ${P2(d0+rooms[i].nights+1)}/10)`:"";return (en?{email:`- Room ${k}: ${r.name}, ${r.pax} guest(s), ${r.nights} night(s). Request: ${q}.${x}`,sales:`Guest ${k}: ${r.name} | ${r.pax} pax | ${r.nights}N | Request: ${q}${x}`,web:`Room ${k} - Guest: ${r.name} | Guests: ${r.pax} | Nights: ${r.nights} | Notes: ${q}${x}`}:{email:`- Phòng ${k}: ${r.name}, ${r.pax} người, ở ${r.nights} đêm. Yêu cầu: ${q}.${x}`,sales:`Khách ${k}: ${r.name} | ${r.pax} pax | ${r.nights} đêm | YC: ${q}${x}`,web:`Phòng ${k} - Họ tên: ${r.name} | Số khách: ${r.pax} | Số đêm: ${r.nights} | Ghi chú: ${q}${x}`})[src]}).join("\n");
+ const L=R2.map((r,i)=>{const q=RQ[r.rq][en?1:0],k=i+1,x=E==1&&i==ei?` (${en?"check-out":"trả phòng"} ${DMY(d0+rooms[i].nights+1).slice(0,5)})`:"";return (en?{email:`- Room ${k}: ${r.name}, ${r.pax} guest(s), ${r.nights} night(s). Request: ${q}.${x}`,sales:`Guest ${k}: ${r.name} | ${r.pax} pax | ${r.nights}N | Request: ${q}${x}`,web:`Room ${k} - Guest: ${r.name} | Guests: ${r.pax} | Nights: ${r.nights} | Notes: ${q}${x}`}:{email:`- Phòng ${k}: ${r.name}, ${r.pax} người, ở ${r.nights} đêm. Yêu cầu: ${q}.${x}`,sales:`Khách ${k}: ${r.name} | ${r.pax} pax | ${r.nights} đêm | YC: ${q}${x}`,web:`Phòng ${k} - Họ tên: ${r.name} | Số khách: ${r.pax} | Số đêm: ${r.nights} | Ghi chú: ${q}${x}`})[src]}).join("\n");
  const H=(en?{email:`From: ${nz(who).replace(/ /g,".")}@mail.com\nSubject: Room reservation\nDear Reception,\nPlease book ${n} ${tp} room(s) from ${d}.\n`,sales:`[SALES NOTE] Corporate booking, ${n} ${tp} room(s), arrival ${d}\n`,web:`Website booking #W${ref} | ${n} ${tp} room(s) | Arrival ${d}\n`}:{email:`Từ: ${nz(who).replace(/ /g,".")}@mail.com\nChủ đề: Đặt phòng\nKính gửi Lễ tân,\nTôi muốn đặt ${n} phòng ${tp}, nhận phòng ngày ${d}.\n`,sales:`[SALES] Booking công ty, ${n} phòng ${tp}, nhận phòng ${d}\n`,web:`Đặt phòng website #W${ref} | ${n} phòng ${tp} | Nhận phòng ${d}\n`})[src];
  const val=[rooms[ei].name,rooms[ei].pax,rooms[ei].nights][ef],reply=E==0?(en?`Guest replied: Room ${ei+1} - ${["name","guests","nights"][ef]}: ${val}.`:`Khách trả lời: Phòng ${ei+1} - ${["tên","số người","số đêm"][ef]}: ${val}.`):E==1?(en?`Guest replied: Room ${ei+1} is ${rooms[ei].nights} night(s); the check-out date was a typo.`:`Khách trả lời: Phòng ${ei+1} ở ${rooms[ei].nights} đêm, ngày trả phòng ghi nhầm.`):(en?"Guest replied: the booking details are correct.":"Khách trả lời: thông tin booking là chính xác.");
  return {k:"booking",name:{email:"Email",sales:"Sales",web:"Website"}[src]+" booking ("+(en?"EN":"VI")+") · "+n+" phòng",type:tp,rooms,d0,srcn:{email:"Direct",sales:"Corporate",web:"Website"}[src],err:E>=0,reply,text:L.length?H+L+(src=="email"?(en?"\nBest regards,\n":"\nTrân trọng,\n")+who:""):H}}
+const baseMs=()=>{if(S.base)return Date.parse(S.base+"T00:00:00Z");const t=new Date();return Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())};
+const BD=n=>new Date(baseMs()+(n-1)*864e5),P2d=x=>String(x).padStart(2,"0"),ISOd=n=>BD(n).toISOString().slice(0,10),DMY=n=>{const d=BD(n);return P2d(d.getUTCDate())+"/"+P2d(d.getUTCMonth()+1)+"/"+d.getUTCFullYear()},dnum=x=>Math.round((Date.parse(x+"T00:00:00Z")-baseMs())/864e5)+1,todayISO=()=>{const t=new Date();return t.getFullYear()+"-"+P2d(t.getMonth()+1)+"-"+P2d(t.getDate())};
+const TKS=x=>typeof x!="string"?x:x.replace(/\{D0\}/g,DMY(S.day).slice(0,5)).replace(/\{D1\}/g,DMY(S.day+1).slice(0,5)).replace(/\{D-3\}/g,DMY(S.day-3)).replace(/\{M1\}/g,DMY(S.day+30).slice(0,5)).replace(/\{EXP\}/g,(()=>{const d=BD(S.day);d.setUTCMonth(d.getUTCMonth()-1);return P2d(d.getUTCMonth()+1)+"/"+d.getUTCFullYear()})());
+const CALI='<svg viewBox="0 0 48 48" width="20" height="20" class="ic2" aria-hidden="true"><rect class="a" x="5" y="9" width="38" height="34" rx="4"/><rect class="b" x="5" y="9" width="38" height="10" rx="4"/><rect class="b" x="14" y="4" width="4" height="10" rx="2"/><rect class="b" x="30" y="4" width="4" height="10" rx="2"/><rect class="b" x="12" y="26" width="8" height="6" rx="1.5"/><rect class="b" x="24" y="26" width="8" height="6" rx="1.5"/></svg>';
 function menu(){
  const sv=load();$("board").innerHTML="";$("prog").innerHTML="";$("shift").textContent="Khách sạn 5 sao giả định · Quầy lễ tân";
  $("stage").innerHTML=`<div class="card center"><h2>FRONTDESK VN</h2><p>Bạn làm lễ tân 30 ngày tại Rosemary Luxury Boutique Hotel, khách sạn 5 sao với 40 phòng thuộc 5 hạng (Superior, Deluxe, Executive, Suite, Presidential). Tiêu chuẩn 5 sao nghĩa là khách nhanh mất kiên nhẫn hơn. Mỗi ca có quy trình riêng: ca sáng nhận brief, làm folio, hướng dẫn khách ăn sáng, check-out và chuẩn bị Arrival List; ca chiều chuẩn bị welcome drink, kiểm tra phòng, set up VIP và check-in; ca đêm claim tiền OTA, night audit và chuẩn bị Departure List, Invoice, Breakfast List. Cuối mỗi ca đều phải bàn giao brief. Càng về sau khách càng đông, khách càng nóng tính và phòng trống càng ít. Tích lũy XP để thăng chức Trainee, Receptionist, Captain, FO Supervisor, AFOM, FOM. Chức càng cao càng khó, và quản lý bắt đầu giao việc từ Captain. Cuối ngày bạn nhận thưởng hoặc bị phạt. Hài lòng dưới 25 hoặc Uy tín dưới 20 vào cuối ngày là một cảnh cáo. Xử lý đúng giúp tăng Uy tín và giảm Stress, sai sót làm Stress tăng và trên 80 thì bạn kiệt sức, đủ 3 cảnh cáo thì mất việc.</p>
  ${gsel()}<p><label>Tên nhân viên: <input id="pn" maxlength="24" value="${esc(P.name)}" style="padding:8px;border:1px solid var(--line);border-radius:3px;font:inherit"></label></p><button class="btn" id="nw" style="margin:14px 6px 0">Chơi mới</button>${sv?`<button class="btn" id="ct" style="margin:14px 6px 0">Tiếp tục ngày ${sv.day}</button>`:""}<button class="btn" id="ac" style="margin:14px 6px 0">Thành tích</button>
  <p class="note">Toàn bộ khách sạn, nhân vật và doanh nghiệp là giả định. Tiến trình được lưu tự động trên trình duyệt này.</p></div>`;
- $("nw").onclick=()=>{P.name=$("pn").value.trim()||"Nhân viên mới";saveP();$("ac").onclick=null;Object.assign(S,{ot:0,otp:0,gt:360,gs:360,ts:[],gender:sel,rk:0,name:P.name,xp:0,clk:0,trust:50,stress:20,day:1,warn:0,sat:50,rev:0,ok:0,tot:0,hist:[],lastEv:""});hud();startDay()};
+ $("nw").onclick=()=>{P.name=$("pn").value.trim()||"Nhân viên mới";saveP();$("ac").onclick=null;Object.assign(S,{base:todayISO(),ot:0,otp:0,gt:360,gs:360,ts:[],gender:sel,rk:0,name:P.name,xp:0,clk:0,trust:50,stress:20,day:1,warn:0,sat:50,rev:0,ok:0,tot:0,hist:[],lastEv:""});hud();startDay()};
  $("ac").onclick=ach;document.querySelectorAll(".gb").forEach(b=>b.onclick=()=>{sel=b.dataset.g;P.gender=sel;saveP();document.querySelectorAll(".gb").forEach(x=>x.classList.toggle("on",x===b))});
  if(sv)$("ct").onclick=()=>{Object.assign(S,sv);if($("pn").value.trim()){S.name=$("pn").value.trim();P.name=S.name;saveP()}hud();startDay()};
 }
@@ -707,7 +713,7 @@ function startDay(){
  const fill=(r,n)=>[...r,...take(g=>!g.k,n-r.length)].slice(0,n).sort(()=>Math.random()-.5),tc=(c,n)=>take(g=>g.cat==c,n);
  const gm=fill([...take(g=>g.k=="co",2),...tc("i",2)],5),ga=fill([...take(g=>g.k=="chain",rk()>=2?1:0),...take(g=>g.mg&&g.k!="chain",rk()>=2?2:0),...take(g=>g.k=="assign",3),...tc("w",2),...tc("i",1)],8),gn=fill([...tc("w",1),...tc("i",2)],5);
  S.hist.push([...gm,...ga,...gn].map(g=>g.id));S.hist=S.hist.slice(-3);
- const pr=g=>{const c={...g};if(c.o)c.o=c.o.slice().sort(()=>Math.random()-.5);if(c.k&&c.k!="chain")c.name=rnd(NAMES);return c};
+ const pr=g=>{const c={...g};if(c.o)c.o=c.o.slice().sort(()=>Math.random()-.5).map(o=>o.map(TKS));if(c.docs)c.docs=c.docs.map(d=>({...d,r:d.r.map(q=>[q[0],TKS(q[1])])}));c.pms=TKS(c.pms);c.say=TKS(c.say);if(c.k&&c.k!="chain")c.name=rnd(NAMES);return c};
  const tk=k=>({...TASKS[k],items:TASKS[k].items.slice().sort(()=>Math.random()-.5)});
  const ae=ga.map(pr);
  if(S.ev){const e={...S.ev.s};e.o=e.o.slice().sort(()=>Math.random()-.5);e.name="⚠️ "+e.name;ae.splice(Math.floor(Math.random()*(ae.length+1)),0,e)}
@@ -721,7 +727,7 @@ function startDay(){
  const nt=q.filter(g=>g.k=="task").length;
  G.length=0;G.push(...q);S.i=0;S.log=[];S.d0={ok:S.ok,tot:S.tot,rev:S.rev};
  board(0);$("shift").textContent="Ngày "+S.day+"/30";
- $("stage").innerHTML=`<div class="card center"><h2>Ngày ${S.day}: ${LV(S.day)}</h2>${S.ev?`<div class="fb q1" style="text-align:left"><b>${S.ev.ic} Sự kiện đặc biệt: ${S.ev.n}</b>${S.ev.d}</div>`:""}<p>Hôm nay có ${q.length} lượt việc trong 3 ca: ${nt} bước quy trình ca và ${q.length-nt} lượt xử lý khách. Cảnh cáo hiện tại: ${S.warn}/3.</p><button class="btn" id="st">Bắt đầu ca sáng</button></div>`;
+ $("stage").innerHTML=`<div class="card center"><h2>Ngày ${S.day} · ${DMY(S.day)}: ${LV(S.day)}</h2>${S.ev?`<div class="fb q1" style="text-align:left"><b>${S.ev.ic} Sự kiện đặc biệt: ${S.ev.n}</b>${S.ev.d}</div>`:""}<p>Hôm nay có ${q.length} lượt việc trong 3 ca: ${nt} bước quy trình ca và ${q.length-nt} lượt xử lý khách. Cảnh cáo hiện tại: ${S.warn}/3.</p><button class="btn" id="st">Bắt đầu ca sáng</button></div>`;
  $("st").onclick=show;save();
 }
 end=function(){
@@ -732,7 +738,7 @@ end=function(){
  const lost=S.warn>=3,win=!lost&&S.day>=30,bad=S.log.filter(l=>l.q<2).map(l=>l.n);
  hud();$("shift").textContent="Báo cáo ngày "+S.day+"/30";
  const fin=lost||win,elig=!(lost||win)&&S.rk<5&&S.xp>=RANKS[S.rk+1][1];if(fin){wipe();P.runs.push({n:S.name,d:S.day,rev:S.rev,rk:RANKS[rk()][0],acc:Math.round(S.ok/Math.max(1,S.tot)*100),w:S.warn,win,clk:S.clk});P.runs=P.runs.slice(-10);saveP()}
- $("stage").innerHTML=`<div class="card center"><h2>${lost?"Bạn bị cho thôi việc":win?"Hoàn thành 30 ngày!":"Kết thúc ngày "+S.day}</h2><div class="stars" aria-label="${st} trên 5 sao">${"★".repeat(st)}${"☆".repeat(5-st)}</div>
+ $("stage").innerHTML=`<div class="card center"><h2>${lost?"Bạn bị cho thôi việc":win?"Hoàn thành 30 ngày!":"Kết thúc ngày "+S.day+" ("+DMY(S.day)+")"}</h2><div class="stars" aria-label="${st} trên 5 sao">${"★".repeat(st)}${"☆".repeat(5-st)}</div>
  ${elig?`<div class="fb q2" style="text-align:left"><b>Đủ XP thăng chức!</b>Bạn đủ điều kiện thi lên ${RANKS[S.rk+1][0]}.</div>`:""}<p>Xử lý <b>${h}</b> lượt · Chính xác ngày này <b>${Math.round(acc*100)}%</b> · Hài lòng <b>${S.sat}/100</b><br>${bonus?(bonus>0?"Thưởng ":"Phạt ")+fmt(Math.abs(bonus))+" · ":""}Tổng doanh thu <b>${fmt(S.rev)}</b></p>
  <div class="kpi" style="text-align:left"><div>Công suất cuối ngày<b>${Math.round(rooms.filter(r=>r.st=="occ"||r.rsv).length/rooms.length*100)}%</b></div><div>Làm thêm tích lũy<b>${S.ot} phút</b></div><div>Tiền làm thêm<b>${fmt(S.otp)}</b></div><div>Kinh nghiệm<b>${S.xp} XP</b></div></div><p>Uy tín với quản lý <b>${S.trust}/100</b> · Stress <b>${S.stress}/100</b>${S.stress>=80?" (kiệt sức: hài lòng bị trừ 8 sang ngày sau)":""}</p>${bad.length?`<p>Cần xem lại: ${bad.join(", ")}.</p>`:"<p>Không có lỗi nào hôm nay.</p>"}
  ${low?`<p><b>Cảnh cáo ${S.warn}/3:</b> hài lòng dưới 25 hoặc uy tín quá thấp.</p>`:""}
@@ -972,8 +978,356 @@ Hồ sơ=Profile
 Yêu cầu đặc biệt=Special request
 Số người=Guests
 Thông tin=Information
-`.trim().split("\n").map(l=>{const i=l.indexOf("=");return[l.slice(0,i),l.slice(i+1)]}).filter(x=>x[0]&&x[1]);
-const OR=new WeakMap(),CV=(t,lg)=>{const k=t.trim();if(!k)return t;const pm=k.match(/^(✓ |\d+\. )(.+)$/);if(pm)return t.replace(k,pm[1]+CV(pm[2],lg).trim());for(const[v,e]of PAIRS){const f=lg=="vi"?e:v,o=lg=="vi"?v:e;if(k===f)return t.replace(k,o)}for(const[v,e]of PAIRS){const f=lg=="vi"?e:v,o=lg=="vi"?v:e;if(/:\s?$/.test(f)&&k.startsWith(f.trim())){return t.replace(f.trim(),o.trim())}}return t};
+
+Đang dọn=Cleaning
+Trống sạch=Vacant clean
+Trực tiếp=Direct
+Doanh nghiệp=Corporate
+Khách vãng lai=Walk-in
+Giặt ủi=Laundry
+Đưa đón sân bay=Airport transfer
+Bữa sáng=Breakfast
+Khác=Other
+Tiền mặt=Cash
+Thẻ=Card
+Chuyển khoản=Bank transfer
+OTA trả trước=OTA prepaid
+Hướng sông=River view
+Hướng thành phố=City view
+Không có=None
+Đặt chỗ=Reservation
+Không có đặt phòng nào đang hiệu lực.=No active reservation.
+Tổng (gồm VAT)=Total (incl. VAT)
+Đổi trạng thái=Change status
+Lọc đặt phòng=Filter reservations
+Tạo đặt phòng=New reservation
+Chưa thanh toán=Unpaid
+Bình thường=Normal
+Cao=High
+Trung bình=Medium
+Thấp=Low
+Khẩn=Urgent
+Nghiêm trọng=Critical
+Hỏng điều hòa=AC failure
+Mất nước nóng=Hot water failure
+Hỏng két sắt=Safe failure
+Lỗi rèm cửa=Curtain problem
+Sự cố điện=Electrical issue
+Lỗi Wi-Fi=Wi-Fi issue
+Khóa cửa=Door lock
+Đường ống nước=Plumbing
+Mở=Open
+Sao chép JSON lưu=Copy save JSON
+JSON lưu=Save JSON
+Nhập và tải lại=Import & reload
+Xóa chiến dịch đã lưu=Delete saved campaign
+Chưa vào ca=Off shift
+Lễ tân viên=Receptionist
+Loại phí=Charge category
+Giảm giá=Discount
+Phương thức thanh toán=Payment method
+Khách / Đặt phòng=Guest / Reservation
+Hoa Kỳ=United States
+Anh=United Kingdom
+Hàn Quốc=Korea
+Nhật Bản=Japan
+Pháp=France
+Đức=Germany
+Việt Nam=Vietnam
+Đã đối chiếu CCCD/hộ chiếu với đặt phòng=ID / passport verified against reservation
+Gán phòng=Assign room
+Phương thức=Method
+Đã chuyển đến bộ phận phụ trách=Passed to the responsible department
+Phát chìa=Issue key
+Đã phát chìa ✓=Key issued ✓
+Đã kiểm minibar và phụ phí với buồng phòng=Minibar and additional charges verified with Housekeeping
+Chỉ áp dụng voucher hợp lệ.=Apply only a valid voucher.
+Công ty / mã số thuế (tùy chọn)=Company / tax code (optional)
+Đã xuất hóa đơn=Invoice issued
+Đã quét hộ chiếu=Passport scanned
+Đã ghi thông tin visa / nhập cảnh=Visa / entry information recorded
+Đã khai báo lưu trú=Lodging registration submitted
+Đã xác nhận giường phụ (EB)=Extra bed (EB) confirmed
+Đặt cọc tối thiểu=Deposit: at least
+Yêu cầu đặc biệt:=Special request:
+Số dư cần thanh toán:=Balance due:
+Phòng sẽ chuyển sang Cleaning.=The room will change to Cleaning.
+Khách mới=New
+Đã giao=Assigned
+Đang xử lý=In progress
+Đang chờ=Waiting
+Hoàn thành=Completed
+Nhà hàng=Restaurant
+Vận chuyển=Transport
+Dịp đặc biệt=Special occasion
+Tour=Tour
+Y tế=Medical
+Thất lạc đồ=Lost & Found
+Giao cho=Assigned to
+Báo cháy=Fire alarm
+Người khả nghi=Suspicious person
+Cấp cứu y tế=Medical emergency
+Mất hộ chiếu=Missing passport
+Hư hỏng xe=Parking damage
+Mất tài sản=Lost property
+Vi phạm riêng tư=Privacy issue
+Overbooking=Overbooking
+Chênh lệch thanh toán=Payment discrepancy
+Mất điện=Power outage
+Xử lý chưa đúng=Handled incorrectly
+Xử lý tạm được=Handled acceptably
+Xử lý đúng quy trình=Handled per procedure
+Đã đóng=Closed
+Khiếu nại khách=Guest complaint
+Đang điều tra=Investigating
+Danh sách khách đi=Departure List
+Danh sách ăn sáng=Breakfast List
+Danh sách khách đến=Arrival List
+Yêu cầu đặc biệt của khách=Special requests
+Chuẩn bị VIP=VIP setup
+Phòng sẵn sàng (đã đặt)=Room readiness (reserved rooms)
+Danh sách khách đi (ngày mai)=Departure List (tomorrow)
+Claim OTA=OTA claim
+Kiểm tra tiền mặt=Verify cash
+Kiểm tra hóa đơn=Verify invoices
+Kiểm tra folio=Verify folios
+Kiểm tra trạng thái phòng=Verify room status
+Kiểm tra khách đi=Verify departures
+Kiểm tra khách đến=Verify arrivals
+Kiểm tra OTA=Verify OTA
+Hạch toán giao dịch còn treo=Post pending transactions
+Xem lại nhật ký=Review logs
+Giao dịch (folio)=Transactions (folios)
+Truy vết chênh lệch đến chứng từ. Không chỉnh sổ cho khớp.=Trace the variance to a supporting document. Do not adjust the books to force a match.
+Chứng từ=Supporting document
+Đã trả trước=Prepaid
+Có=Yes
+Xác nhận=Confirm
+Bảng điều khiển=Dashboard
+Yêu cầu khách=Guest Requests
+Bàn giao ca (Daily Brief)=Daily Brief
+Night audit chưa chốt=Night audit not closed yet
+Trang=Page
+Ca=Shift
+Chưa có ca nào được chấm công.=No shifts clocked yet.
+Tiếng Việt=English
+Menu chính=Menu
+Tìm kiếm (Ctrl+K)=Search (Ctrl+K)
+Thông báo=Notifications
+Bắt đầu ca=Start shift
+Không có thông báo=No notifications
+Kế hoạch phòng=Room plan
+Đào tạo=Training
+Phòng OOS=OOS rooms
+Đoàn (Corporate)=Group (Corporate)
+Doanh thu phòng / phòng đang ở=Room revenue / occupied rooms
+Doanh thu phòng / tổng số phòng=Room revenue / total rooms
+Phòng đang có khách (1 đêm)=Occupied rooms (1 night)
+Suite và Presidential đang ở=Suite and Presidential in-house
+Thông tin: khách, phòng, hạng…=Info: guest, room, type…
+Chọn phòng trống.=Choose a vacant room.
+Nhập tên khách.=Enter the guest name.
+Nhập họ tên khách.=Enter the guest's full name.
+Số điện thoại không hợp lệ.=Invalid phone number.
+Email không hợp lệ.=Invalid email.
+Đang chơi=In progress
+Mất việc=Fired
+JSON không hợp lệ.=Invalid JSON.
+Không có reservation.=No reservations.
+Chưa có incident. Các tình huống sự cố trong Training sẽ tự ghi vào đây.=No incidents yet. Incident scenarios in Training are logged here automatically.
+Hiện tại=Current
+Toàn chiến dịch=Whole campaign
+Từ tình huống=From scenarios
+Chỉ ghi bảng chấm công=Timesheet only
+Vào=In
+Ra=Out
+Nhận brief từ ca đêm=Receive the brief from the night shift
+Nhận Brief từ ca sáng=Receive the brief from the morning shift
+Nhận Brief từ ca Chiều=Receive the brief from the afternoon shift
+Đối chiếu số liệu bàn giao trước khi ký nhận.=Reconcile the handover figures before signing.
+Số liệu bàn giao=Handover figures
+Hệ thống=System
+Thực tế=Actual
+hóa đơn=invoices
+phòng=rooms
+Không có việc tồn đọng=No pending items
+Báo chênh lệch và ghi Log:=Report the variance and log it:
+Nhận và xử lý việc tồn đọng trong Log:=Pick up and handle the pending Log item:
+Ký nhận brief sau khi đối chiếu đủ=Sign the brief after full reconciliation
+Ký nhận ngay mà không đối chiếu=Sign immediately without reconciling
+Phòng 305 xin đổi phòng vì ồn, chưa giải quyết=Room 305 asked to change rooms due to noise, unresolved
+Khách phòng 502 cần xe sân bay lúc 5 giờ sáng, chưa đặt xe=Room 502 needs an airport car at 5 am, not booked yet
+Folio phòng 402 còn khoản minibar chưa thu=Room 402 folio still has an uncollected minibar charge
+Khách VIP phòng 601 dị ứng hải sản, chưa báo bếp=VIP guest in room 601 has a seafood allergy, kitchen not informed
+Khách phòng 208 xin hóa đơn VAT, chưa xuất=Room 208 requested a VAT invoice, not issued yet
+Đối chiếu số liệu (nếu có) rồi tick các bước cần làm. Một số bước không nên làm.=Reconcile the figures (if any), then tick the steps to perform. Some steps should not be done.
+Xác nhận hoàn thành=Confirm completion
+Hoàn thành đầy đủ, đúng quy trình.=Fully completed, per procedure.
+Chưa đúng=Incorrect
+Chấp nhận được=Acceptable
+Xử lý tốt=Well handled
+cần thực hiện=required
+không nên làm=should not be done
+Chuẩn bị folio cho khách check-out=Prepare folios for check-out guests
+Sắp đến giờ khách trả phòng.=Check-out time is approaching.
+In folio theo Departure List=Print folios per the Departure List
+Đối chiếu minibar và phụ phí với buồng phòng=Reconcile minibar and extra charges with housekeeping
+Kiểm tra voucher và giảm giá hợp lệ=Check valid vouchers and discounts
+Trừ khoản đã trả trước (OTA, tiền cọc)=Deduct prepaid amounts (OTA, deposit)
+Bỏ qua folio của khách trả muộn=Skip folios of late check-out guests
+Hướng dẫn khách đến nhà hàng ăn sáng=Guide guests to the breakfast restaurant
+Khách xuống sảnh hỏi chỗ ăn sáng.=A guest comes down asking where breakfast is served.
+Chào khách, hỏi số phòng và gói ăn sáng=Greet the guest, ask room number and breakfast package
+Chỉ đường hoặc dẫn khách tới nhà hàng=Give directions or walk the guest to the restaurant
+Báo nhà hàng yêu cầu đặc biệt (dị ứng, ăn chay)=Inform the restaurant of special requests (allergy, vegetarian)
+Cho khách vào ăn mà không kiểm tra gói ăn sáng=Let the guest in without checking the breakfast package
+Chuẩn bị Arrival List=Prepare the Arrival List
+Chuẩn bị danh sách khách đến hôm nay.=Prepare today's arrivals list.
+Lấy danh sách khách đến từ hệ thống=Pull the arrivals from the system
+Đánh dấu VIP, khách quay lại và yêu cầu đặc biệt=Flag VIPs, returning guests and special requests
+Kiểm tra phòng dự kiến với buồng phòng=Confirm planned rooms with housekeeping
+In và để sẵn cho ca chiều=Print and leave ready for the afternoon shift
+Chỉ in tên khách, bỏ ghi chú=Print guest names only, skip notes
+Bàn giao Brief cho ca chiều=Hand over the brief to the afternoon shift
+Sắp hết ca sáng.=The morning shift is ending.
+Bàn giao Arrival List=Hand over the Arrival List
+Bàn giao Invoice=Hand over Invoices
+Ghi Log ca sáng đầy đủ=Complete the morning Log
+Bàn giao Cash Float đã đếm=Hand over the counted Cash Float
+Rời quầy ngay khi hết giờ, chưa bàn giao=Leave the desk at shift end without handing over
+Chuẩn bị Welcome drink=Prepare the welcome drink
+Chuẩn bị đồ uống chào mừng cho khách đến.=Prepare welcome drinks for arriving guests.
+Kiểm tra số lượng theo Arrival List=Check quantities against the Arrival List
+Chuẩn bị thêm loại không cồn cho trẻ em và khách kiêng=Prepare non-alcoholic options for children and abstaining guests
+Giữ lạnh và đặt sẵn tại quầy=Keep chilled and ready at the desk
+Chuẩn bị một loại cho tất cả khách=Prepare one type for all guests
+Check Arrival room và Special Request=Check arrival rooms and special requests
+Kiểm tra phòng khách sắp đến.=Check the rooms of arriving guests.
+Hỏi buồng phòng phòng đã sẵn sàng=Ask housekeeping if the room is ready
+Đối chiếu yêu cầu đặc biệt (giường phụ, tầng cao, dị ứng)=Match special requests (extra bed, high floor, allergy)
+Báo bộ phận liên quan chuẩn bị yêu cầu=Notify the relevant department to prepare the requests
+Giao phòng chưa kiểm tra để kịp giờ=Hand over an unchecked room to save time
+Set up VIP=Set up the VIP
+Có khách VIP đến chiều nay.=A VIP guest arrives this afternoon.
+Kiểm tra lại phòng VIP đã dọn xong=Re-check that the VIP room is finished
+Đặt hoa, trái cây và thư chào=Place flowers, fruit and a welcome note
+Chuẩn bị sẵn thủ tục để check-in nhanh=Prepare paperwork for a fast check-in
+Bỏ qua kiểm tra vì phòng đã dọn sáng nay=Skip the check because the room was cleaned this morning
+Bàn giao Brief cho ca Đêm=Hand over the brief to the night shift
+Sắp hết ca chiều.=The afternoon shift is ending.
+Bàn giao Arrival còn lại nếu có=Hand over remaining arrivals, if any
+Ghi Log ca chiều đầy đủ=Complete the afternoon Log
+Chỉ nhắn miệng cho ca đêm=Only tell the night shift verbally
+Claim tiền từ OTA=Claim money from OTAs
+Đến giờ đối chiếu và claim tiền từ các kênh OTA.=Time to reconcile and claim money from OTA channels.
+Đối chiếu booking OTA với folio=Match OTA bookings with folios
+Claim các booking trả trước và khách no-show đúng hạn=Claim prepaid bookings and no-shows on time
+Lưu chứng từ và mã booking=Keep documents and booking codes
+Claim cả những booking đã hủy=Also claim cancelled bookings
+Chuẩn bị Departure List, Invoice=Prepare the Departure List and Invoices
+Chuẩn bị cho khách trả phòng sáng mai.=Prepare for tomorrow morning's check-outs.
+Lấy danh sách khách trả phòng sáng mai=Pull tomorrow morning's departures
+In Invoice theo đặt phòng=Print Invoices per booking
+Đánh dấu khách cần xe, trả muộn=Flag guests needing a car or late check-out
+Để mặc định, không kiểm tra=Leave defaults, no checking
+Chuẩn bị Breakfast List=Prepare the Breakfast List
+Chuẩn bị danh sách ăn sáng cho nhà hàng.=Prepare the breakfast list for the restaurant.
+Lấy khách có gói ăn sáng=Pull guests with a breakfast package
+Ghi dị ứng, ăn chay và yêu cầu đặc biệt=Note allergies, vegetarian and special requests
+Gửi nhà hàng và kiểm tra lại=Send to the restaurant and double-check
+Gửi toàn bộ khách trong khách sạn=Send every guest in the hotel
+Bàn giao cho ca sáng hôm sau=Hand over to the next morning shift
+Sắp hết ca đêm.=The night shift is ending.
+Bàn giao Departure List=Hand over the Departure List
+Ghi Log ca đêm đầy đủ=Complete the night Log
+Bàn giao Cash Float sau night audit=Hand over the Cash Float after the night audit
+Để két chưa đối chiếu sau night audit=Leave the drawer unreconciled after the night audit
+Phòng đã đặt chờ nhận=Reserved rooms awaiting check-in
+Ngày game=Game day
+Chủ Nhật=Sunday
+Doanh thu hôm nay=Revenue today
+Công suất phòng=Room occupancy
+Phòng trống=Vacant rooms
+Đã xong=Done
+Chính xác hôm nay=Accuracy today
+Hàng đợi công việc=Work queue
+
+Tầng cao=High floor
+Không hút thuốc=Non-smoking
+Giường đôi=Double bed
+Giường phụ=Extra bed
+Ăn sáng chay=Vegetarian breakfast
+Đón sân bay=Airport pickup
+Nhận phòng sớm=Early check-in
+Phòng yên tĩnh=Quiet room
+Dị ứng hải sản=Seafood allergy
+Trang trí sinh nhật=Birthday decoration
+
+>Definite=Chắc chắn
+>InHouse=Đang ở
+>Type=Loại
+>High (arrival)=Cao (khách đến)
+>Ticket=Phiếu
+>Front Desk=Lễ tân
+>Reservations=Đặt phòng
+>Daily Brief=Bàn giao ca
+>Night Audit=Kiểm toán đêm
+>Campaign revenue=Doanh thu chiến dịch
+>Room status=Trạng thái phòng
+>Completed days=Ngày đã hoàn thành
+>Promotions=Số lần thăng chức
+>Shifts clocked=Ca đã chấm công
+>Scenario accuracy=Độ chính xác tình huống
+>Check-in wizard=Quy trình nhận phòng
+>Check-out wizard=Quy trình trả phòng
+>guest(s)=khách
+>Source:=Nguồn:
+>Voucher (ROSE10, VIP15)=Mã voucher (ROSE10, VIP15)
+>Guest Requests / Concierge=Yêu cầu khách / Concierge
+>Incident Management=Quản lý sự cố
+>Room…=Phòng…
+>Claimable=Có thể claim
+>No-show=Không đến (no-show)
+>Open incidents=Sự cố đang mở
+>Open requests=Yêu cầu đang mở
+>Pending tasks=Việc còn tồn
+>Incidents=Sự cố
+>Search guest, reservation, room…=Tìm khách, đặt phòng, phòng…
+>Search room, guest, page…=Tìm phòng, khách, trang…
+
+Mỗi phòng tối đa 2 khách; khách thứ 3 kê EB; không nhận quá 3 người.=Max 2 guests per room; a 3rd guest needs an extra bed (EB); more than 3 is not accepted.
+CI phải từ ngày hiện tại và CO phải sau CI.=Check-in must be today or later and check-out must be after check-in.
+Ngày nhận phòng phải từ hôm nay và ngày trả phòng phải sau ngày nhận.=Check-in must be today or later and check-out must be after check-in.
+Dữ liệu cũ đã được chuyển sang schema 2.=Old data was migrated to schema 2.
+Đã xóa tiến trình chiến dịch. Tải lại trang để bắt đầu lại.=Campaign progress deleted. Reload the page to start over.
+Check-in phòng=Check-in room
+Check-out phòng=Check-out room
+Hủy booking phòng=Cancelled booking, room
+Booking mới phòng=New booking, room
+Reservation mới phòng=New reservation, room
+Night audit đã chốt=Night audit closed
+Giá:=Price:
+đêm=night(s)
+Tiền mặt thu=Cash collected
+5.000.000đ + tiền mặt thu=5,000,000đ + cash collected
+
+phút=min
+giờ=h
+`.trim().split("\n").map(l=>{const r=l[0]==">";if(r)l=l.slice(1);const i=l.indexOf("="),a=l.slice(0,i),b=l.slice(i+1);return r?[b,a,true]:[a,b,false]}).filter(x=>x[0]&&x[1]);
+const VI_RE=/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;const MV=new Map(),ME=new Map();PAIRS.forEach(([v,e,r])=>{v=v.trim();e=e.trim();if(!ME.has(e))ME.set(e,v);if(!r&&!MV.has(v))MV.set(v,e)});
+const OR=new WeakMap();
+const cv=(k,lg)=>{const M=lg=="vi"?ME:MV;if(M.has(k))return M.get(k);
+ const pm=k.match(/^(✓ |\d+\. )(.+)$/);if(pm)return pm[1]+cv(pm[2],lg);
+ if(k.includes(" · "))return k.split(" · ").map(x=>cv(x,lg)).join(" · ");
+ if(k.includes(" → "))return k.split(" → ").map(x=>cv(x,lg)).join(" → ");
+ if(/^(Phòng|Room) \d+, /.test(k))return k.split(", ").map(x=>cv(x,lg)).join(", ");
+ let m=k.match(/^(.+?:)\s?(.+)$/);if(m&&M.has(m[1]))return M.get(m[1])+" "+cv(m[2],lg);
+ m=k.match(/^(.+?) ([+\-]?\d[\d.,/%:\-–]*[đ%]?)$/);if(m&&M.has(m[1]))return M.get(m[1])+" "+m[2];
+ m=k.match(/^(\d[\d.,]*) (.+)$/);if(m&&M.has(m[2]))return m[1]+" "+M.get(m[2]);
+ const dyn=lg=="vi"?!VI_RE.test(k):VI_RE.test(k);
+ if(dyn&&/[\d(:]/.test(k)&&k.split(" ").length<=9){let ws=k.split(" "),o=[],i=0,ch=false;while(i<ws.length){let hit=0;for(let n=Math.min(6,ws.length-i);n>0&&!hit;n--){const raw=ws.slice(i,i+n).join(" "),mm=raw.match(/^([("'\[]*)(.*?)([)"'\].,;!?]*)$/);if(M.has(raw)){o.push(M.get(raw));i+=n;hit=1;ch=true}else if(mm&&mm[2]){const key=mm[2],t=M.get(key)||M.get(key.charAt(0).toUpperCase()+key.slice(1))||M.get(key.charAt(0).toLowerCase()+key.slice(1));if(t){o.push(mm[1]+t+mm[3]);i+=n;hit=1;ch=true}}}if(!hit){o.push(ws[i]);i++}}if(ch)return o.join(" ")}
+ return k};
+const CV=(t,lg)=>{const k=t.trim();return k?t.replace(k,cv(k,lg)):t};
 function applyLang(root){const lg=window.__L||"vi",w=document.createTreeWalker(root,4);let n;while(n=w.nextNode()){let o=OR.get(n);if(!o||n.data!==o.t)o={s:n.data,t:n.data};const r=CV(o.s,lg);if(r!==n.data)n.data=r;o.t=n.data;OR.set(n,o)}
  root.querySelectorAll("[placeholder],[aria-label]").forEach(e=>["placeholder","aria-label"].forEach(a=>{const v=e.getAttribute(a);if(v==null)return;const k="o"+a;if(e[k]==null||e[k+"t"]!==v)e[k]=v;const r=CV(e[k],lg);if(r!==v)e.setAttribute(a,r);e[k+"t"]=r}))}
 const PS=window.PMS={n:0,subs:new Set(),notes:{},logs:[],emit(){this.n++;this.subs.forEach(f=>f())},log(m){this.logs.unshift({t:fmtT(S.gt),d:S.day,m});this.logs.length=Math.min(this.logs.length,60);this.emit()}};
@@ -984,7 +1338,7 @@ let migrated=false;try{const sv=load();if(sv&&!sv.schema){localStorage.setItem(K
 if(cfg.theme)document.documentElement.dataset.theme=cfg.theme;
 if(!rooms.some(r=>r.st!="free"))resetRooms(0);
 const RATE={Superior:900000,Deluxe:1500000,Executive:1800000,Suite:2600000,Presidential:4200000},SL={free:"Vacant clean",occ:"Occupied",clean:"Cleaning",maint:"Maintenance",res:"Reserved"},sk=r=>r.rsv?"res":r.st;
-const ISO=n=>new Date(Date.UTC(2026,9,n)).toISOString().slice(0,10),dn=s=>Math.round((Date.UTC(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10))-Date.UTC(2026,9,0))/864e5),DT=n=>new Date(2026,9,n).toLocaleDateString("vi-VN"),EBP=300000,SRC=["Direct","Booking.com","Agoda","Website","Corporate","Walk-in"],CAT=["Minibar","Laundry","Spa","Airport transfer","Breakfast","Other"],PM=["Cash","Card","Bank transfer","OTA prepaid"],VC={ROSE10:10,VIP15:15};
+const ISO=ISOd,dn=dnum,DT=n=>DMY(n),EBP=300000,SRC=["Direct","Booking.com","Agoda","Website","Corporate","Walk-in"],CAT=["Minibar","Laundry","Spa","Airport transfer","Breakfast","Other"],PM=["Cash","Card","Bank transfer","OTA prepaid"],VC={ROSE10:10,VIP15:15};
 const gx=g=>{const n=+g.nights||1,ci=g.ci!=null?g.ci:S.day,co=g.co!=null?g.co:ci+n;return{ci,co,n:co-ci||1,eb:+g.pax>2}};
 const srcOf=r=>r.guest.src||SRC[+r.n%SRC.length],isOta=r=>/Booking|Agoda/.test(srcOf(r));
 const fol=r=>{const x=gx(r.guest),k=r.n+"-"+x.ci;if(!PS.fol[k]){const it=[{d:"Room "+r.t+" × "+x.n+" night(s)",q:x.n,u:RATE[r.t],c:"Room"}];if(x.eb)it.push({d:"Extra bed (EB)",q:x.n,u:EBP,c:"EB"});PS.fol[k]={it,pay:[],vc:0}}return PS.fol[k]};
@@ -1050,7 +1404,7 @@ function Dash({go,open}){const k=kp(),c=PS.cnt[S.day]||{},oc=k.oc,dep=oc.filter(
  D({className:"w-kg"},h(Kp,{l:"ADR",v:fmt(k.adr),sub:"Doanh thu phòng / phòng đang ở"}),h(Kp,{l:"RevPAR",v:fmt(k.revpar),sub:"Doanh thu phòng / tổng số phòng"}),h(Kp,{l:"Doanh thu phòng",v:fmt(k.rev),sub:"Phòng đang có khách (1 đêm)"}),h(Kp,{l:"VIP / Suite",v:k.vip.length,sub:"Suite và Presidential đang ở"})),
  D({className:"w-svc"},...sv.map(x=>h("button",{key:x[2],onClick:()=>go(x[2])},h(Ic,{n:x[0],s:34}),x[1]))),
  D({className:"p-2c"},Card("Mô phỏng",D({className:"p-row"},"Chức danh",h("b",null,RANKS[rk()][0])),D({className:"p-bar"},h("i",{style:{width:pr+"%"}})),D({className:"p-sub"},"XP "+S.xp+(nx?" / "+nx[1]:"")),D({className:"p-row"},"Hài lòng",h("b",null,S.sat)),D({className:"p-row"},"Uy tín",h("b",null,S.trust)),D({className:"p-row"},"Stress",h("b",null,S.stress)),Bt("Mở tình huống",()=>go("train"),"pri")),Card("Nhật ký thao tác",PS.logs.length?h("ul",{className:"p-ul"},...PS.logs.slice(0,8).map((l,i)=>h("li",{key:i},h("b",null,"N"+l.d+" "+l.t+" "),l.m))):D({className:"p-sub"},"Chưa có thao tác nào."))))}
-const bdate=()=>new Date(2026,9,S.day).toLocaleDateString("vi-VN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+const bdate=()=>BD(S.day).toLocaleDateString((window.__L||"vi")=="vi"?"vi-VN":"en-GB",{timeZone:"UTC",weekday:"long",day:"numeric",month:"long",year:"numeric"});
 const TC={Superior:"STD",Deluxe:"DLX",Executive:"EXE",Suite:"STE",Presidential:"PRS"},SI={free:"check",occ:"user",clean:"brush",maint:"wrench",res:"file"};
 const FP=(f,setF,C,extra)=>D({className:"w-fp"},extra,D({className:"w-lgt"},"Chú thích"),...[["all","Tất cả",rooms.length],...Object.keys(SL).map(k=>[k,SL[k],C[k]||0])].map(x=>h("button",{key:x[0],className:"w-lg"+(f==x[0]?" on":""),onClick:()=>setF(x[0])},h("i",{className:"w-dot s-"+x[0]}),x[1]+" ("+x[2]+")")));
 function Rack({open}){const[f,setF]=useState("all"),[fl,setFl]=useState(""),[ty,setTy]=useState(""),C={};rooms.forEach(r=>C[sk(r)]=(C[sk(r)]||0)+1);const vis=r=>(f=="all"||sk(r)==f)&&(!ty||r.t==ty);
@@ -1059,8 +1413,8 @@ function Rack({open}){const[f,setF]=useState("all"),[fl,setFl]=useState(""),[ty,
 function Plan({open,go}){const[nd,setNd]=useState(10),[ty,setTy]=useState(""),[f,setF]=useState("all"),[dr,setDr]=useState(null),C={};rooms.forEach(r=>C[sk(r)]=(C[sk(r)]||0)+1);const cols=Array.from({length:nd},(_,i)=>S.day+i),K=Object.keys(RATE),rs=rooms.filter(r=>!ty||r.t==ty).slice().sort((a,b)=>a.t==b.t?a.n-b.n:K.indexOf(a.t)-K.indexOf(b.t)),gt="170px 64px repeat("+nd+",minmax(52px,1fr))";
  const busy=(r,d)=>r.st=="maint"||!!(r.guest&&(r.rsv||r.st=="occ")&&gx(r.guest).ci<=d&&d<gx(r.guest).co);
  const bar=r=>{if(r.st=="maint")return{s:S.day,e:S.day+nd,c:"oos",t:"Phòng ngừng sử dụng"};if(!r.guest||!(r.rsv||r.st=="occ"))return null;const x=gx(r.guest),s=Math.max(x.ci,S.day),e=Math.min(x.co,S.day+nd);return e>s?{s,e,c:r.rsv?(x.ci==S.day?"td":"rv"):(x.co==S.day?"dp":"ih"),t:r.guest.name}:null};
- useEffect(()=>{const up=()=>{if(!dr)return;const a=Math.min(dr.a,dr.b),b=Math.max(dr.a,dr.b),r=rooms.find(x=>x.n==dr.n);setDr(null);for(let d=a;d<=b;d++)if(busy(r,d)){PS.log("Không thể tạo booking: phòng "+r.n+" đã có khách trong khoảng ngày đã chọn");return}PS.draft={room:r.n,ci:a,co:b+1};go("nb")};window.addEventListener("mouseup",up);return()=>window.removeEventListener("mouseup",up)},[dr]);
- const used=d=>rooms.filter(r=>busy(r,d)).length,dl=d=>new Date(2026,9,d).toLocaleDateString("vi-VN",{day:"2-digit",month:"2-digit"}),sel=(r,d)=>dr&&dr.n==r.n&&d>=Math.min(dr.a,dr.b)&&d<=Math.max(dr.a,dr.b);
+ useEffect(()=>{const up=()=>{if(!dr)return;const a=Math.min(dr.a,dr.b),b=Math.max(dr.a,dr.b),r=rooms.find(x=>x.n==dr.n);setDr(null);for(let d=a;d<=b;d++)if(busy(r,d)){PS.log((window.__L||"vi")=="vi"?"Không thể tạo booking: phòng "+r.n+" đã có khách trong khoảng ngày đã chọn":"Cannot create booking: room "+r.n+" is occupied during the selected dates");return}PS.draft={room:r.n,ci:a,co:b+1};go("nb")};window.addEventListener("mouseup",up);return()=>window.removeEventListener("mouseup",up)},[dr]);
+ const used=d=>rooms.filter(r=>busy(r,d)).length,dl=d=>DMY(d).slice(0,5),sel=(r,d)=>dr&&dr.n==r.n&&d>=Math.min(dr.a,dr.b)&&d<=Math.max(dr.a,dr.b);
  return D({className:"p-pg"},Ttl("Kế hoạch sử dụng phòng"),D({className:"p-sub"},"Kéo chuột trên lịch để tạo booking"),D({className:"w-split"},FP(f,setF,C,D(null,h("label",null,"Số ngày hiển thị",h("select",{value:nd,onChange:e=>setNd(+e.target.value)},...[7,10,14].map(n=>h("option",{key:n},n)))),h("label",null,"Hạng phòng",h("select",{value:ty,onChange:e=>setTy(e.target.value)},h("option",{value:""},"Tất cả"),...K.map(t=>h("option",{key:t},t)))),D({className:"w-lgt"},"Màu thanh"),...[["rv","Đã đặt"],["ih","Đang ở"],["td","Đến hôm nay"],["dp","Đến hạn đi"],["oos","Phòng ngừng sử dụng"]].map(x=>D({key:x[0],className:"w-lb"},h("i",{className:"bar "+x[0]}),x[1])))),
  D({className:"w-gantt"+(dr?" drag":"")},D({className:"w-gr hd",style:{gridTemplateColumns:gt}},D(null,"Phòng"),D(null,"Trạng thái"),...cols.map(d=>D({key:d,className:d==S.day?"today":""},dl(d)))),...rs.map(r=>{const b=bar(r);return D({key:r.n,className:"w-gr",style:{gridTemplateColumns:gt}},D(null,r.n+" - "+TC[r.t]),D(null,h("i",{className:"w-dot s-"+sk(r)}),{free:"VC",occ:"OD",clean:"VD",maint:"OOS"}[r.st]),...cols.map((d,i)=>D({key:d,className:"cell"+(d==S.day?" today":"")+(sel(r,d)?" sel":"")+(busy(r,d)?"":" free"),style:{gridColumn:i+3,gridRow:1},onMouseDown:e=>{if(!busy(r,d)){e.preventDefault();setDr({n:r.n,a:d,b:d})}},onMouseEnter:()=>{if(dr&&dr.n==r.n)setDr({...dr,b:d})}})),b&&h("button",{className:"bar "+b.c,style:{gridColumn:(b.s-S.day+3)+" / "+(b.e-S.day+3),gridRow:1},onClick:()=>open(r.n)},b.t))}),D({className:"w-gr ft",style:{gridTemplateColumns:gt}},D(null,"Công suất"),D(null,""),...cols.map(d=>D({key:d},used(d)+"/"+rooms.length+" · "+Math.round(used(d)/rooms.length*100)+"%"))))))}
 function Drawer({n,close,go}){const r=rooms.find(x=>x.n==n);const[note,setNote]=useState(PS.notes[n]||"");if(!r)return null;const gs=r.guest,rate=RATE[r.t],nt=gs&&+gs.nights?+gs.nights:1;
@@ -1075,7 +1429,7 @@ function Resv({open,go}){const[tab,setTab]=useState("all"),[q,setQ]=useState("")
  const create=()=>{const r=rooms.find(x=>x.n==f.room),ci=dn(f.ci),co=dn(f.co);if(!r)return setEr("Chọn phòng trống.");if(!f.name.trim())return setEr("Nhập tên khách.");if(+f.pax<1||+f.pax>3)return setEr("Mỗi phòng tối đa 2 khách; khách thứ 3 kê EB; không nhận quá 3 người.");if(!(ci>=S.day&&co>ci))return setEr("CI phải từ ngày hiện tại và CO phải sau CI.");
   r.rsv=true;r.guest={name:f.name.trim(),pax:+f.pax,nights:co-ci,ci,co,req:RQ[f.req][0],src:f.src};cn("new");cn("newp",+f.pax);setEr("");setNw(false);PS.log("Reservation mới phòng "+r.n+" · "+r.guest.name+" · "+DT(ci)+" → "+DT(co)+(+f.pax>2?" · EB":""))};
  return D({className:"p-pg"},Ttl("Trạng thái đặt phòng"),D({className:"p-lg"},...[["all","Folio"],["arr","Đến (chưa nhận phòng)"],["in","Đang ở"],["dep","Đi hôm nay"]].map(x=>h("button",{key:x[0],className:"p-fl"+(tab==x[0]?" on":""),onClick:()=>setTab(x[0])},x[1])),h("input",{className:"p-in","aria-label":"Filter reservations",placeholder:"Thông tin: khách, phòng, hạng…",value:q,onChange:e=>setQ(e.target.value)}),Bt("Tìm kiếm",()=>{},"pri"),Bt("+ Đặt phòng mới",()=>go("nb"),"pri")),
- nw&&Card("New reservation",D({className:"p-act"},h("select",{"aria-label":"Room",value:f.room,onChange:e=>setF({...f,room:e.target.value})},h("option",{value:""},"Room…"),...fr.map(r=>h("option",{key:r.n,value:r.n},r.n+" · "+r.t))),h("input",{className:"p-in","aria-label":"Guest name",placeholder:"Guest name",value:f.name,onChange:e=>setF({...f,name:e.target.value})}),h("select",{"aria-label":"Guests",value:f.pax,onChange:e=>setF({...f,pax:e.target.value})},...[1,2,3].map(n=>h("option",{key:n,value:n},n+" guest(s)"+(n>2?" (+EB)":"")))),h("input",{className:"p-in",type:"date","aria-label":"Check-in",min:ISO(S.day),value:f.ci,onChange:e=>setF({...f,ci:e.target.value})}),h("input",{className:"p-in",type:"date","aria-label":"Check-out",min:ISO(S.day+1),value:f.co,onChange:e=>setF({...f,co:e.target.value})}),h("select",{"aria-label":"Request",value:f.req,onChange:e=>setF({...f,req:+e.target.value})},...RQ.map((q,k)=>h("option",{key:k,value:k},q[0]+" / "+q[1]))),h("select",{"aria-label":"Source",value:f.src,onChange:e=>setF({...f,src:e.target.value})},...SRC.map(x=>h("option",{key:x},x))),Bt("Create",create,"pri")),er&&D({className:"p-err"},er)),
+ nw&&Card("New reservation",D({className:"p-act"},h("select",{"aria-label":"Room",value:f.room,onChange:e=>setF({...f,room:e.target.value})},h("option",{value:""},"Room…"),...fr.map(r=>h("option",{key:r.n,value:r.n},r.n+" · "+r.t))),h("input",{className:"p-in","aria-label":"Guest name",placeholder:"Guest name",value:f.name,onChange:e=>setF({...f,name:e.target.value})}),h("select",{"aria-label":"Guests",value:f.pax,onChange:e=>setF({...f,pax:e.target.value})},...[1,2,3].map(n=>h("option",{key:n,value:n},n+" guest(s)"+(n>2?" (+EB)":"")))),h("input",{className:"p-in",type:"date","aria-label":"Check-in",min:ISO(S.day),value:f.ci,onChange:e=>setF({...f,ci:e.target.value})}),h("input",{className:"p-in",type:"date","aria-label":"Check-out",min:ISO(S.day+1),value:f.co,onChange:e=>setF({...f,co:e.target.value})}),h("select",{"aria-label":"Request",value:f.req,onChange:e=>setF({...f,req:+e.target.value})},...RQ.map((q,k)=>h("option",{key:k,value:k},q[(window.__L||"vi")=="vi"?0:1]))),h("select",{"aria-label":"Source",value:f.src,onChange:e=>setF({...f,src:e.target.value})},...SRC.map(x=>h("option",{key:x},x))),Bt("Create",create,"pri")),er&&D({className:"p-err"},er)),
  h(Tbl,{on:r=>open(r.n),rows,cols:[["Trạng thái",r=>r.rsv?"Reserved":"InHouse"],["Số xác nhận",r=>"RS-"+gx(r.guest).ci+r.n],["Tên khách",gn],["Công ty / đại lý",srcOf],["Hạng phòng",r=>TC[r.t]],["Phòng",r=>r.n],["Ngày đến",r=>DT(gx(r.guest).ci)],["Ngày đi",r=>DT(gx(r.guest).co)],["Số lượng khách",r=>r.guest.pax+(gx(r.guest).eb?" (2 + EB)":"")],["Trạng thái đặt",()=>"Definite"],["Giá phòng",r=>fmt(RATE[r.t])+(gx(r.guest).eb?" + EB "+fmt(EBP):"")],["Thanh toán",r=>{const t=ft(fol(r));return t.bal<=0?"Paid":t.paid>0?"Deposit":"Unpaid"}],["Yêu cầu",r=>r.guest.req],["",r=>D({className:"p-act"},r.rsv&&Bt("Check-in",()=>{PS.pre=r.n;go("ci")}),r.st=="occ"&&Bt("Check-out",()=>{PS.pre=r.n;go("co")}),r.rsv&&Bt("Hủy",()=>RA(r,"cx")))]]}),D({className:"w-tf"},"Tổng số folio: "+rows.length,Bt("Xuất Excel",()=>{try{navigator.clipboard.writeText(rows.map(r=>[gn(r),r.n,DT(gx(r.guest).ci),DT(gx(r.guest).co),r.guest.pax].join(",")).join("\n"))}catch(e){}},"pri")),!rows.length&&D({className:"p-sub"},"Không có reservation phù hợp."))}
 const HKP=["Normal","High"],ISS=["AC failure","Hot water failure","Safe failure","Curtain problem","Electrical issue","Wi-Fi issue","Door lock","Plumbing"];
 function HK({open}){const rows=rooms.filter(r=>r.st!="occ");return D({className:"p-pg"},h("h2",null,"Housekeeping"),h(Tbl,{on:r=>open(r.n),rows,cols:[["Room",r=>r.n],["Type",r=>r.t],["Status",r=>h(Bd,{s:sk(r)})],["Housekeeper",r=>"HK-"+(+r.n%4+1)],["Priority",r=>r.rsv?"High (arrival)":"Normal"],["Next arrival",r=>r.rsv?gn(r):"—"],["",r=>r.st=="free"?Bt("Start cleaning",()=>RA(r,"st","clean")):r.st=="clean"?Bt("Mark clean",()=>RA(r,"st","free"),"pri"):null]]}))}
@@ -1088,8 +1442,8 @@ function Rep(){const k=kp(),T={};k.oc.forEach(r=>T[r.t]=(T[r.t]||0)+RATE[r.t]);c
 function Ach(){const rows=[...(S.name?[{n:S.name,rk:RANKS[rk()][0],d:S.day,rev:S.rev,acc:S.tot?Math.round(S.ok/S.tot*100):100,w:S.warn,clk:S.clk,st:"Đang chơi"}]:[]),...P.runs.slice().reverse().map(r=>({...r,st:r.win?"Hoàn thành":"Mất việc"}))];
  return D({className:"p-pg"},h("h2",null,"Achievements"),D({className:"p-kg"},h(Kp,{l:"Completed days",v:Math.max(0,S.day-1),sub:""}),h(Kp,{l:"Promotions",v:rk(),sub:RANKS[rk()][0]}),h(Kp,{l:"Shifts clocked",v:S.clk,sub:""}),h(Kp,{l:"Scenario accuracy",v:(S.tot?Math.round(S.ok/S.tot*100):100)+"%",sub:""})),h(Tbl,{rows,cols:[["Employee",r=>r.n],["Rank",r=>r.rk],["Day",r=>r.d+"/30"],["Revenue",r=>fmt(r.rev)],["Accuracy",r=>r.acc+"%"],["Warnings",r=>r.w+"/3"],["Shifts",r=>r.clk],["Result",r=>r.st]]}))}
 function Data(){const[t,setT]=useState(""),[m,setM]=useState(migrated?"Dữ liệu cũ đã được chuyển sang schema 2.":"");
- return D({className:"p-pg"},h("h2",null,"Data / Save"),D({className:"p-sub"},"Schema 2 · khóa lưu: frontdesk-vn-save, frontdesk-vn-profile, frontdesk-vn-pms. "+m),Card("Export",Bt("Copy save JSON",()=>{try{navigator.clipboard.writeText(JSON.stringify({save:load(),profile:P}))}catch(e){}})),Card("Import",h("textarea",{rows:4,value:t,onChange:e=>setT(e.target.value),"aria-label":"Save JSON"}),Bt("Import & reload",()=>{try{const o=JSON.parse(t);if(o.save)localStorage.setItem(K,JSON.stringify({...o.save,schema:2}));if(o.profile)localStorage.setItem(PK,JSON.stringify(o.profile));location.reload()}catch(e){setM("JSON không hợp lệ.")}})),Card("Reset",Bt("Delete saved campaign",()=>{wipe();setM("Đã xóa tiến trình chiến dịch. Tải lại trang để bắt đầu lại.")},"danger")))}
-function Train(){const ref=useRef(null);useEffect(()=>{const el=document.getElementById("legacy");ref.current.appendChild(el);return()=>document.getElementById("hold").appendChild(el)},[]);return D({className:"p-pg"},h("h2",null,"Front Desk · Training"),D({ref}))}
+ return D({className:"p-pg"},h("h2",null,"Data / Save"),D({className:"p-sub"},((window.__L||"vi")=="vi"?"Schema 2 · khóa lưu: ":"Schema 2 · storage keys: ")+"frontdesk-vn-save, frontdesk-vn-profile, frontdesk-vn-pms. ",m),Card("Export",Bt("Copy save JSON",()=>{try{navigator.clipboard.writeText(JSON.stringify({save:load(),profile:P}))}catch(e){}})),Card("Import",h("textarea",{rows:4,value:t,onChange:e=>setT(e.target.value),"aria-label":"Save JSON"}),Bt("Import & reload",()=>{try{const o=JSON.parse(t);if(o.save)localStorage.setItem(K,JSON.stringify({...o.save,schema:2}));if(o.profile)localStorage.setItem(PK,JSON.stringify(o.profile));location.reload()}catch(e){setM("JSON không hợp lệ.")}})),Card("Reset",Bt("Delete saved campaign",()=>{wipe();setM("Đã xóa tiến trình chiến dịch. Tải lại trang để bắt đầu lại.")},"danger")))}
+function Train(){const ref=useRef(null);useEffect(()=>{const el=document.getElementById("legacy");ref.current.appendChild(el);return()=>document.getElementById("hold").appendChild(el)},[]);const vi=(window.__L||"vi")=="vi",g=G[S.i],L=(a,b)=>vi?a:b;return D({className:"p-pg"},h("h2",null,L("Lễ tân · Đào tạo","Front Desk · Training")),D({className:"p-strip"},h("span",null,L("Ngày game ","Game day ")+S.day+"/30 · "+DMY(S.day)),h("span",null,g?g.shift.split(" · ")[1]:L("Chưa vào ca","Off shift")),h("span",null,S.name||"Receptionist"),h("span",null,RANKS[rk()][0]),h("span",null,"XP "+S.xp)),D({ref}))}
 
 Object.assign(IC,{in:["M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4","M10 17l5-5-5-5","M15 12H3"],out:["M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4","M16 17l5-5-5-5","M21 12H9"],card:["M3 6h18v12H3z","M3 10h18"],alert:["M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z","M12 9v4","M12 17h.01"]});
 const Wiz=({title,steps,onDone})=>{const[s,setS]=useState(0),st=steps[Math.min(s,steps.length-1)];return Card(title,D({className:"p-st"},...steps.map((x,i)=>h("span",{key:i,className:"p-sp"+(i==s?" on":i<s?" dn":"")},(i<s?"✓ ":(i+1)+". ")+x.t))),D({className:"p-wb"},st.body),D({className:"p-act wz"},s>0&&Bt("Back",()=>setS(s-1)),s<steps.length-1?h("button",{className:"p-btn pri",disabled:!st.ok,onClick:()=>setS(s+1)},"Next"):h("button",{className:"p-btn pri",disabled:!st.ok,onClick:()=>{onDone();setS(0)}},"Complete")))};
@@ -1106,12 +1460,13 @@ function FolioV(){const rs=rooms.filter(r=>r.guest&&(r.st=="occ"||r.rsv)),[n,set
  return D({className:"p-pg"},h("h2",null,"Folio / Billing"),r?D(null,h("select",{value:r.n,"aria-label":"Reservation",onChange:e=>setN(e.target.value)},...rs.map(x=>h("option",{key:x.n,value:x.n},x.n+" · "+x.guest.name))),D({className:"p-3c"},Card("Guest / Reservation",D(null,h("b",null,r.guest.name)),D(null,"Room "+r.n+" · "+r.t),D(null,"CI "+DT(gx(r.guest).ci)+" → CO "+DT(gx(r.guest).co)),D(null,r.guest.pax+" guest(s)"+(gx(r.guest).eb?" (2 + EB)":"")),D(null,"Source: "+srcOf(r))),Card("Folio",h(Folio,{r,key:r.n})))):D({className:"p-sub"},"Không có reservation."))}
 const NAT=["Việt Nam","United States","United Kingdom","Korea","Japan","France","Germany","Other"],blankP=n=>({name:n||"",dob:"",sex:"",nat:"Việt Nam",id:"",phone:"",email:""});
 const Fld=(l,c)=>h("label",{className:"p-fld"},l,c);
+const DI=({value,onChange,min,label})=>{const r=useRef(null);return h("span",{className:"dt"},h("input",{ref:r,className:"p-in",type:"date",min,value,onChange,"aria-label":label}),h("button",{type:"button",className:"cal","aria-label":label,onClick:()=>{try{r.current.showPicker()}catch(e){r.current.focus()}}},h(Ic,{n:"file",s:20})))};
 function NB({go}){const dft=PS.draft||{},[f,setF]=useState({room:dft.room||"",name:"",phone:"",email:"",nat:"Việt Nam",pax:2,ci:ISO(dft.ci||S.day),co:ISO(dft.co||S.day+1),req:RQ.length-1,src:"Direct",dep:"",note:""}),[er,setEr]=useState("");useEffect(()=>{PS.draft=null},[]);
  const fr=rooms.filter(r=>r.st=="free"&&!r.rsv),set=k=>e=>setF({...f,[k]:e.target.value}),ci=dn(f.ci),co=dn(f.co);
  const go2=()=>{const r=rooms.find(x=>x.n==f.room);if(!r||!(r.st=="free"&&!r.rsv))return setEr("Chọn phòng trống.");if(!f.name.trim())return setEr("Nhập họ tên khách.");if(!/^[0-9+ ]{8,15}$/.test(f.phone.trim()))return setEr("Số điện thoại không hợp lệ.");if(f.email&&!/^\S+@\S+\.\S+$/.test(f.email))return setEr("Email không hợp lệ.");if(+f.pax<1||+f.pax>3)return setEr("Mỗi phòng tối đa 2 khách; khách thứ 3 kê EB; không nhận quá 3 người.");if(!(ci>=S.day&&co>ci))return setEr("Ngày nhận phòng phải từ hôm nay và ngày trả phòng phải sau ngày nhận.");
   r.rsv=true;r.guest={name:f.name.trim(),pax:+f.pax,nights:co-ci,ci,co,req:RQ[f.req][0],src:f.src,phone:f.phone,email:f.email,nat:f.nat,note:f.note,ppl:[{...blankP(f.name.trim()),nat:f.nat,phone:f.phone,email:f.email}]};cn("new");cn("newp",+f.pax);if(+f.dep>0)fol(r).pay.push({m:"Cash",a:+f.dep,t:fmtT(S.gt)});persist();PS.log("Booking mới phòng "+r.n+" · "+r.guest.name+" · "+DT(ci)+" → "+DT(co)+(+f.pax>2?" · EB":""));go("resv")};
  return D({className:"p-pg"},Ttl("Đặt phòng mới"),D({className:"p-2c"},Card("Thông tin liên hệ",D({className:"p-fg"},Fld("Họ tên",h("input",{className:"p-in",value:f.name,onChange:set("name")})),Fld("Số điện thoại",h("input",{className:"p-in",value:f.phone,onChange:set("phone")})),Fld("Email",h("input",{className:"p-in",value:f.email,onChange:set("email")})),Fld("Quốc tịch",h("select",{value:f.nat,onChange:set("nat")},...NAT.map(n=>h("option",{key:n},n)))),Fld("Nguồn",h("select",{value:f.src,onChange:set("src")},...SRC.map(x=>h("option",{key:x},x)))))),
- Card("Thông tin phòng",D({className:"p-fg"},Fld("Phòng",h("select",{value:f.room,onChange:set("room")},h("option",{value:""},"—"),...fr.concat(rooms.filter(r=>r.n==f.room&&!fr.includes(r))).map(r=>h("option",{key:r.n,value:r.n},r.n+" · "+r.t)))),Fld("Ngày nhận phòng",h("input",{className:"p-in",type:"date",min:ISO(S.day),value:f.ci,onChange:set("ci")})),Fld("Ngày trả phòng",h("input",{className:"p-in",type:"date",min:ISO(S.day+1),value:f.co,onChange:set("co")})),Fld("Số khách",h("select",{value:f.pax,onChange:set("pax")},...[1,2,3].map(n=>h("option",{key:n,value:n},n+(n>2?" (+EB)":""))))),Fld("Yêu cầu",h("select",{value:f.req,onChange:e=>setF({...f,req:+e.target.value})},...RQ.map((q,k)=>h("option",{key:k,value:k},q[0]+" / "+q[1])))),Fld("Tiền cọc",h("input",{className:"p-in",type:"number",value:f.dep,onChange:set("dep")}))),D({className:"p-sub"},"Tối đa 2 khách mỗi phòng. Khách thứ 3 kê giường phụ (EB)."),f.room&&co>ci&&D({className:"p-sub"},"Giá: "+fmt(RATE[(rooms.find(x=>x.n==f.room)||{}).t||"Superior"])+" × "+(co-ci)+" đêm"+(+f.pax>2?" + EB "+fmt(EBP)+" × "+(co-ci):"")))),
+ Card("Thông tin phòng",D({className:"p-fg"},Fld("Phòng",h("select",{value:f.room,onChange:set("room")},h("option",{value:""},"—"),...fr.concat(rooms.filter(r=>r.n==f.room&&!fr.includes(r))).map(r=>h("option",{key:r.n,value:r.n},r.n+" · "+r.t)))),Fld("Ngày nhận phòng",h(DI,{min:ISO(S.day),value:f.ci,onChange:set("ci"),label:"Ngày nhận phòng"})),Fld("Ngày trả phòng",h(DI,{min:ISO(S.day+1),value:f.co,onChange:set("co"),label:"Ngày trả phòng"})),Fld("Số khách",h("select",{value:f.pax,onChange:set("pax")},...[1,2,3].map(n=>h("option",{key:n,value:n},n+(n>2?" (+EB)":""))))),Fld("Yêu cầu",h("select",{value:f.req,onChange:e=>setF({...f,req:+e.target.value})},...RQ.map((q,k)=>h("option",{key:k,value:k},q[(window.__L||"vi")=="vi"?0:1])))),Fld("Tiền cọc",h("input",{className:"p-in",type:"number",value:f.dep,onChange:set("dep")}))),D({className:"p-sub"},"Tối đa 2 khách mỗi phòng. Khách thứ 3 kê giường phụ (EB)."),f.room&&co>ci&&D({className:"p-sub"},"Giá: "+fmt(RATE[(rooms.find(x=>x.n==f.room)||{}).t||"Superior"])+" × "+(co-ci)+" đêm"+(+f.pax>2?" + EB "+fmt(EBP)+" × "+(co-ci):"")))),
  Card("Ghi chú",h("textarea",{rows:3,value:f.note,onChange:set("note")})),er&&D({className:"p-err"},er),D({className:"p-act"},Bt("Tạo booking",go2,"pri"),Bt("Hủy bỏ",()=>go("resv"))))}
 const PF=({p,i,set})=>D({className:"p-pf"},h("b",null,"Khách "+(i+1)+(i==2?" (EB)":"")),D({className:"p-fg"},...[["name","Họ tên"],["dob","Ngày sinh","date"],["id","CCCD / Hộ chiếu"],["phone","Số điện thoại"],["email","Email"]].map(x=>Fld(x[1],h("input",{key:x[0],className:"p-in",type:x[2]||"text",value:p[x[0]]||"",onChange:e=>set({...p,[x[0]]:e.target.value})}))),Fld("Giới tính",h("select",{value:p.sex||"",onChange:e=>set({...p,sex:e.target.value})},h("option",{value:""},"—"),h("option",{value:"M"},"Nam"),h("option",{value:"F"},"Nữ"))),Fld("Quốc tịch",h("select",{value:p.nat||"Việt Nam",onChange:e=>set({...p,nat:e.target.value})},...NAT.map(n=>h("option",{key:n},n))))));
 function CI(){const rs=rooms.filter(r=>r.rsv&&r.guest),[n,setN]=useState(PS.pre),[w,setW]=useState({}),[to,setTo]=useState(null),r=rs.find(x=>x.n==n)||rs[0];
@@ -1154,13 +1509,20 @@ function Brief(){const[ca,setCa]=useState("Ca sáng"),dep=rooms.filter(r=>r.st==
  ...sec.map(x=>Card(x[0]+" ("+x[1].length+")",h(Tbl,{rows:x[1],cols:[["Room",r=>r.n],["Guest",gn],["CI → CO",r=>DT(gx(r.guest).ci)+" → "+DT(gx(r.guest).co)],["Guests",r=>r.guest.pax+(gx(r.guest).eb?" + EB":"")],["Request",r=>r.guest.req]]}))),pend.length>0&&Card("Pending tasks",h("ul",{className:"p-ul"},...pend.map((g,i)=>h("li",{key:i},g.name)))))}
 function Audit(){const k=kp(),[ac,setAc]=useState(""),[rf,setRf]=useState(""),[ck,setCk]=useState({}),[cf,setCf]=useState(false),sys=cashSys(),act=ac===""?sys:+ac,vr=act-sys,cl=PS.audit[S.day],cat={};Object.values(PS.fol).forEach(f=>f.it.forEach(i=>cat[i.c]=(cat[i.c]||0)+i.q*i.u));
  const items=["Verify cash","Verify invoices","Verify folios","Verify room status","Verify departures","Verify arrivals","Verify OTA","Post pending transactions","Review logs"],ready=items.every((_,i)=>ck[i])&&(vr==0||rf.trim().length>2),ota=otaL();
- return D({className:"p-pg"},h("h2",null,"Night Audit"),D({className:"p-sub"},"Business date: "+bdate()+(cl?" · CLOSED at "+cl.t:"")),D({className:"p-kg"},h(Kp,{l:"Occupancy",v:k.pct+"%",sub:""}),h(Kp,{l:"Room revenue",v:fmt(k.rev),sub:""}),h(Kp,{l:"ADR",v:fmt(k.adr),sub:""}),h(Kp,{l:"RevPAR",v:fmt(k.revpar),sub:""})),
+ return D({className:"p-pg"},h("h2",null,"Night Audit"),D({className:"p-sub"},((window.__L||"vi")=="vi"?"Ngày kinh doanh: ":"Business date: ")+bdate()+(cl?" · CLOSED at "+cl.t:"")),D({className:"p-kg"},h(Kp,{l:"Occupancy",v:k.pct+"%",sub:""}),h(Kp,{l:"Room revenue",v:fmt(k.rev),sub:""}),h(Kp,{l:"ADR",v:fmt(k.adr),sub:""}),h(Kp,{l:"RevPAR",v:fmt(k.revpar),sub:""})),
  D({className:"p-2c"},Card("Transactions (folios)",...["Room","EB","Minibar","Laundry","Spa","Airport transfer","Breakfast","Other"].map(c=>D({className:"p-row",key:c},c,h("b",null,fmt(cat[c]||0))))),Card("Cash reconciliation",D({className:"p-row"},"System cash",h("b",null,fmt(sys))),D(null,"Actual cash ",h("input",{className:"p-in",type:"number","aria-label":"Actual cash",placeholder:String(sys),value:ac,onChange:e=>setAc(e.target.value)})),D({className:"p-row"},"Variance",h("b",{style:{color:vr?"var(--warn)":"var(--good)"}},fmt(vr))),vr!=0&&D(null,D({className:"p-err"},"Trace the variance to a supporting document. Do not adjust the books to force a match."),h("input",{className:"p-in","aria-label":"Supporting document",placeholder:"Supporting document ref (receipt, voucher…)",value:rf,onChange:e=>setRf(e.target.value)})))),
  Card("OTA reconciliation",h(Tbl,{rows:ota,cols:[["Room",r=>r.n],["Guest",gn],["Source",srcOf],["Prepaid",r=>+r.n%2==0?"Yes":"No"],["Claimable",r=>+r.n%2==0?fmt(RATE[r.t]*gx(r.guest).n):"—"],["No-show",()=>"0"]]})),
  Card("Audit checklist",...items.map((x,i)=>h(Ck,{key:i,l:x,v:ck[i],on:v=>setCk({...ck,[i]:v})})),Bt("Close business day",()=>setCf(true),"pri")),
  cf&&D({className:"p-ov",onClick:()=>setCf(false)},D({className:"p-pal",role:"alertdialog","aria-label":"Confirm",onClick:e=>e.stopPropagation()},h("b",null,"Close business day "+DT(S.day)+"?"),D({className:"p-sub"},ready?"This audit cannot be reopened for this date.":"Complete all checklist items and trace any cash variance to a document before closing."),D({className:"p-act"},Bt("Cancel",()=>setCf(false)),h("button",{className:"p-btn danger",disabled:!ready||!!cl,onClick:()=>{chg(()=>{PS.audit[S.day]={t:fmtT(S.gt),vr,ref:rf}});PS.log("Night audit closed · variance "+fmt(vr)+(rf?" · ref "+rf:""));setCf(false)}},"Close audit")))))}
 const NAV=[["MAIN",[["dash","Dashboard","dash"],["rack","Room Rack","bed"],["resv","Reservations","file"],["ci","Check-in","in"],["co","Check-out","out"],["fo","Folio / Billing","card"]]],["OPERATIONS",[["hk","Housekeeping","brush"],["mt","Maintenance","wrench"],["rq","Guest Requests","bell"]]],["NIGHT AUDIT",[["au","Night Audit","moon"],["br","Daily Brief","file"]]],["MANAGEMENT",[["rep","Reports","chart"],["inc","Incidents","alert"]]],["SIMULATION",[["train","Front Desk · Training","grad"],["ach","Achievements","trophy"]]],["SYSTEM",[["data","Data / Save","save"]]]];
-const alerts=()=>{const a=[],k=kp(),nx=RANKS[rk()+1];if(S.stress>=70)a.push(["warn","Stress cao: "+S.stress,"train"]);if(S.sat<40)a.push(["warn","Satisfaction thấp: "+S.sat,"train"]);const mt=rooms.filter(r=>r.st=="maint").length;if(mt)a.push(["warn",mt+" phòng đang bảo trì","mt"]);if(k.rs.length)a.push(["info",k.rs.length+" phòng chờ check-in","ci"]);if(S.ot)a.push(["info","Làm thêm "+S.ot+" phút","me"]);if(nx&&S.xp>=nx[1])a.push(["ok","Đủ XP thi thăng chức "+nx[0],"train"]);const oi=PS.incs.filter(q=>q.st!="Closed").length,oq=PS.reqs.filter(q=>q.st!="Completed").length;if(oi)a.push(["warn",oi+" sự cố chưa đóng","inc"]);if(oq)a.push(["info",oq+" yêu cầu khách chưa hoàn thành","rq"]);if(!PS.audit[S.day]&&G.length&&S.i>G.length*.6)a.push(["info","Night audit chưa chốt","au"]);return a};
+const alerts=()=>{const a=[],k=kp(),nx=RANKS[rk()+1],v=(window.__L||"vi")=="vi",L=(x,y)=>v?x:y;
+ if(S.stress>=70)a.push(["warn",L("Stress cao: ","High stress: ")+S.stress,"train"]);if(S.sat<40)a.push(["warn",L("Hài lòng thấp: ","Low satisfaction: ")+S.sat,"train"]);
+ const mt=rooms.filter(r=>r.st=="maint").length;if(mt)a.push(["warn",mt+L(" phòng đang bảo trì"," room(s) under maintenance"),"mt"]);
+ if(k.rs.length)a.push(["info",k.rs.length+L(" phòng chờ check-in"," room(s) awaiting check-in"),"ci"]);if(S.ot)a.push(["info",L("Làm thêm ","Overtime ")+S.ot+L(" phút"," min"),"me"]);
+ if(nx&&S.xp>=nx[1])a.push(["ok",L("Đủ XP thi thăng chức ","Eligible for the promotion exam: ")+nx[0],"train"]);
+ const oi=PS.incs.filter(q=>q.st!="Closed").length,oq=PS.reqs.filter(q=>q.st!="Completed").length;if(oi)a.push(["warn",oi+L(" sự cố chưa đóng"," open incident(s)"),"inc"]);if(oq)a.push(["info",oq+L(" yêu cầu khách chưa hoàn thành"," unfinished guest request(s)"),"rq"]);
+ if(!PS.audit[S.day]&&G.length&&S.i>G.length*.6)a.push(["info",L("Night audit chưa chốt","Night audit not closed yet"),"au"]);
+ return a};
 function Pal({go,open,close}){const[q,setQ]=useState(""),[i,setI]=useState(0),ql=q.toLowerCase();
  const res=useMemo(()=>[...MENU.flatMap(g=>g[2]).map(n=>[n[0],n[1]]).filter(n=>n[1].toLowerCase().includes(ql)).map(n=>({k:"Page",l:n[1],f:()=>go(n[0])})),...rooms.filter(r=>ql&&(r.n+r.t+(r.guest?r.guest.name:"")).toLowerCase().includes(ql)).slice(0,8).map(r=>({k:"Room",l:r.n+" · "+r.t+" · "+gn(r),f:()=>open(r.n)}))],[q]);
  return D({className:"p-ov",onClick:close},D({className:"p-pal",role:"dialog","aria-label":"Search",onClick:e=>e.stopPropagation()},h("input",{autoFocus:true,className:"p-in",placeholder:"Search room, guest, page…",value:q,onChange:e=>{setQ(e.target.value);setI(0)},onKeyDown:e=>{if(e.key=="ArrowDown")setI(Math.min(res.length-1,i+1));else if(e.key=="ArrowUp")setI(Math.max(0,i-1));else if(e.key=="Enter"&&res[i]){res[i].f();close()}}}),...res.map((r,j)=>D({key:j,className:"p-pi"+(j==i?" on":""),onMouseEnter:()=>setI(j),onClick:()=>{r.f();close()}},h("small",null,r.k),r.l))))}
@@ -1178,7 +1540,7 @@ function Net({vi}){const cx=210,cy=190,pts=NETI.map((x,i)=>{const a=i/NETI.lengt
 const MENU=[["ĐẶT PHÒNG","BOOKING",[["nb","Đặt phòng mới","file","New booking"],["resv","Trạng thái đặt phòng","file","Reservation status"],["plan","Kế hoạch sử dụng phòng","plan","Room plan"],["rack","Sơ đồ phòng","bed","Room map"]]],["LỄ TÂN","FRONT DESK",[["dash","Trạng thái khách sạn","hotel","Hotel status"],["ci","Nhận phòng (Check-in)","in","Check-in"],["co","Trả phòng (Check-out)","out","Check-out"],["rq","Yêu cầu của khách","bell","Guest requests"],["br","Bàn giao ca","file","Shift handover"]]],["THU NGÂN","CASHIER",[["fo","Folio / Thanh toán","card","Folio / Billing"]]],["BUỒNG","HOUSEKEEPING",[["hk","Dọn phòng","brush","Housekeeping"],["mt","Bảo trì","wrench","Maintenance"]]],["KIỂM TOÁN","AUDIT",[["au","Kiểm toán đêm","moon","Night audit"]]],["BÁO CÁO","REPORTS",[["rep","Báo cáo","chart","Reports"],["inc","Sự cố","alert","Incidents"]]],["MÔ PHỎNG","TRAINING",[["train","Tình huống / Đào tạo","grad","Scenarios / Training"],["ach","Thành tích","trophy","Achievements"]]],["CẤU HÌNH","SETTINGS",[["data","Dữ liệu / Lưu trữ","save","Data / Save"]]]];
 const setGd=g=>{sel=g;P.gender=g;saveP()};
 function Welcome({onStart,lang}){const sv=load(),[nm,setNm]=useState(P.name||""),[gd,setGd2]=useState(P.gender||"f"),vi=lang=="vi";
- const start=cont=>{const name=nm.trim()||(vi?"Nhân viên mới":"New employee");P.name=name;setGd(gd);if(cont&&sv){Object.assign(S,sv);S.name=name;S.gender=gd}else Object.assign(S,{ot:0,otp:0,gt:360,gs:360,ts:[],gender:gd,rk:0,name,xp:0,clk:0,trust:50,stress:20,day:1,warn:0,sat:50,rev:0,ok:0,tot:0,hist:[],lastEv:""});hud();startDay();onStart()};
+ const start=cont=>{const name=nm.trim()||(vi?"Nhân viên mới":"New employee");P.name=name;setGd(gd);if(cont&&sv){Object.assign(S,sv);S.name=name;S.gender=gd;if(!S.base){const t=new Date();t.setDate(t.getDate()-(S.day-1));S.base=t.getFullYear()+"-"+P2d(t.getMonth()+1)+"-"+P2d(t.getDate())}}else Object.assign(S,{base:todayISO(),ot:0,otp:0,gt:360,gs:360,ts:[],gender:gd,rk:0,name,xp:0,clk:0,trust:50,stress:20,day:1,warn:0,sat:50,rev:0,ok:0,tot:0,hist:[],lastEv:""});hud();startDay();onStart()};
  return D({className:"wl"},D({className:"wl-in"},D({className:"wl-l"},D({className:"wl-top"},h("img",{src:LOGO_F,alt:"Rosemary Luxury Boutique Hotel",className:"wl-logo"})),h("h1",null,vi?"Chào mừng đến Rosemary PMS":"Welcome to Rosemary PMS"),h("p",null,vi?"Nhập tên để bắt đầu ca làm việc. Không cần đăng nhập.":"Enter your name to start your shift. No login needed."),
  D({className:"wl-g"},...[["m",vi?"Nam":"Male"],["f",vi?"Nữ":"Female"]].map(x=>h("button",{key:x[0],className:"gb"+(gd==x[0]?" on":""),onClick:()=>setGd2(x[0]),"aria-label":x[1]},h("span",{dangerouslySetInnerHTML:{__html:avatar(64,x[0])}}),D(null,x[1])))),
  h("input",{className:"wl-in2","aria-label":vi?"Tên của bạn":"Your name",placeholder:vi?"Tên của bạn":"Your name",value:nm,maxLength:24,onChange:e=>setNm(e.target.value),onKeyDown:e=>e.key=="Enter"&&start(false)}),
@@ -1200,7 +1562,7 @@ function App(){const[,f]=useState(0);useEffect(()=>{const s=()=>f(x=>x+1);PS.sub
  h("nav",{className:"w-menu","aria-label":"Menu"},...MENU.map(m=>h("button",{key:m[0],className:"w-mb"+(m[2].some(x=>x[0]==view)?" on":"")+(om==m[0]?" open":""),"aria-expanded":om==m[0],onClick:()=>setOm(om==m[0]?null:m[0])},vi?m[0]:m[1],h("span",{className:"w-ch"},"▾")))),
  D({className:"w-r"},ib("search",vi?"Tìm kiếm (Ctrl+K)":"Search (Ctrl+K)",()=>setPal(true)),ib("notif",vi?"Thông báo":"Notifications",()=>setBell(!bell),al.length>0&&h("span",{className:"p-bg"},al.length)),h("button",{className:"w-lang","aria-label":"Language",onClick:()=>{const l=vi?"en":"vi";setLang(l);cfg.lang=l;persist()}},"🌐 "+(vi?"Tiếng Việt":"English")+" ▾"),h("span",{className:"w-div"}),ib("moon",vi?"Sáng/tối":"Light/dark",()=>{const t=th=="dark"?"light":"dark";setTh(t);cfg.theme=t;document.documentElement.dataset.theme=t;persist()}),h("button",{className:"w-user","aria-haspopup":"menu","aria-expanded":um,onClick:()=>{setUm(!um);setBell(false)}},h("span",{className:"p-usr",dangerouslySetInnerHTML:{__html:avatar(32)}}),D(null,h("b",null,S.name||"Receptionist"),h("small",null,RANKS[rk()][0])),h("span",{className:"w-ch"},"▾")),um&&D({className:"w-um",role:"menu"},h("button",{role:"menuitem",onClick:()=>{setUm(false);go("me")}},h(Ic,{n:"user",s:20}),vi?"Thông tin":"Information"),h("button",{role:"menuitem",onClick:logout},h(Ic,{n:"out",s:20}),vi?"Đăng xuất":"Log-out")),h("button",{className:"w-cta",onClick:()=>go("train")},vi?"Bắt đầu ca":"Start shift"))),
  cur&&D({className:"w-mega"},D({className:"w-mh"},vi?cur[0]:cur[1]),D({className:"w-mg"},...cur[2].map(x=>h("button",{key:x[0],onClick:()=>go(x[0])},h(Ic,{n:x[2],s:30}),D(null,h("b",null,vi?x[1]:x[3]),h("small",null,DES[x[0]][vi?0:1])))))),
- D({className:"w-sub"},h(Clock,{vi}),(vi?" · Ngày game ":" · Game day ")+S.day+"/30 · "+(g?g.shift.split(" · ")[1]:"—")+" · "+(S.name||"Receptionist")+" · "+RANKS[rk()][0]+" · XP "+S.xp)),
+ D({className:"w-sub"},h(Clock,{vi}))),
  (om||bell||um)&&D({className:"w-ov",onClick:()=>{setOm(null);setBell(false);setUm(false)}}),
  bell&&D({className:"p-bell"},...al.map((a,i)=>h("button",{key:i,className:"p-al a-"+a[0],onClick:()=>{setBell(false);if(a[2])go(a[2])}},a[1],a[2]?"  →":"")),!al.length&&(vi?"Không có thông báo":"No notifications")),
  h("main",{className:"w-main"},h(V,{go,open})),
